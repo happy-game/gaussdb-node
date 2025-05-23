@@ -15,6 +15,13 @@ function postgresMd5PasswordHash(user, password, salt) {
   return 'md5' + outer
 }
 
+// See AuthenticationSHA256Password (based on similar approach to MD5)
+function postgresSha256PasswordHash(user, password, salt) {
+  const inner = nodeCrypto.createHash('sha256').update(password + user, 'utf-8').digest('hex')
+  const outer = nodeCrypto.createHash('sha256').update(Buffer.concat([Buffer.from(inner), salt])).digest('hex')
+  return 'sha256' + outer
+}
+
 function sha256(text) {
   return nodeCrypto.createHash('sha256').update(text).digest()
 }
@@ -34,6 +41,7 @@ async function deriveKey(password, salt, iterations) {
 
 module.exports = {
   postgresMd5PasswordHash,
+  postgresSha256PasswordHash,
   randomBytes: nodeCrypto.randomBytes,
   deriveKey,
   sha256,

@@ -20,7 +20,8 @@ const writer = new Writer()
 
 const startup = (opts: Record<string, string>): Buffer => {
   // protocol version
-  writer.addInt16(3).addInt16(0)
+  // writer.addInt16(3).addInt16(0)
+  writer.addInt16(3).addInt16(0x33) // this is needed for gaussdb
   for (const key of Object.keys(opts)) {
     writer.addCString(key).addCString(opts[key])
   }

@@ -24,6 +24,7 @@ import {
   BackendMessage,
   MessageName,
   AuthenticationMD5Password,
+  AuthenticationSHA256Password,
   NoticeMessage,
 } from './messages'
 import { BufferReader } from './buffer-reader'
@@ -311,7 +312,6 @@ export class Parser {
       name: 'authenticationOk',
       length,
     }
-
     switch (code) {
       case 0: // AuthenticationOk
         break
@@ -327,17 +327,23 @@ export class Parser {
           return new AuthenticationMD5Password(length, salt)
         }
         break
-      case 10: // AuthenticationSASL
+      // case 10: // AuthenticationSASL
+      //   {
+      //     message.name = 'authenticationSASL'
+      //     message.mechanisms = []
+      //     let mechanism: string
+      //     do {
+      //       mechanism = this.reader.cstring()
+      //       if (mechanism) {
+      //         message.mechanisms.push(mechanism)
+      //       }
+      //     } while (mechanism)
+      //   }
+      //   break
+      case 10:  // AuthenticationSHA256Password
         {
-          message.name = 'authenticationSASL'
-          message.mechanisms = []
-          let mechanism: string
-          do {
-            mechanism = this.reader.cstring()
-            if (mechanism) {
-              message.mechanisms.push(mechanism)
-            }
-          } while (mechanism)
+          message.name = 'authenticationSHA256Password'
+          message.data = this.reader.bytes(length - 8)
         }
         break
       case 11: // AuthenticationSASLContinue

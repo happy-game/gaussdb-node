@@ -1,7 +1,9 @@
 const nodeCrypto = require('crypto')
+const { RFC5802Algorithm } = require('./rfc5802')
 
 module.exports = {
   postgresMd5PasswordHash,
+  postgresSha256PasswordHash,
   randomBytes,
   deriveKey,
   sha256,
@@ -52,6 +54,33 @@ async function postgresMd5PasswordHash(user, password, salt) {
   const inner = await md5(password + user)
   const outer = await md5(Buffer.concat([Buffer.from(inner), salt]))
   return 'md5' + outer
+}
+
+async function postgresSha256PasswordHash(user, password, data) {
+  // Constants for data structure parsing
+  const PASSWORD_METHOD_OFFSET = 0
+  const PASSWORD_METHOD_SIZE = 4
+  const RANDOM_CODE_SIZE = 64
+  const TOKEN_SIZE = 8
+  const ITERATION_SIZE = 4
+
+  const dataBuffer = Buffer.from(data)
+  const passwordStoredMethod = dataBuffer.readInt32BE(PASSWORD_METHOD_OFFSET)
+  
+  // Extract 64-byte random code starting from offset 4
+  const randomCode = dataBuffer.slice(PASSWORD_METHOD_SIZE, PASSWORD_METHOD_SIZE + RANDOM_CODE_SIZE).toString('ascii')
+
+  // Extract 8-byte token after the random code
+  const tokenOffset = PASSWORD_METHOD_SIZE + RANDOM_CODE_SIZE
+  const token = dataBuffer.slice(tokenOffset, tokenOffset + TOKEN_SIZE).toString('ascii')
+
+  // Extract server iteration count from the last 4 bytes
+  const serverIteration = dataBuffer.readInt32BE(dataBuffer.length - ITERATION_SIZE)
+
+  // Generate the hash using RFC5802 algorithm
+  const hashResult = RFC5802Algorithm(password, randomCode, token, '', serverIteration, 'sha256')
+
+  return Buffer.from(hashResult, 'hex').toString('ascii')
 }
 
 /**
