@@ -1,6 +1,8 @@
 const Client = require('../')
 const ok = require('okay')
 
+// SKIP: 不支持 LISTEN/NOFITY statement
+// https://github.com/HuaweiCloudDeveloper/gaussdb-drivers/blob/master-dev/diff-gaussdb-postgres.md#%E4%B8%8D%E6%94%AF%E6%8C%81-listennofity-statement
 const notify = function (channel, payload) {
   const client = new Client()
   client.connectSync()
@@ -8,7 +10,7 @@ const notify = function (channel, payload) {
   client.end()
 }
 
-describe('simple LISTEN/NOTIFY', function () {
+describe.skip('simple LISTEN/NOTIFY', function () {
   before(function (done) {
     const client = (this.client = new Client())
     client.connect(done)
@@ -29,7 +31,7 @@ describe('simple LISTEN/NOTIFY', function () {
 })
 
 if (!process.env.TRAVIS_CI) {
-  describe('async LISTEN/NOTIFY', function () {
+  describe.skip('async LISTEN/NOTIFY', function () {
     before(function (done) {
       const client = (this.client = new Client())
       client.connect(done)

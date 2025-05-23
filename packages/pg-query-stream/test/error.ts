@@ -23,7 +23,9 @@ helper('error', function (client) {
   })
 })
 
-describe('error recovery', () => {
+// SKIP: 不支持 LISTEN/NOFITY statement
+// https://github.com/HuaweiCloudDeveloper/gaussdb-drivers/blob/master-dev/diff-gaussdb-postgres.md#%E4%B8%8D%E6%94%AF%E6%8C%81-listennofity-statement
+describe.skip('error recovery', () => {
   // created from https://github.com/chrisdickinson/pg-test-case
   it('recovers from a streaming error in a transaction', async () => {
     const pool = new Pool()

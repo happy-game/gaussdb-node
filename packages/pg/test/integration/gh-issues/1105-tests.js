@@ -1,6 +1,10 @@
-const helper = require('../test-helper')
-const suite = new helper.Suite()
+// const helper = require('../test-helper')
+// const suite = new helper.Suite()
 
+// SKIP: 不支持 临时表Serial
+// https://github.com/HuaweiCloudDeveloper/gaussdb-drivers/blob/master-dev/diff-gaussdb-postgres.md#%E4%B8%8D%E6%94%AF%E6%8C%81-%E4%B8%B4%E6%97%B6%E8%A1%A8serial
+
+/*
 suite.testAsync('timeout causing query crashes', async () => {
   const client = new helper.Client()
   await client.connect()
@@ -17,3 +21,4 @@ suite.testAsync('timeout causing query crashes', async () => {
   }
   await client.end()
 })
+*/
