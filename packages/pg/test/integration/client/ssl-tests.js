@@ -3,6 +3,12 @@ const helper = require('./test-helper')
 const assert = require('assert')
 const suite = new helper.Suite()
 
+// allow skipping of this test via env var for
+// local testing when you don't have SSL set up
+if (process.env.PGTESTNOSSL) {
+  return
+}
+
 suite.test('can connect with ssl', function () {
   const config = {
     ...helper.config,
