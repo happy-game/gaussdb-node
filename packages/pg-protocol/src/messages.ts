@@ -26,6 +26,7 @@ export type MessageName =
   | 'authenticationSASL'
   | 'authenticationSASLContinue'
   | 'authenticationSASLFinal'
+  | 'authenticationSHA256Password'
   | 'error'
   | 'notice'
 
@@ -188,6 +189,14 @@ export class AuthenticationMD5Password implements BackendMessage {
   constructor(
     public readonly length: number,
     public readonly salt: Buffer
+  ) {}
+}
+
+export class AuthenticationSHA256Password implements BackendMessage {
+  public readonly name: MessageName = 'authenticationSHA256Password'
+  constructor(
+    public readonly length: number,
+    public readonly data: Buffer
   ) {}
 }
 
