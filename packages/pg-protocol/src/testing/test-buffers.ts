@@ -21,6 +21,8 @@ const buffers = {
       .join(true, 'R')
   },
 
+  // SASL authentication is no longer supported - commented out
+  /*
   authenticationSASL: function () {
     return new BufferList().addInt32(10).addCString('SCRAM-SHA-256').addCString('').join(true, 'R')
   },
@@ -32,6 +34,7 @@ const buffers = {
   authenticationSASLFinal: function () {
     return new BufferList().addInt32(12).addString('data').join(true, 'R')
   },
+  */
 
   parameterStatus: function (name: string, value: string) {
     return new BufferList().addCString(name).addCString(value).join(true, 'S')

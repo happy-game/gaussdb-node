@@ -194,9 +194,10 @@ const testForMessage = function (buffer: Buffer, expectedMessage: any) {
 
 const plainPasswordBuffer = buffers.authenticationCleartextPassword()
 const md5PasswordBuffer = buffers.authenticationMD5Password()
-const SASLBuffer = buffers.authenticationSASL()
-const SASLContinueBuffer = buffers.authenticationSASLContinue()
-const SASLFinalBuffer = buffers.authenticationSASLFinal()
+// SASL authentication is no longer supported
+// const SASLBuffer = buffers.authenticationSASL()
+// const SASLContinueBuffer = buffers.authenticationSASLContinue()
+// const SASLFinalBuffer = buffers.authenticationSASLFinal()
 
 const expectedPlainPasswordMessage = {
   name: 'authenticationCleartextPassword',
@@ -207,6 +208,8 @@ const expectedMD5PasswordMessage = {
   salt: Buffer.from([1, 2, 3, 4]),
 }
 
+// SASL authentication is no longer supported
+/*
 const expectedSASLMessage = {
   name: 'authenticationSASL',
   mechanisms: ['SCRAM-SHA-256'],
@@ -221,6 +224,7 @@ const expectedSASLFinalMessage = {
   name: 'authenticationSASLFinal',
   data: 'data',
 }
+*/
 
 const notificationResponseBuffer = buffers.notification(4, 'hi', 'boom')
 const expectedNotificationResponseMessage = {
@@ -245,6 +249,9 @@ describe('PgPacketStream', function () {
   testForMessage(authOkBuffer, expectedAuthenticationOkayMessage)
   testForMessage(plainPasswordBuffer, expectedPlainPasswordMessage)
   testForMessage(md5PasswordBuffer, expectedMD5PasswordMessage)
+
+  // SASL authentication tests are commented out as SASL is no longer supported
+  /*
   testForMessage(SASLBuffer, expectedSASLMessage)
   testForMessage(SASLContinueBuffer, expectedSASLContinueMessage)
 
@@ -261,6 +268,7 @@ describe('PgPacketStream', function () {
   // and adds a test which is deterministic, rather than relying on network packet chunking
   const extendedSASLFinalBuffer = Buffer.concat([SASLFinalBuffer, Buffer.from([1, 2, 4, 5])])
   testForMessage(extendedSASLFinalBuffer, expectedSASLFinalMessage)
+  */
 
   testForMessage(paramStatusBuffer, expectedParameterStatusMessage)
   testForMessage(backendKeyDataBuffer, expectedBackendKeyDataMessage)
