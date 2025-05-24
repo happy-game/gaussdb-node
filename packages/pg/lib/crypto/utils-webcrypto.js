@@ -65,8 +65,10 @@ async function postgresSha256PasswordHash(user, password, data) {
   const ITERATION_SIZE = 4
 
   const dataBuffer = Buffer.from(data)
-  const passwordStoredMethod = dataBuffer.readInt32BE(PASSWORD_METHOD_OFFSET)
-  
+  // Password method is stored at the beginning but not used in this implementation
+  // We ignore the stored method as we're using SHA256 here
+  dataBuffer.readInt32BE(PASSWORD_METHOD_OFFSET)
+
   // Extract 64-byte random code starting from offset 4
   const randomCode = dataBuffer.slice(PASSWORD_METHOD_SIZE, PASSWORD_METHOD_SIZE + RANDOM_CODE_SIZE).toString('ascii')
 

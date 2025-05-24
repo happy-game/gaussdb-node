@@ -17,8 +17,14 @@ function postgresMd5PasswordHash(user, password, salt) {
 
 // See AuthenticationSHA256Password (based on similar approach to MD5)
 function postgresSha256PasswordHash(user, password, salt) {
-  const inner = nodeCrypto.createHash('sha256').update(password + user, 'utf-8').digest('hex')
-  const outer = nodeCrypto.createHash('sha256').update(Buffer.concat([Buffer.from(inner), salt])).digest('hex')
+  const inner = nodeCrypto
+    .createHash('sha256')
+    .update(password + user, 'utf-8')
+    .digest('hex')
+  const outer = nodeCrypto
+    .createHash('sha256')
+    .update(Buffer.concat([Buffer.from(inner), salt]))
+    .digest('hex')
   return 'sha256' + outer
 }
 
