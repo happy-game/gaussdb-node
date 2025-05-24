@@ -3,6 +3,10 @@ const helper = require('./test-helper')
 const assert = require('assert')
 const suite = new helper.Suite()
 
+// SKIP: 不支持 LISTEN/NOFITY statement
+// https://github.com/HuaweiCloudDeveloper/gaussdb-drivers/blob/master-dev/diff-gaussdb-postgres.md#%E4%B8%8D%E6%94%AF%E6%8C%81-listennofity-statement
+
+/*
 suite.test('emits notify message', function (done) {
   const client = helper.client()
   client.query(
@@ -18,7 +22,8 @@ suite.test('emits notify message', function (done) {
             setTimeout(function () {
               assert.equal(msg.channel, 'boom')
               assert.ok(
-                msg.payload == 'omg!' /* 9.x */ || msg.payload == '' /* 8.x */,
+                // 9.x and 8.x have different payloads
+                msg.payload == 'omg!'  || msg.payload == '' ,
                 'expected blank payload or correct payload but got ' + msg.message
               )
               client.end(++bothEmitted ? done : undefined)
@@ -40,6 +45,7 @@ suite.test('emits notify message', function (done) {
     })
   )
 })
+*/
 
 // this test fails on travis due to their config
 suite.test('emits notice message', function (done) {
