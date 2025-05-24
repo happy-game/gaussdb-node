@@ -24,16 +24,18 @@ jobs:
     timeout-minutes: 15
     needs: lint
     services:
-      postgres:
-        image: ghcr.io/railwayapp-templates/postgres-ssl
+      gaussdb:
+        image: opengauss/opengauss
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_HOST_AUTH_METHOD: 'md5'
-          POSTGRES_DB: ci_db_test
+          GS_USERNAME: ci_user
+          GS_PASSWORD: openGauss@123
+          GS_USER_PASSWORD: openGauss@123
+          POSTGRES_HOST_AUTH_METHOD: 'trust'
+          POSTGRES_INITDB_ARGS: "--auth-local=md5"
+          GS_DB: ci_db_test
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        # options: --health-cmd "su - omm -c \"gs_ctl status\"" --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       fail-fast: false
       matrix:
@@ -49,21 +51,21 @@ jobs:
     name: Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
     env:
-      PGUSER: postgres
-      PGPASSWORD: postgres
+      PGUSER: ci_user
+      PGPASSWORD: openGauss@123
       PGHOST: localhost
       PGDATABASE: ci_db_test
       PGTESTNOSSL: 'true'
-      SCRAM_TEST_PGUSER: scram_test
-      SCRAM_TEST_PGPASSWORD: test4scram
+      # SCRAM_TEST_PGUSER: scram_test
+      # SCRAM_TEST_PGPASSWORD: test4scram
     steps:
       - name: Show OS
         run: |
           uname -a
-      - run: |
-          psql \
-            -c "SET password_encryption = 'scram-sha-256'" \
-            -c "CREATE ROLE scram_test LOGIN PASSWORD 'test4scram'"
+      # - run: |
+      #     psql \
+      #       -c "SET password_encryption = 'scram-sha-256'" \
+      #       -c "CREATE ROLE scram_test LOGIN PASSWORD 'test4scram'"
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
