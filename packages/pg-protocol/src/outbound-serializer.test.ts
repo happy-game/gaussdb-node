@@ -12,7 +12,7 @@ describe('serializer', () => {
       actual,
       new BufferList()
         .addInt16(3)
-        .addInt16(0)
+        .addInt16(0x33) // this is for gaussdb
         .addCString('user')
         .addCString('brian')
         .addCString('database')

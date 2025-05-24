@@ -56,16 +56,30 @@ jobs:
       PGHOST: localhost
       PGDATABASE: ci_db_test
       PGTESTNOSSL: 'true'
-      # SCRAM_TEST_PGUSER: scram_test
-      # SCRAM_TEST_PGPASSWORD: test4scram
+      SHA256_TEST_PGUSER: sha256_test
+      SHA256_TEST_PGPASSWORD: test4@scram
     steps:
       - name: Show OS
         run: |
           uname -a
-      # - run: |
-      #     psql \
-      #       -c "SET password_encryption = 'scram-sha-256'" \
-      #       -c "CREATE ROLE scram_test LOGIN PASSWORD 'test4scram'"
+      - name: Wait for GaussDB to be ready
+        run: |
+          timeout 60 bash -c 'until pg_isready -h localhost -p 5432; do sleep 2; done'
+      - name: Setup SHA256 authentication
+        run: |
+          # Wait for database to be fully started
+          sleep 15
+          
+          # Get container ID
+          CONTAINER_ID=$(docker ps --filter "ancestor=opengauss/opengauss" --format "{{.ID}}")
+          docker exec $CONTAINER_ID su - omm -c "gs_guc set -D /var/lib/opengauss/data/ -c 'password_encryption_type = 2'"
+          
+          # Add SHA256 authentication rule to pg_hba.conf
+          docker exec $CONTAINER_ID su - omm -c "gs_guc set -D /var/lib/opengauss/data/ -h 'host all sha256_test 0.0.0.0/0 sha256'"
+          docker exec $CONTAINER_ID su - omm -c "gs_ctl reload -D /var/lib/opengauss/data/"
+          sleep 5
+          
+          PGPASSWORD=openGauss@123 psql -h localhost -U ci_user -d ci_db_test -c "CREATE ROLE sha256_test login password 'test4@scram';"
       - uses: actions/checkout@v4
         with:
           persist-credentials: false

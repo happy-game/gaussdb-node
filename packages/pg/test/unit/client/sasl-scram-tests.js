@@ -1,3 +1,7 @@
+// SASL authentication is no longer supported in this repository
+// All SASL tests have been commented out
+
+/*
 'use strict'
 const helper = require('./test-helper')
 const assert = require('assert')
@@ -312,3 +316,4 @@ suite.test('sasl/scram', function () {
     })
   })
 })
+*/

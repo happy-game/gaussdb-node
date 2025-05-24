@@ -24,7 +24,8 @@ import {
   BackendMessage,
   MessageName,
   AuthenticationMD5Password,
-  AuthenticationSHA256Password,
+  // AuthenticationSHA256Password is imported but not used - temporarily commented
+  // AuthenticationSHA256Password,
   NoticeMessage,
 } from './messages'
 import { BufferReader } from './buffer-reader'
@@ -340,7 +341,7 @@ export class Parser {
       //     } while (mechanism)
       //   }
       //   break
-      case 10:  // AuthenticationSHA256Password
+      case 10: // AuthenticationSHA256Password
         {
           message.name = 'authenticationSHA256Password'
           message.data = this.reader.bytes(length - 8)
