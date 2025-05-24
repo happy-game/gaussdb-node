@@ -21,8 +21,8 @@ services:
       - ..:/workspace:cached
 
     environment:
-      PGPASSWORD: pass
-      PGUSER: user
+      PGPASSWORD: openGauss@123
+      PGUSER: gaussdb
       PGDATABASE: data
       PGHOST: db
       # set this to true in the development environment until I can get SSL setup on the 
@@ -39,14 +39,15 @@ services:
       - db:db
 
   db:
-    image: postgres:14-alpine
+    image: opengauss/opengauss
     restart: unless-stopped
     ports: 
       - 5432:5432
-    command: postgres -c password_encryption=md5
+    # command: postgres -c password_encryption=md5
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_INITDB_ARGS: "--auth-local=md5"
-      POSTGRES_PASSWORD: pass
-      POSTGRES_USER: user
-      POSTGRES_DB: data
+      GS_USERNAME: gaussdb
+      GS_PASSWORD: openGauss@123
+      GS_USER_PASSWORD: openGauss@123
+      GS_DB: data
