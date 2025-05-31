@@ -47,7 +47,7 @@
     "wrangler": "^3.x"
   },
   "optionalDependencies": {
-    "pg-cloudflare": "^1.2.5"
+    "gaussdb-cloudflare": "^1.2.5"
   },
   "peerDependencies": {
     "pg-native": ">=3.0.1"

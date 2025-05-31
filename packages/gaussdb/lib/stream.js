@@ -38,7 +38,7 @@ function getNodejsStreamFuncs() {
  */
 function getCloudflareStreamFuncs() {
   function getStream(ssl) {
-    const { CloudflareSocket } = require('pg-cloudflare')
+    const { CloudflareSocket } = require('gaussdb-cloudflare')
     return new CloudflareSocket(ssl)
   }
 

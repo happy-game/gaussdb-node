@@ -1,8 +1,8 @@
 import assert from 'node:assert'
 import { describe, it } from 'node:test'
-import { CloudflareSocket } from 'pg-cloudflare'
+import { CloudflareSocket } from 'gaussdb-cloudflare'
 
-describe('pg-cloudflare', () => {
+describe('gaussdb-cloudflare', () => {
   it('should export CloudflareSocket constructor', () => {
     assert.ok(new CloudflareSocket())
   })
