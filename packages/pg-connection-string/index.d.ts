@@ -1,4 +1,4 @@
-import { ClientConfig } from 'pg'
+import { ClientConfig } from 'gaussdb'
 
 export function parse(connectionString: string, options?: Options): ConnectionOptions
 

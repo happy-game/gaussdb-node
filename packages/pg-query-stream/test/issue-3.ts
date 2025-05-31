@@ -1,4 +1,4 @@
-import pg from 'pg'
+import pg from 'gaussdb'
 import QueryStream from '../src'
 
 describe('end semantics race condition', function () {

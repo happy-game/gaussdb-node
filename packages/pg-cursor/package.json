@@ -25,10 +25,10 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "^10.5.2",
-    "pg": "^8.16.0"
+    "gaussdb": "^8.16.0"
   },
   "peerDependencies": {
-    "pg": "^8"
+    "gaussdb": "^8"
   },
   "files": [
     "index.js",

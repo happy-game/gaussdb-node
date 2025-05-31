@@ -1,6 +1,6 @@
 const assert = require('assert')
 const Cursor = require('../')
-const pg = require('pg')
+const pg = require('gaussdb')
 
 // SKIP: 不支持 LISTEN/NOFITY statement
 // https://github.com/HuaweiCloudDeveloper/gaussdb-drivers/blob/master-dev/diff-gaussdb-postgres.md#%E4%B8%8D%E6%94%AF%E6%8C%81-listennofity-statement

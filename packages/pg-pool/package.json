@@ -36,7 +36,7 @@
     "mocha": "^10.5.2"
   },
   "peerDependencies": {
-    "pg": ">=8.0"
+    "gaussdb": ">=8.0"
   },
   "files": [
     "index.js",

@@ -1,4 +1,4 @@
-import pg from 'pg'
+import pg from 'gaussdb'
 
 export default function (name, cb) {
   describe(name, function () {

@@ -1,4 +1,4 @@
-const pg = require('pg').native
+const pg = require('gaussdb').native
 const Native = require('../')
 
 const warmup = function (fn, cb) {

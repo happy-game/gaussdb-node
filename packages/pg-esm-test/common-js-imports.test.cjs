@@ -3,9 +3,9 @@ const test = require('node:test')
 const { describe, it } = test
 
 const paths = [
-  'pg',
-  'pg/lib/index.js',
-  'pg/lib/connection-parameters.js',
+  'gaussdb',
+  'gaussdb/lib/index.js',
+  'gaussdb/lib/connection-parameters.js',
   'pg-protocol/dist/messages.js',
   'pg-native/lib/build-result.js',
 ]
@@ -20,7 +20,7 @@ for (const path of paths) {
 
 describe('pg-native', () => {
   it('should work with commonjs', async () => {
-    const pg = require('pg')
+    const pg = require('gaussdb')
 
     const pool = new pg.native.Pool()
     const result = await pool.query('SELECT 1')

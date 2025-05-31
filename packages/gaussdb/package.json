@@ -1,5 +1,5 @@
 {
-  "name": "pg",
+  "name": "gaussdb",
   "version": "8.16.0",
   "description": "GaussDB client - pure javascript & libpq with the same API",
   "keywords": [
@@ -20,7 +20,7 @@
     ".": {
       "import": "./esm/index.mjs",
       "require": "./lib/index.js",
-      "default": "./lib/index.js"
+      "default": "./lib/index.js" 
     },
     "./lib/*": {
       "import": "./lib/*",
