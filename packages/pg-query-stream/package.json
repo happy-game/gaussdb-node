@@ -1,7 +1,7 @@
 {
   "name": "pg-query-stream",
   "version": "4.10.0",
-  "description": "Postgres query result returned as readable stream",
+  "description": "GaussDB query result returned as readable stream",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -16,14 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/brianc/node-postgres.git",
+    "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
     "directory": "packages/pg-query-stream"
   },
   "keywords": [
-    "postgres",
     "query-stream",
-    "pg",
     "query",
+    "gaussdb",
     "stream"
   ],
   "files": [
@@ -34,7 +33,7 @@
   "author": "Brian M. Carlson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brianc/node-postgres/issues"
+    "url": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/issues"
   },
   "devDependencies": {
     "@types/chai": "^4.2.13",

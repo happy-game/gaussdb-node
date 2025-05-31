@@ -1,20 +1,17 @@
 {
   "name": "pg",
   "version": "8.16.0",
-  "description": "PostgreSQL client - pure javascript & libpq with the same API",
+  "description": "GaussDB client - pure javascript & libpq with the same API",
   "keywords": [
     "database",
     "libpq",
-    "pg",
-    "postgre",
-    "postgres",
-    "postgresql",
+    "gaussdb",
     "rdbms"
   ],
-  "homepage": "https://github.com/brianc/node-postgres",
+  "homepage": "https://github.com/HuaweiCloudDeveloper/gaussdb-node",
   "repository": {
     "type": "git",
-    "url": "git://github.com/brianc/node-postgres.git",
+    "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
     "directory": "packages/pg"
   },
   "author": "Brian Carlson <brian.m.carlson@gmail.com>",

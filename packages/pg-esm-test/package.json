@@ -1,15 +1,14 @@
 {
   "name": "pg-esm-test",
   "version": "1.2.0",
-  "description": "A test module for PostgreSQL with ESM support",
+  "description": "A test module for GaussDB with ESM support",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "node --test"
   },
   "keywords": [
-    "postgres",
-    "postgresql",
+    "gaussdb",
     "esm",
     "test"
   ],

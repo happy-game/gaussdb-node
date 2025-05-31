@@ -1,7 +1,7 @@
 {
   "name": "pg-connection-string",
   "version": "2.9.0",
-  "description": "Functions for dealing with a PostgresSQL connection string",
+  "description": "Functions for dealing with a GaussDB connection string",
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {
@@ -18,21 +18,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/brianc/node-postgres.git",
+    "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
     "directory": "packages/pg-connection-string"
   },
   "keywords": [
-    "pg",
     "connection",
     "string",
-    "parse"
+    "parse",
+    "gaussdb"
   ],
   "author": "Blaine Bublitz <blaine@iceddev.com> (http://iceddev.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brianc/node-postgres/issues"
+    "url": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/issues"
   },
-  "homepage": "https://github.com/brianc/node-postgres/tree/master/packages/pg-connection-string",
+  "homepage": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/pg-connection-string",
   "devDependencies": {
     "@types/pg": "^8.12.0",
     "chai": "^4.1.1",

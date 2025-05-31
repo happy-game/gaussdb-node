@@ -1,7 +1,7 @@
 {
   "name": "pg-pool",
   "version": "3.10.0",
-  "description": "Connection pool for node-postgres",
+  "description": "Connection pool for GaussDB",
   "main": "index.js",
   "exports": {
     ".": {
@@ -18,21 +18,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/brianc/node-postgres.git",
+    "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
     "directory": "packages/pg-pool"
   },
   "keywords": [
-    "pg",
-    "postgres",
+    "gaussdb",
     "pool",
     "database"
   ],
   "author": "Brian M. Carlson",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/brianc/node-pg-pool/issues"
-  },
-  "homepage": "https://github.com/brianc/node-pg-pool#readme",
   "devDependencies": {
     "bluebird": "3.7.2",
     "co": "4.6.0",
