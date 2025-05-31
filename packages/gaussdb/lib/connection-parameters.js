@@ -4,7 +4,7 @@ const dns = require('dns')
 
 const defaults = require('./defaults')
 
-const parse = require('pg-connection-string').parse // parses a connection string
+const parse = require('gaussdb-connection-string').parse // parses a connection string
 
 const val = function (key, config, envVar) {
   if (envVar === undefined) {

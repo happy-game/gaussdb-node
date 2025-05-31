@@ -29,7 +29,7 @@
     }
   },
   "dependencies": {
-    "pg-connection-string": "^2.9.0",
+    "gaussdb-connection-string": "^2.9.0",
     "pg-pool": "^3.10.0",
     "pg-protocol": "^1.10.0",
     "pg-types": "2.2.0",

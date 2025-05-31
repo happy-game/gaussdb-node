@@ -1,8 +1,8 @@
 import assert from 'node:assert'
 import { describe, it } from 'node:test'
-import { parse, toClientConfig, parseIntoClientConfig } from 'pg-connection-string'
+import { parse, toClientConfig, parseIntoClientConfig } from 'gaussdb-connection-string'
 
-describe('pg-connection-string', () => {
+describe('gaussdb-connection-string', () => {
   it('should export parse function', () => {
     assert.strictEqual(typeof parse, 'function')
   })

@@ -1,5 +1,5 @@
 {
-  "name": "pg-connection-string",
+  "name": "gaussdb-connection-string",
   "version": "2.9.0",
   "description": "Functions for dealing with a GaussDB connection string",
   "main": "./index.js",
@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
-    "directory": "packages/pg-connection-string"
+    "directory": "packages/gaussdb-connection-string"
   },
   "keywords": [
     "connection",
@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/issues"
   },
-  "homepage": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/pg-connection-string",
+  "homepage": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/gaussdb-connection-string",
   "devDependencies": {
     "@types/pg": "^8.12.0",
     "chai": "^4.1.1",

@@ -1,4 +1,4 @@
-// ESM wrapper for pg-connection-string
+// ESM wrapper for gaussdb-connection-string
 import connectionString from '../index.js'
 
 // Re-export the parse function

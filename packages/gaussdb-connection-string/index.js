@@ -145,7 +145,7 @@ function parse(str, options = {}) {
   return config
 }
 
-// convert pg-connection-string ssl config to a ClientConfig.ConnectionOptions
+// convert gaussdb-connection-string ssl config to a ClientConfig.ConnectionOptions
 function toConnectionOptions(sslConfig) {
   const connectionOptions = Object.entries(sslConfig).reduce((c, [key, value]) => {
     // we explicitly check for undefined and null instead of `if (value)` because some
@@ -160,7 +160,7 @@ function toConnectionOptions(sslConfig) {
   return connectionOptions
 }
 
-// convert pg-connection-string config to a ClientConfig
+// convert gaussdb-connection-string config to a ClientConfig
 function toClientConfig(config) {
   const poolConfig = Object.entries(config).reduce((c, [key, value]) => {
     if (key === 'ssl') {
