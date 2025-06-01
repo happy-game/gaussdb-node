@@ -31,7 +31,7 @@
   "dependencies": {
     "gaussdb-connection-string": "^2.9.0",
     "gaussdb-pool": "^3.10.0",
-    "pg-protocol": "^1.10.0",
+    "gaussdb-protocol": "^1.10.0",
     "pg-types": "2.2.0",
     "pgpass": "1.0.5"
   },

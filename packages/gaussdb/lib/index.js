@@ -7,7 +7,7 @@ const Result = require('./result')
 const utils = require('./utils')
 const Pool = require('gaussdb-pool')
 const TypeOverrides = require('./type-overrides')
-const { DatabaseError } = require('pg-protocol')
+const { DatabaseError } = require('gaussdb-protocol')
 const { escapeIdentifier, escapeLiteral } = require('./utils')
 
 const poolFactory = (Client) => {

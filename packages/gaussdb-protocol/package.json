@@ -1,5 +1,5 @@
 {
-  "name": "pg-protocol",
+  "name": "gaussdb-protocol",
   "version": "1.10.0",
   "description": "The GaussDB client/server binary protocol, implemented in TypeScript",
   "main": "dist/index.js",
@@ -37,7 +37,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
-    "directory": "packages/pg-protocol"
+    "directory": "packages/gaussdb-protocol"
   },
   "files": [
     "/dist/*{js,ts,map}",

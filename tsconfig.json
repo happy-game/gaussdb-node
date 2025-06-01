@@ -8,6 +8,6 @@
   "references": [
     {"path": "./packages/gaussdb-cloudflare"},
     {"path": "./packages/gaussdb-query-stream"},
-    {"path": "./packages/pg-protocol"}
+    {"path": "./packages/gaussdb-protocol"}
   ]
 }

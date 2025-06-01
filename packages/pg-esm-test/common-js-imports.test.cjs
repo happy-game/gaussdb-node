@@ -6,7 +6,7 @@ const paths = [
   'gaussdb',
   'gaussdb/lib/index.js',
   'gaussdb/lib/connection-parameters.js',
-  'pg-protocol/dist/messages.js',
+  'gaussdb-protocol/dist/messages.js',
   'pg-native/lib/build-result.js',
 ]
 for (const path of paths) {

@@ -1,8 +1,8 @@
-import protocol, { NoticeMessage, DatabaseError } from 'pg-protocol/dist/messages.js'
+import protocol, { NoticeMessage, DatabaseError } from 'gaussdb-protocol/dist/messages.js'
 import { describe, it } from 'node:test'
 import { strict as assert } from 'node:assert'
 
-describe('pg-protocol', () => {
+describe('gaussdb-protocol', () => {
   it('should export database error', () => {
     assert.ok(DatabaseError)
   })
