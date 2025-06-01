@@ -1,5 +1,5 @@
 {
-  "name": "pg-query-stream",
+  "name": "gaussdb-query-stream",
   "version": "4.10.0",
   "description": "GaussDB query result returned as readable stream",
   "main": "./dist/index.js",
@@ -17,7 +17,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
-    "directory": "packages/pg-query-stream"
+    "directory": "packages/gaussdb-query-stream"
   },
   "keywords": [
     "query-stream",

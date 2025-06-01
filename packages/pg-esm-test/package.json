@@ -19,7 +19,7 @@
     "pg-native": "^3.5.0",
     "gaussdb-pool": "^3.10.0",
     "pg-protocol": "^1.10.0",
-    "pg-query-stream": "^4.10.0"
+    "gaussdb-query-stream": "^4.10.0"
   },
   "author": "Brian M. Carlson <brian.m.carlson@gmail.com>",
   "license": "MIT"

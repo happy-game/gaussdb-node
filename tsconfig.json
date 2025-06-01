@@ -7,7 +7,7 @@
   "include": [],
   "references": [
     {"path": "./packages/gaussdb-cloudflare"},
-    {"path": "./packages/pg-query-stream"},
+    {"path": "./packages/gaussdb-query-stream"},
     {"path": "./packages/pg-protocol"}
   ]
 }
