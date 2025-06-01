@@ -1,6 +1,6 @@
 import { Readable } from 'stream'
 import { Submittable, Connection } from 'gaussdb'
-import Cursor from 'pg-cursor'
+import Cursor from 'gaussdb-cursor'
 
 interface QueryStreamConfig {
   batchSize?: number

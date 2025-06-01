@@ -53,6 +53,6 @@
     "gaussdb": "^8"
   },
   "dependencies": {
-    "pg-cursor": "^2.15.0"
+    "gaussdb-cursor": "^2.15.0"
   }
 }
