@@ -1,7 +1,7 @@
 {
   "name": "pg-native",
   "version": "3.5.0",
-  "description": "A slightly nicer interface to Postgres over node-libpq",
+  "description": "A slightly nicer interface to GaussDB over node-libpq",
   "main": "index.js",
   "exports": {
     ".": {
@@ -20,19 +20,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brianc/node-postgres.git"
+    "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git"
   },
   "keywords": [
-    "postgres",
-    "pg",
+    "gaussdb",
     "libpq"
   ],
   "author": "Brian M. Carlson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brianc/node-postgres/issues"
+    "url": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/issues"
   },
-  "homepage": "https://github.com/brianc/node-postgres/tree/master/packages/pg-native",
+  "homepage": "https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/pg-native",
   "dependencies": {
     "libpq": "^1.8.15",
     "pg-types": "2.2.0"

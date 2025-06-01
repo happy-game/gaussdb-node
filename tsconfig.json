@@ -6,8 +6,8 @@
   },
   "include": [],
   "references": [
-    {"path": "./packages/pg-cloudflare"},
-    {"path": "./packages/pg-query-stream"},
-    {"path": "./packages/pg-protocol"}
+    {"path": "./packages/gaussdb-cloudflare"},
+    {"path": "./packages/gaussdb-query-stream"},
+    {"path": "./packages/gaussdb-protocol"}
   ]
 }

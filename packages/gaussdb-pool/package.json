@@ -1,0 +1,45 @@
+{
+  "name": "gaussdb-pool",
+  "version": "3.10.0",
+  "description": "Connection pool for GaussDB",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": " node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
+    "directory": "packages/gaussdb-pool"
+  },
+  "keywords": [
+    "gaussdb",
+    "pool",
+    "database"
+  ],
+  "author": "Brian M. Carlson",
+  "license": "MIT",
+  "devDependencies": {
+    "bluebird": "3.7.2",
+    "co": "4.6.0",
+    "expect.js": "0.3.1",
+    "lodash": "^4.17.11",
+    "mocha": "^10.5.2"
+  },
+  "peerDependencies": {
+    "gaussdb": ">=8.0"
+  },
+  "files": [
+    "index.js",
+    "esm"
+  ]
+}
