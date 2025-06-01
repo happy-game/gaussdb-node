@@ -1,5 +1,5 @@
 {
-  "name": "pg-pool",
+  "name": "gaussdb-pool",
   "version": "3.10.0",
   "description": "Connection pool for GaussDB",
   "main": "index.js",
@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:HuaweiCloudDeveloper/gaussdb-node.git",
-    "directory": "packages/pg-pool"
+    "directory": "packages/gaussdb-pool"
   },
   "keywords": [
     "gaussdb",
