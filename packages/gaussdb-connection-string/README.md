@@ -14,7 +14,7 @@ MIT License
 ```js
 const parse = require('pg-connection-string').parse;
 
-const config = parse('postgres://someuser:somepassword@somehost:381/somedatabase')
+const config = parse('gaussdb://someuser:somepassword@somehost:381/somedatabase')
 ```
 
 The resulting config contains a subset of the following properties:
@@ -40,7 +40,7 @@ The pg-connection-string `ConnectionOptions` interface is not compatible with th
 import { ClientConfig } from 'pg';
 import { parseIntoClientConfig } from 'pg-connection-string';
 
-const config: ClientConfig = parseIntoClientConfig('postgres://someuser:somepassword@somehost:381/somedatabase')
+const config: ClientConfig = parseIntoClientConfig('gaussdb://someuser:somepassword@somehost:381/somedatabase')
 ```
 
 You can also use `toClientConfig` to convert an existing `ConnectionOptions` interface into a `ClientConfig` interface:
@@ -49,7 +49,7 @@ You can also use `toClientConfig` to convert an existing `ConnectionOptions` int
 import { ClientConfig } from 'pg';
 import { parse, toClientConfig } from 'pg-connection-string';
 
-const config = parse('postgres://someuser:somepassword@somehost:381/somedatabase')
+const config = parse('gaussdb://someuser:somepassword@somehost:381/somedatabase')
 const clientConfig: ClientConfig = toClientConfig(config)
 ```
 
@@ -58,7 +58,7 @@ const clientConfig: ClientConfig = toClientConfig(config)
 The short summary of acceptable URLs is:
 
  * `socket:<path>?<query>` - UNIX domain socket
- * `postgres://<user>:<password>@<host>:<port>/<database>?<query>` - TCP connection
+ * `gaussdb://<user>:<password>@<host>:<port>/<database>?<query>` - TCP connection
 
 But see below for more details.
 

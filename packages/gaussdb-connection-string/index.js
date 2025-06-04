@@ -23,10 +23,10 @@ function parse(str, options = {}) {
   }
 
   try {
-    result = new URL(str, 'postgres://base')
+    result = new URL(str, 'gaussdb://base')
   } catch (e) {
     // The URL is invalid so try again with a dummy host
-    result = new URL(str.replace('@/', '@___DUMMY___/'), 'postgres://base')
+    result = new URL(str.replace('@/', '@___DUMMY___/'), 'gaussdb://base')
     dummyHost = true
   }
 

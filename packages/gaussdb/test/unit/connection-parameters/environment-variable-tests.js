@@ -59,7 +59,7 @@ suite.test('ConnectionParameters initialized from mix', function () {
 
 suite.test('connection string parsing', function () {
   clearEnv()
-  const string = 'postgres://brian:pw@boom:381/lala'
+  const string = 'gaussdb://brian:pw@boom:381/lala'
   const subject = new ConnectionParameters(string)
   assert.equal(subject.host, 'boom', 'string host')
   assert.equal(subject.user, 'brian', 'string user')
@@ -72,27 +72,27 @@ suite.test('connection string parsing - ssl', function () {
   // clear process.env
   clearEnv()
 
-  let string = 'postgres://brian:pw@boom:381/lala?ssl=true'
+  let string = 'gaussdb://brian:pw@boom:381/lala?ssl=true'
   let subject = new ConnectionParameters(string)
   assert.equal(subject.ssl, true, 'ssl')
 
-  string = 'postgres://brian:pw@boom:381/lala?ssl=1'
+  string = 'gaussdb://brian:pw@boom:381/lala?ssl=1'
   subject = new ConnectionParameters(string)
   assert.equal(subject.ssl, true, 'ssl')
 
-  string = 'postgres://brian:pw@boom:381/lala?other&ssl=true'
+  string = 'gaussdb://brian:pw@boom:381/lala?other&ssl=true'
   subject = new ConnectionParameters(string)
   assert.equal(subject.ssl, true, 'ssl')
 
-  string = 'postgres://brian:pw@boom:381/lala?ssl=0'
+  string = 'gaussdb://brian:pw@boom:381/lala?ssl=0'
   subject = new ConnectionParameters(string)
   assert.equal(!!subject.ssl, false, 'ssl')
 
-  string = 'postgres://brian:pw@boom:381/lala'
+  string = 'gaussdb://brian:pw@boom:381/lala'
   subject = new ConnectionParameters(string)
   assert.equal(!!subject.ssl, false, 'ssl')
 
-  string = 'postgres://brian:pw@boom:381/lala?ssl=no-verify'
+  string = 'gaussdb://brian:pw@boom:381/lala?ssl=no-verify'
   subject = new ConnectionParameters(string)
   assert.deepStrictEqual(subject.ssl, { rejectUnauthorized: false }, 'ssl')
 })

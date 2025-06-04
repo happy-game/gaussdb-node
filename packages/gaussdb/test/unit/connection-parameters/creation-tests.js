@@ -15,7 +15,7 @@ const suite = new helper.Suite()
 suite.test('ConnectionParameters construction', function () {
   assert.ok(new ConnectionParameters(), 'with null config')
   assert.ok(new ConnectionParameters({ user: 'asdf' }), 'with config object')
-  assert.ok(new ConnectionParameters('postgres://localhost/postgres'), 'with connection string')
+  assert.ok(new ConnectionParameters('gaussdb://localhost/postgres'), 'with connection string')
 })
 
 const compare = function (actual, expected, type) {
@@ -61,7 +61,7 @@ suite.test('ConnectionParameters initializing from defaults with connectionStrin
   // Just changing this here doesn't actually work because it's no longer in scope when viewed inside of
   // of ConnectionParameters() so we have to pass in the defaults explicitly to test it
   defaults.connectionString =
-    'postgres://brians-are-the-best:mypassword@foo.bar.net:7777/scoobysnacks?options=-c geqo=off'
+    'gaussdb://brians-are-the-best:mypassword@foo.bar.net:7777/scoobysnacks?options=-c geqo=off'
   const subject = new ConnectionParameters(defaults)
   defaults.connectionString = original_value
   compare(subject, config, 'defaults-connectionString')
@@ -91,17 +91,17 @@ suite.test('ConnectionParameters initializing from config', function () {
 
 suite.test('ConnectionParameters initializing from config and config.connectionString', function () {
   const subject1 = new ConnectionParameters({
-    connectionString: 'postgres://test@host/db',
+    connectionString: 'gaussdb://test@host/db',
   })
   const subject2 = new ConnectionParameters({
-    connectionString: 'postgres://test@host/db?ssl=1',
+    connectionString: 'gaussdb://test@host/db?ssl=1',
   })
   const subject3 = new ConnectionParameters({
-    connectionString: 'postgres://test@host/db',
+    connectionString: 'gaussdb://test@host/db',
     ssl: true,
   })
   const subject4 = new ConnectionParameters({
-    connectionString: 'postgres://test@host/db?ssl=1',
+    connectionString: 'gaussdb://test@host/db?ssl=1',
     ssl: false,
   })
 
@@ -112,12 +112,12 @@ suite.test('ConnectionParameters initializing from config and config.connectionS
 })
 
 suite.test('escape spaces if present', function () {
-  const subject = new ConnectionParameters('postgres://localhost/post gres')
+  const subject = new ConnectionParameters('gaussdb://localhost/post gres')
   assert.equal(subject.database, 'post gres')
 })
 
 suite.test('do not double escape spaces', function () {
-  const subject = new ConnectionParameters('postgres://localhost/post%20gres')
+  const subject = new ConnectionParameters('gaussdb://localhost/post%20gres')
   assert.equal(subject.database, 'post gres')
 })
 
@@ -282,7 +282,7 @@ suite.test('password contains  < and/or >  characters', function () {
     database: 'postgres',
   }
   const connectionString =
-    'postgres://' +
+    'gaussdb://' +
     sourceConfig.user +
     ':' +
     sourceConfig.password +
@@ -299,7 +299,7 @@ suite.test('password contains  < and/or >  characters', function () {
 suite.test('username or password contains weird characters', function () {
   const defaults = require('../../../lib/defaults')
   defaults.ssl = true
-  const strang = 'pg://my f%irst name:is&%awesome!@localhost:9000'
+  const strang = 'gaussdb://my f%irst name:is&%awesome!@localhost:9000'
   const subject = new ConnectionParameters(strang)
   assert.equal(subject.user, 'my f%irst name')
   assert.equal(subject.password, 'is&%awesome!')
@@ -308,7 +308,7 @@ suite.test('username or password contains weird characters', function () {
 })
 
 suite.test('url is properly encoded', function () {
-  const encoded = 'pg://bi%25na%25%25ry%20:s%40f%23@localhost/%20u%2520rl'
+  const encoded = 'gaussdb://bi%25na%25%25ry%20:s%40f%23@localhost/%20u%2520rl'
   const subject = new ConnectionParameters(encoded)
   assert.equal(subject.user, 'bi%na%%ry ')
   assert.equal(subject.password, 's@f#')
@@ -320,7 +320,7 @@ suite.test('ssl is set on client', function () {
   const Client = require('../../../lib/client')
   const defaults = require('../../../lib/defaults')
   defaults.ssl = true
-  const c = new Client('postgres://user:password@host/database')
+  const c = new Client('gaussdb://user:password@host/database')
   assert(c.ssl, 'Client should have ssl enabled via defaults')
 })
 

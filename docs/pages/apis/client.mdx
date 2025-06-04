@@ -15,7 +15,7 @@ type Config = {
   host?: string, // default process.env.PGHOST
   port?: number, // default process.env.PGPORT
   database?: string, // default process.env.PGDATABASE || user
-  connectionString?: string, // e.g. postgres://user:password@host:5432/database
+  connectionString?: string, // e.g. gaussdb://user:password@host:5432/database
   ssl?: any, // passed directly to node.TLSSocket, supports all tls.connect options
   types?: any, // custom type parsers
   statement_timeout?: number, // number of milliseconds before a statement in query will time out, default is no timeout
