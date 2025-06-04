@@ -180,7 +180,7 @@ suite.test('executing nested queries', function (done) {
 })
 
 suite.test('raises error if cannot connect', function () {
-  const connectionString = 'pg://sfalsdkf:asdf@localhost/ieieie'
+  const connectionString = 'gaussdb://sfalsdkf:asdf@localhost/ieieie'
   const pool = new pg.Pool({ connectionString: connectionString })
   pool.connect(
     assert.calls(function (err, client, done) {

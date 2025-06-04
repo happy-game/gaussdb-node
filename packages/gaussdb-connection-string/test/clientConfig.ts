@@ -6,7 +6,7 @@ import { parse, toClientConfig, parseIntoClientConfig } from '../'
 
 describe('toClientConfig', function () {
   it('converts connection info', function () {
-    const config = parse('postgres://brian:pw@boom:381/lala')
+    const config = parse('gaussdb://brian:pw@boom:381/lala')
     const clientConfig = toClientConfig(config)
 
     clientConfig.user?.should.equal('brian')
@@ -18,7 +18,7 @@ describe('toClientConfig', function () {
 
   it('converts query params', function () {
     const config = parse(
-      'postgres:///?application_name=TheApp&fallback_application_name=TheAppFallback&client_encoding=utf8&options=-c geqo=off'
+      'gaussdb:///?application_name=TheApp&fallback_application_name=TheAppFallback&client_encoding=utf8&options=-c geqo=off'
     )
     const clientConfig = toClientConfig(config)
 
@@ -29,21 +29,21 @@ describe('toClientConfig', function () {
   })
 
   it('converts SSL boolean', function () {
-    const config = parse('pg:///?ssl=true')
+    const config = parse('gaussdb:///?ssl=true')
     const clientConfig = toClientConfig(config)
 
     clientConfig.ssl?.should.equal(true)
   })
 
   it('converts sslmode=disable', function () {
-    const config = parse('pg:///?sslmode=disable')
+    const config = parse('gaussdb:///?sslmode=disable')
     const clientConfig = toClientConfig(config)
 
     clientConfig.ssl?.should.equal(false)
   })
 
   it('converts sslmode=noverify', function () {
-    const config = parse('pg:///?sslmode=no-verify')
+    const config = parse('gaussdb:///?sslmode=no-verify')
     const clientConfig = toClientConfig(config)
 
     clientConfig.ssl?.should.deep.equal({
@@ -52,14 +52,14 @@ describe('toClientConfig', function () {
   })
 
   it('converts other sslmode options', function () {
-    const config = parse('pg:///?sslmode=verify-ca')
+    const config = parse('gaussdb:///?sslmode=verify-ca')
     const clientConfig = toClientConfig(config)
 
     clientConfig.ssl?.should.deep.equal({})
   })
 
   it('converts other sslmode options', function () {
-    const config = parse('pg:///?sslmode=verify-ca')
+    const config = parse('gaussdb:///?sslmode=verify-ca')
     const clientConfig = toClientConfig(config)
 
     clientConfig.ssl?.should.deep.equal({})
@@ -67,7 +67,7 @@ describe('toClientConfig', function () {
 
   it('converts ssl cert options', function () {
     const connectionString =
-      'pg:///?sslcert=' +
+      'gaussdb:///?sslcert=' +
       __dirname +
       '/example.cert&sslkey=' +
       __dirname +
@@ -93,13 +93,13 @@ describe('toClientConfig', function () {
   })
 
   it('handles invalid port', function () {
-    const config = parse('postgres://@boom:381/lala')
+    const config = parse('gaussdb://@boom:381/lala')
     config.port = 'bogus'
     expect(() => toClientConfig(config)).to.throw()
   })
 
   it('handles invalid sslconfig values', function () {
-    const config = parse('postgres://@boom/lala')
+    const config = parse('gaussdb://@boom/lala')
     config.ssl = {}
     config.ssl.cert = null
     config.ssl.key = undefined
@@ -114,7 +114,7 @@ describe('toClientConfig', function () {
 
 describe('parseIntoClientConfig', function () {
   it('converts url', function () {
-    const clientConfig = parseIntoClientConfig('postgres://brian:pw@boom:381/lala')
+    const clientConfig = parseIntoClientConfig('gaussdb://brian:pw@boom:381/lala')
 
     clientConfig.user?.should.equal('brian')
     clientConfig.password?.should.equal('pw')
