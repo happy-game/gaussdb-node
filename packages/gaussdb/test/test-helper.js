@@ -201,7 +201,7 @@ if (Object.isExtensible(assert)) {
 
 module.exports = {
   Suite: Suite,
-  pg: require('./../lib/'),
+  gaussdb: require('./../lib/'),
   args: args,
   config: args,
   sys: sys,

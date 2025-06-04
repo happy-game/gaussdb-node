@@ -1,11 +1,11 @@
 'use strict'
 const helper = require('./test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const suite = new helper.Suite()
 const assert = require('assert')
 
 const testForTypeCoercion = function (type) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   suite.test(`test type coercion ${type.name}`, (cb) => {
     pool.connect(function (err, client, done) {
       assert(!err)
@@ -24,7 +24,7 @@ const testForTypeCoercion = function (type) {
             )
 
             const query = client.query(
-              new pg.Query({
+              new gaussdb.Query({
                 name: 'get type ' + type.name,
                 text: 'select col from test_type',
               })
@@ -154,7 +154,7 @@ suite.test('timestamptz round trip', function (cb) {
     values: ['now', now],
   })
   const result = client.query(
-    new pg.Query({
+    new gaussdb.Query({
       name: 'get date',
       text: 'select * from date_tests where name = $1',
       values: ['now'],
@@ -178,7 +178,7 @@ suite.test('timestamptz round trip', function (cb) {
 })
 
 suite.test('selecting nulls', (cb) => {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, done) {
       assert.ifError(err)

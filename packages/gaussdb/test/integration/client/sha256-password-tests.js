@@ -1,6 +1,6 @@
 'use strict'
 const helper = require('./../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const suite = new helper.Suite()
 const { native } = helper.args
 const assert = require('assert')
@@ -46,7 +46,7 @@ if (!config.user || !config.password) {
 }
 
 suite.testAsync('can connect using sha256 password authentication', async () => {
-  const client = new pg.Client(config)
+  const client = new gaussdb.Client(config)
   let usingSha256 = false
   client.connection.once('authenticationSHA256Password', () => {
     usingSha256 = true
@@ -62,7 +62,7 @@ suite.testAsync('can connect using sha256 password authentication', async () => 
 })
 
 suite.testAsync('sha256 authentication fails when password is wrong', async () => {
-  const client = new pg.Client({
+  const client = new gaussdb.Client({
     ...config,
     password: config.password + 'append-something-to-make-it-bad',
   })
@@ -81,7 +81,7 @@ suite.testAsync('sha256 authentication fails when password is wrong', async () =
 })
 
 suite.testAsync('sha256 authentication fails when password is empty', async () => {
-  const client = new pg.Client({
+  const client = new gaussdb.Client({
     ...config,
     // use a password function to simulate empty password
     password: () => '',

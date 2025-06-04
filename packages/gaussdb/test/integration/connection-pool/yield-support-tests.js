@@ -3,7 +3,7 @@ const helper = require('./test-helper')
 const co = require('co')
 const assert = require('assert')
 
-const pool = new helper.pg.Pool()
+const pool = new helper.gaussdb.Pool()
 new helper.Suite().test(
   'using coroutines works with promises',
   co.wrap(function* () {

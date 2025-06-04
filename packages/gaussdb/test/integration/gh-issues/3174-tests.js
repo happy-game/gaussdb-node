@@ -141,7 +141,7 @@ const testErrorBuffer = (bufferName, errorBuffer) => {
     const closeServer = await new Promise((resolve, reject) => {
       return startMockServer(options.port, errorBuffer, (closeServer) => resolve(closeServer))
     })
-    const pool = new helper.pg.Pool(options)
+    const pool = new helper.gaussdb.Pool(options)
 
     let errorHit = false
     pool.on('error', () => {

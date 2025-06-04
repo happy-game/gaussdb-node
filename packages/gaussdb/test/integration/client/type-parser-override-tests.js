@@ -15,7 +15,7 @@ function testTypeParser(client, expectedResult, done) {
   )
 }
 
-const pool = new helper.pg.Pool(helper.config)
+const pool = new helper.gaussdb.Pool(helper.config)
 pool.connect(
   assert.success(function (client1, done1) {
     pool.connect(

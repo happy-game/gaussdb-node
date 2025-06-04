@@ -1,7 +1,7 @@
 'use strict'
 
 // const helper = require('../test-helper')
-// const pg = helper.pg
+// const pg = helper.gaussdb
 // const suite = new helper.Suite()
 // const assert = require('assert')
 

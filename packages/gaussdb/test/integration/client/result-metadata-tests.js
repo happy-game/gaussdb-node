@@ -1,9 +1,9 @@
 'use strict'
 const helper = require('./test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 
-const pool = new pg.Pool()
+const pool = new gaussdb.Pool()
 new helper.Suite().test('should return insert metadata', function () {
   pool.connect(
     assert.calls(function (err, client, done) {

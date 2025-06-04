@@ -1,18 +1,18 @@
 'use strict'
 const helper = require('./test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const native = helper.args.native
 const assert = require('assert')
 
 const suite = new helper.Suite()
 suite.test('connecting to invalid port', (cb) => {
-  const pool = new pg.Pool({ port: 13801 })
+  const pool = new gaussdb.Pool({ port: 13801 })
   pool.connect().catch((e) => cb())
 })
 
 suite.test('errors emitted on checked-out clients', (cb) => {
   // make pool hold 2 clients
-  const pool = new pg.Pool({ max: 2 })
+  const pool = new gaussdb.Pool({ max: 2 })
   // get first client
   pool.connect(
     assert.success(function (client, done) {
@@ -59,7 +59,7 @@ suite.test('errors emitted on checked-out clients', (cb) => {
 })
 
 suite.test('connection-level errors cause queued queries to fail', (cb) => {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.success((client, done) => {
       client.query(
@@ -99,7 +99,7 @@ suite.test('connection-level errors cause queued queries to fail', (cb) => {
 })
 
 suite.test('connection-level errors cause future queries to fail', (cb) => {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.success((client, done) => {
       client.query(
@@ -138,7 +138,7 @@ suite.test('connection-level errors cause future queries to fail', (cb) => {
 })
 
 suite.test('handles socket error during pool.query and destroys it immediately', (cb) => {
-  const pool = new pg.Pool({ max: 1 })
+  const pool = new gaussdb.Pool({ max: 1 })
 
   if (native) {
     pool.query('SELECT pg_sleep(10)', [], (err) => {

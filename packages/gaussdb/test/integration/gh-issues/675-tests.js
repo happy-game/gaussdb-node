@@ -2,7 +2,7 @@
 const helper = require('../test-helper')
 const assert = require('assert')
 
-const pool = new helper.pg.Pool()
+const pool = new helper.gaussdb.Pool()
 pool.connect(function (err, client, done) {
   if (err) throw err
 

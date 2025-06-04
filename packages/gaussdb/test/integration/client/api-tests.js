@@ -1,12 +1,12 @@
 'use strict'
 const helper = require('../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 
 const suite = new helper.Suite()
 
 suite.test('null and undefined are both inserted as NULL', function (done) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, release) {
       assert(!err)
@@ -41,7 +41,7 @@ suite.test('null and undefined are both inserted as NULL', function (done) {
 
 suite.test('pool callback behavior', (done) => {
   // test weird callback behavior with node-pool
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(function (err) {
     assert(!err)
     arguments[1].emit('drain')
@@ -51,7 +51,7 @@ suite.test('pool callback behavior', (done) => {
 })
 
 suite.test('query timeout', (cb) => {
-  const pool = new pg.Pool({ query_timeout: 1000 })
+  const pool = new gaussdb.Pool({ query_timeout: 1000 })
   pool.connect().then((client) => {
     client.query(
       'SELECT pg_sleep(2)',
@@ -66,7 +66,7 @@ suite.test('query timeout', (cb) => {
 })
 
 suite.test('query recover from timeout', (cb) => {
-  const pool = new pg.Pool({ query_timeout: 1000 })
+  const pool = new gaussdb.Pool({ query_timeout: 1000 })
   pool.connect().then((client) => {
     client.query(
       'SELECT pg_sleep(20)',
@@ -90,7 +90,7 @@ suite.test('query recover from timeout', (cb) => {
 })
 
 suite.test('query no timeout', (cb) => {
-  const pool = new pg.Pool({ query_timeout: 10000 })
+  const pool = new gaussdb.Pool({ query_timeout: 10000 })
   pool.connect().then((client) => {
     client.query(
       'SELECT pg_sleep(1)',
@@ -104,7 +104,7 @@ suite.test('query no timeout', (cb) => {
 })
 
 suite.test('query with timeout on query basis', (cb) => {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect().then((client) => {
     client.query(
       { text: 'SELECT pg_sleep(20)', query_timeout: 1000 },
@@ -152,7 +152,7 @@ suite.test('callback API', (done) => {
 })
 
 suite.test('executing nested queries', function (done) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, release) {
       assert(!err)
@@ -181,7 +181,7 @@ suite.test('executing nested queries', function (done) {
 
 suite.test('raises error if cannot connect', function () {
   const connectionString = 'gaussdb://sfalsdkf:asdf@localhost/ieieie'
-  const pool = new pg.Pool({ connectionString: connectionString })
+  const pool = new gaussdb.Pool({ connectionString: connectionString })
   pool.connect(
     assert.calls(function (err, client, done) {
       assert.ok(err, 'should have raised an error')
@@ -191,7 +191,7 @@ suite.test('raises error if cannot connect', function () {
 })
 
 suite.test('query errors are handled and do not bubble if callback is provided', function (done) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, release) {
       assert(!err)
@@ -208,7 +208,7 @@ suite.test('query errors are handled and do not bubble if callback is provided',
 })
 
 suite.test('callback is fired once and only once', function (done) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, release) {
       assert(!err)
@@ -231,7 +231,7 @@ suite.test('callback is fired once and only once', function (done) {
 })
 
 suite.test('can provide callback and config object', function (done) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, release) {
       assert(!err)
@@ -252,7 +252,7 @@ suite.test('can provide callback and config object', function (done) {
 })
 
 suite.test('can provide callback and config and parameters', function (done) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, release) {
       assert(!err)

@@ -1,19 +1,19 @@
 'use strict'
 const helper = require('../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 
 const suite = new helper.Suite()
 
 suite.test('parsing array decimal results', function (done) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.calls(function (err, client, release) {
       assert(!err)
       client.query('CREATE TEMP TABLE why(names text[], numbors integer[], decimals double precision[])')
       client
         .query(
-          new pg.Query(
+          new gaussdb.Query(
             'INSERT INTO why(names, numbors, decimals) VALUES(\'{"aaron", "brian","a b c" }\', \'{1, 2, 3}\', \'{.1, 0.05, 3.654}\')'
           )
         )

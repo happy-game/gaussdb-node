@@ -1,8 +1,8 @@
 'use strict'
 const helper = require('./test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const suite = new helper.Suite()
-const pool = new pg.Pool()
+const pool = new gaussdb.Pool()
 const assert = require('assert')
 
 suite.test('can access results when no rows are returned', function (done) {
@@ -15,7 +15,7 @@ suite.test('can access results when no rows are returned', function (done) {
 
   pool.connect(
     assert.success(function (client, release) {
-      const q = new pg.Query('select $1::text as val limit 0', ['hi'])
+      const q = new gaussdb.Query('select $1::text as val limit 0', ['hi'])
       const query = client.query(
         q,
         assert.success(function (result) {

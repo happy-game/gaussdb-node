@@ -5,7 +5,7 @@ const assert = require('assert')
 const suite = new helper.Suite()
 
 suite.test('All queries should return a result array', (done) => {
-  const client = new helper.pg.Client()
+  const client = new helper.gaussdb.Client()
   client.connect()
   const promises = []
   promises.push(client.query('CREATE TEMP TABLE foo(bar TEXT)'))

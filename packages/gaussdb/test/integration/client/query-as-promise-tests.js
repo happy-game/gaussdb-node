@@ -1,7 +1,7 @@
 'use strict'
 const bluebird = require('bluebird')
 const helper = require('../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 
 process.on('unhandledRejection', function (e) {
@@ -12,7 +12,7 @@ process.on('unhandledRejection', function (e) {
 const suite = new helper.Suite()
 
 suite.test('promise API', (cb) => {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect().then((client) => {
     client
       .query('SELECT $1::text as name', ['foo'])
@@ -34,7 +34,7 @@ suite.test('promise API', (cb) => {
 })
 
 suite.test('promise API with configurable promise type', (cb) => {
-  const client = new pg.Client({ Promise: bluebird })
+  const client = new gaussdb.Client({ Promise: bluebird })
   const connectPromise = client.connect()
   assert(connectPromise instanceof bluebird, 'Client connect() returns configured promise')
 

@@ -1,10 +1,10 @@
 'use strict'
 const helper = require('./test-helper')
 const suite = new helper.Suite()
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 
-const client = new pg.Client()
+const client = new gaussdb.Client()
 client.connect(
   assert.success(function () {
     client.query('begin')
@@ -65,7 +65,7 @@ client.connect(
 )
 
 suite.test('gh#36', function (cb) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.success(function (client, done) {
       client.query('BEGIN')

@@ -1,11 +1,11 @@
 'use strict'
 const helper = require('./test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 
 const suite = new helper.Suite()
 
-const pool = new pg.Pool()
+const pool = new gaussdb.Pool()
 
 pool.connect(
   assert.calls(function (err, client, release) {
@@ -50,7 +50,7 @@ pool.connect(
         assert(!err)
         client.query('CREATE TEMP TABLE why(names text[], numbors integer[])')
         client
-          .query(new pg.Query('INSERT INTO why(names, numbors) VALUES(\'{"aaron", "brian","a b c" }\', \'{1, 2, 3}\')'))
+          .query(new gaussdb.Query('INSERT INTO why(names, numbors) VALUES(\'{"aaron", "brian","a b c" }\', \'{1, 2, 3}\')'))
           .on('error', console.log)
         suite.test('numbers', function (done) {
           //      client.connection.on('message', console.log)
