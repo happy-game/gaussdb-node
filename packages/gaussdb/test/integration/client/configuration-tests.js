@@ -1,6 +1,6 @@
 'use strict'
 const helper = require('./test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 const { Client } = helper
 
@@ -14,7 +14,7 @@ for (const key in process.env) {
 }
 
 suite.test('default values are used in new clients', function () {
-  assert.same(pg.defaults, {
+  assert.same(gaussdb.defaults, {
     user: process.env.USER,
     database: undefined,
     password: null,
@@ -30,7 +30,7 @@ suite.test('default values are used in new clients', function () {
     parseInputDatesAsUTC: false,
   })
 
-  const client = new pg.Client()
+  const client = new gaussdb.Client()
   assert.same(client, {
     user: process.env.USER,
     password: null,
@@ -40,11 +40,11 @@ suite.test('default values are used in new clients', function () {
 })
 
 suite.test('modified values are passed to created clients', function () {
-  pg.defaults.user = 'boom'
-  pg.defaults.password = 'zap'
-  pg.defaults.host = 'blam'
-  pg.defaults.port = 1234
-  pg.defaults.database = 'pow'
+  gaussdb.defaults.user = 'boom'
+  gaussdb.defaults.password = 'zap'
+  gaussdb.defaults.host = 'blam'
+  gaussdb.defaults.port = 1234
+  gaussdb.defaults.database = 'pow'
 
   const client = new Client()
   assert.same(client, {
@@ -58,7 +58,7 @@ suite.test('modified values are passed to created clients', function () {
 
 suite.test('database defaults to user when user is non-default', () => {
   {
-    pg.defaults.database = undefined
+    gaussdb.defaults.database = undefined
 
     const client = new Client({
       user: 'foo',
@@ -68,7 +68,7 @@ suite.test('database defaults to user when user is non-default', () => {
   }
 
   {
-    pg.defaults.database = 'bar'
+    gaussdb.defaults.database = 'bar'
 
     const client = new Client({
       user: 'foo',

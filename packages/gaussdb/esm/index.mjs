@@ -1,20 +1,20 @@
-// ESM wrapper for pg
-import pg from '../lib/index.js'
+// ESM wrapper for gaussdb
+import gaussdb from '../lib/index.js'
 
 // Re-export all the properties
-export const Client = pg.Client
-export const Pool = pg.Pool
-export const Connection = pg.Connection
-export const types = pg.types
-export const Query = pg.Query
-export const DatabaseError = pg.DatabaseError
-export const escapeIdentifier = pg.escapeIdentifier
-export const escapeLiteral = pg.escapeLiteral
-export const Result = pg.Result
-export const TypeOverrides = pg.TypeOverrides
+export const Client = gaussdb.Client
+export const Pool = gaussdb.Pool
+export const Connection = gaussdb.Connection
+export const types = gaussdb.types
+export const Query = gaussdb.Query
+export const DatabaseError = gaussdb.DatabaseError
+export const escapeIdentifier = gaussdb.escapeIdentifier
+export const escapeLiteral = gaussdb.escapeLiteral
+export const Result = gaussdb.Result
+export const TypeOverrides = gaussdb.TypeOverrides
 
 // Also export the defaults
-export const defaults = pg.defaults
+export const defaults = gaussdb.defaults
 
 // Re-export the default
-export default pg
+export default gaussdb

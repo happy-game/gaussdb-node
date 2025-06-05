@@ -16,7 +16,7 @@ suite.test('can connect with ssl', function () {
       rejectUnauthorized: false,
     },
   }
-  const client = new helper.pg.Client(config)
+  const client = new helper.gaussdb.Client(config)
   client.connect(
     assert.success(function () {
       client.query(

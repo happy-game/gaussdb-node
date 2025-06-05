@@ -3,9 +3,9 @@ const helper = require('../test-helper')
 const exec = require('child_process').exec
 const assert = require('assert')
 
-helper.pg.defaults.poolIdleTimeout = 1000
+helper.gaussdb.defaults.poolIdleTimeout = 1000
 
-const pool = new helper.pg.Pool()
+const pool = new helper.gaussdb.Pool()
 pool.connect(function (err, client, done) {
   assert.ifError(err)
   client.once('error', function (err) {

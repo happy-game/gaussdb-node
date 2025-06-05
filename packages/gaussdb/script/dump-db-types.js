@@ -1,11 +1,11 @@
 'use strict'
-const pg = require('../lib')
+const gaussdb = require('../lib')
 const args = require('../test/cli')
 
 const queries = ['select CURRENT_TIMESTAMP', "select interval '1 day' + interval '1 hour'", "select TIMESTAMP 'today'"]
 
 queries.forEach(function (query) {
-  const client = new pg.Client({
+  const client = new gaussdb.Client({
     user: args.user,
     database: args.database,
     password: args.password,

@@ -5,7 +5,7 @@ const suite = new helper.Suite()
 
 // https://github.com/brianc/node-postgres/issues/2716
 suite.testAsync('client.end() should resolve if already ended', async () => {
-  const client = new helper.pg.Client()
+  const client = new helper.gaussdb.Client()
   await client.connect()
 
   // this should resolve only when the underlying socket is fully closed, both

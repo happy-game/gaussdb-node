@@ -1,6 +1,6 @@
 'use strict'
 const helper = require('./test-helper')
-const Query = helper.pg.Query
+const Query = helper.gaussdb.Query
 
 const assert = require('assert')
 const suite = new helper.Suite()
@@ -128,15 +128,15 @@ const suite = new helper.Suite()
   const client = helper.client()
   client.query('CREATE TEMP TABLE zoom(name varchar(100));')
   client.query("INSERT INTO zoom (name) VALUES ('zed')")
-  client.query("INSERT INTO zoom (name) VALUES ('postgres')")
-  client.query("INSERT INTO zoom (name) VALUES ('node postgres')")
+  client.query("INSERT INTO zoom (name) VALUES ('gaussdb')")
+  client.query("INSERT INTO zoom (name) VALUES ('node gaussdb')")
 
   const checkForResults = function (q) {
     assert.emits(q, 'row', function (row) {
-      assert.equal(row.name, 'node postgres')
+      assert.equal(row.name, 'gaussdb')
 
       assert.emits(q, 'row', function (row) {
-        assert.equal(row.name, 'postgres')
+        assert.equal(row.name, 'node gaussdb')
 
         assert.emits(q, 'row', function (row) {
           assert.equal(row.name, 'zed')

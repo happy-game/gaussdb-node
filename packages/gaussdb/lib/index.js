@@ -18,7 +18,7 @@ const poolFactory = (Client) => {
   }
 }
 
-const PG = function (clientConstructor) {
+const GAUSSDB = function (clientConstructor) {
   this.defaults = defaults
   this.Client = clientConstructor
   this.Query = this.Client.Query
@@ -35,9 +35,9 @@ const PG = function (clientConstructor) {
 }
 
 if (typeof process.env.NODE_PG_FORCE_NATIVE !== 'undefined') {
-  module.exports = new PG(require('./native'))
+  module.exports = new GAUSSDB(require('./native'))
 } else {
-  module.exports = new PG(Client)
+  module.exports = new GAUSSDB(Client)
 
   // lazy require native module...the native module may not have installed
   Object.defineProperty(module.exports, 'native', {
@@ -46,7 +46,7 @@ if (typeof process.env.NODE_PG_FORCE_NATIVE !== 'undefined') {
     get() {
       let native = null
       try {
-        native = new PG(require('./native'))
+        native = new GAUSSDB(require('./native'))
       } catch (err) {
         if (err.code !== 'MODULE_NOT_FOUND') {
           throw err

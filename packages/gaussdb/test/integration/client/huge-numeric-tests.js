@@ -1,6 +1,6 @@
 'use strict'
 const helper = require('./test-helper')
-const pool = new helper.pg.Pool()
+const pool = new helper.gaussdb.Pool()
 const assert = require('assert')
 
 pool.connect(

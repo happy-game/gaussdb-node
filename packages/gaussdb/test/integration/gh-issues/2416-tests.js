@@ -4,7 +4,7 @@ const assert = require('assert')
 const suite = new helper.Suite()
 
 suite.testAsync('it sets search_path on connection', async () => {
-  const client = new helper.pg.Client({
+  const client = new helper.gaussdb.Client({
     options: '--search_path=foo',
   })
   await client.connect()

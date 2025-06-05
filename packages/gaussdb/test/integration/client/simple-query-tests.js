@@ -1,6 +1,6 @@
 'use strict'
 const helper = require('./test-helper')
-const Query = helper.pg.Query
+const Query = helper.gaussdb.Query
 const assert = require('assert')
 const suite = new helper.Suite()
 const test = suite.test.bind(suite)

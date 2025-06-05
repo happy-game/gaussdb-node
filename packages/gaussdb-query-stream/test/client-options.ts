@@ -1,4 +1,4 @@
-import pg from 'gaussdb'
+import gaussdb from 'gaussdb'
 import assert from 'assert'
 import QueryStream from '../src'
 
@@ -7,7 +7,7 @@ describe('client options', function () {
     const types = {
       getTypeParser: () => (string) => string,
     }
-    const client = new pg.Client({ types })
+    const client = new gaussdb.Client({ types })
     client.connect()
     const stream = new QueryStream('SELECT * FROM generate_series(0, 10) num')
     const query = client.query(stream)

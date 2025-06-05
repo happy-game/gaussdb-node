@@ -1,7 +1,7 @@
 'use strict'
 const helper = require('./test-helper')
-const Query = helper.pg.Query
-const DatabaseError = helper.pg.DatabaseError
+const Query = helper.gaussdb.Query
+const DatabaseError = helper.gaussdb.DatabaseError
 const assert = require('assert')
 const { Client } = helper
 const suite = new helper.Suite()

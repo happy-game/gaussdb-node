@@ -9,14 +9,14 @@ function md5(string) {
 }
 
 // See AuthenticationMD5Password at https://www.postgresql.org/docs/current/static/protocol-flow.html
-function postgresMd5PasswordHash(user, password, salt) {
+function gaussdbMd5PasswordHash(user, password, salt) {
   const inner = md5(password + user)
   const outer = md5(Buffer.concat([Buffer.from(inner), salt]))
   return 'md5' + outer
 }
 
 // See AuthenticationSHA256Password (based on similar approach to MD5)
-function postgresSha256PasswordHash(user, password, salt) {
+function gaussdbSha256PasswordHash(user, password, salt) {
   const inner = nodeCrypto
     .createHash('sha256')
     .update(password + user, 'utf-8')
@@ -46,8 +46,8 @@ async function deriveKey(password, salt, iterations) {
 }
 
 module.exports = {
-  postgresMd5PasswordHash,
-  postgresSha256PasswordHash,
+  gaussdbMd5PasswordHash,
+  gaussdbSha256PasswordHash,
   randomBytes: nodeCrypto.randomBytes,
   deriveKey,
   sha256,

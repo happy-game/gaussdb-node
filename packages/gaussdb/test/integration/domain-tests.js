@@ -1,11 +1,11 @@
 'use strict'
 
 const helper = require('./test-helper')
-const Query = helper.pg.Query
+const Query = helper.gaussdb.Query
 const suite = new helper.Suite()
 
 const assert = require('assert')
-const Pool = helper.pg.Pool
+const Pool = helper.gaussdb.Pool
 
 suite.test('no domain', function (cb) {
   assert(!process.domain)

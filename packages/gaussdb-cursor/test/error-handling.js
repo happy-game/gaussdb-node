@@ -1,13 +1,13 @@
 'use strict'
 const assert = require('assert')
 const Cursor = require('../')
-const pg = require('gaussdb')
+const gaussdb = require('gaussdb')
 
 const text = 'SELECT generate_series as num FROM generate_series(0, 4)'
 
 describe('error handling', function () {
   it('can continue after error', function (done) {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     client.connect()
     const cursor = client.query(new Cursor('asdfdffsdf'))
     cursor.read(1, function (err) {
@@ -21,7 +21,7 @@ describe('error handling', function () {
   })
 
   it('errors queued reads', async () => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     await client.connect()
 
     const cursor = client.query(new Cursor('asdfdffsdf'))
@@ -55,7 +55,7 @@ describe('error handling', function () {
 
 describe('read callback does not fire sync', () => {
   it('does not fire error callback sync', (done) => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     client.connect()
     const cursor = client.query(new Cursor('asdfdffsdf'))
     let after = false
@@ -75,7 +75,7 @@ describe('read callback does not fire sync', () => {
   })
 
   it('does not fire result sync after finished', (done) => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     client.connect()
     const cursor = client.query(new Cursor('SELECT NOW()'))
     let after = false
@@ -100,7 +100,7 @@ describe('read callback does not fire sync', () => {
 
 describe('proper cleanup', function () {
   it('can issue multiple cursors on one client', function (done) {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     client.connect()
     const cursor1 = client.query(new Cursor(text))
     cursor1.read(8, function (err, rows) {

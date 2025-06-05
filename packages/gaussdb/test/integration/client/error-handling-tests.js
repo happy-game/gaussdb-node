@@ -2,10 +2,10 @@
 
 const helper = require('./test-helper')
 
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
-const Client = pg.Client
-const DatabaseError = pg.DatabaseError
+const Client = gaussdb.Client
+const DatabaseError = gaussdb.DatabaseError
 
 const createErorrClient = function () {
   const client = helper.client()
@@ -87,7 +87,7 @@ suite.test('query receives error on client shutdown', function (done) {
       }
       let queryError
       client.query(
-        new pg.Query(config),
+        new gaussdb.Query(config),
         assert.calls(function (err, res) {
           assert(err instanceof Error)
           queryError = err
@@ -103,7 +103,7 @@ suite.test('query receives error on client shutdown', function (done) {
 })
 
 const ensureFuture = function (testClient, done) {
-  const goodQuery = testClient.query(new pg.Query('select age from boom'))
+  const goodQuery = testClient.query(new gaussdb.Query('select age from boom'))
   assert.emits(goodQuery, 'row', function (row) {
     assert.equal(row.age, 28)
     done()
@@ -117,7 +117,7 @@ suite.test('when query is parsing', (done) => {
 
   // this query wont parse since there isn't a table named bang
   const query = client.query(
-    new pg.Query({
+    new gaussdb.Query({
       text: 'select * from bang where name = $1',
       values: ['0'],
     })
@@ -134,7 +134,7 @@ suite.test('when a query is binding', function (done) {
   client.query({ text: 'CREATE TEMP TABLE boom(age integer); INSERT INTO boom (age) VALUES (28);' })
 
   const query = client.query(
-    new pg.Query({
+    new gaussdb.Query({
       text: 'select * from boom where age = $1',
       values: ['asldkfjasdf'],
     })
@@ -214,7 +214,7 @@ suite.test('non-query error', function (done) {
 suite.test('within a simple query', (done) => {
   const client = createErorrClient()
 
-  const query = client.query(new pg.Query("select eeeee from yodas_dsflsd where pixistix = 'zoiks!!!'"))
+  const query = client.query(new gaussdb.Query("select eeeee from yodas_dsflsd where pixistix = 'zoiks!!!'"))
 
   assert.emits(query, 'error', function (error) {
     if (!helper.config.native) {

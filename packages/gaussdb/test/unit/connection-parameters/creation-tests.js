@@ -348,10 +348,10 @@ suite.test('ssl is set on client', function () {
   defaults.ssl = true
   const c = new ConnectionParameters(sourceConfig)
   c.getLibpqConnectionString(
-    assert.calls(function (err, pgCString) {
+    assert.calls(function (err, gaussdbCString) {
       assert(!err)
       assert.equal(
-        pgCString.indexOf("sslrootcert='/path/root.crt'") !== -1,
+        gaussdbCString.indexOf("sslrootcert='/path/root.crt'") !== -1,
         true,
         'libpqConnectionString should contain sslrootcert'
       )

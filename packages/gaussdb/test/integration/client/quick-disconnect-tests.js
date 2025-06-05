@@ -3,6 +3,6 @@
 //
 const helper = require('./test-helper')
 
-const client = new helper.pg.Client(helper.config)
+const client = new helper.gaussdb.Client(helper.config)
 client.connect()
 client.end()

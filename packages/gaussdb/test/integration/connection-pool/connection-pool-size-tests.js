@@ -6,7 +6,7 @@ const suite = new helper.Suite()
 
 const testPoolSize = function (max) {
   suite.testAsync(`test ${max} queries executed on a pool rapidly`, async () => {
-    const pool = new helper.pg.Pool({ max: 10 })
+    const pool = new helper.gaussdb.Pool({ max: 10 })
 
     let count = 0
 

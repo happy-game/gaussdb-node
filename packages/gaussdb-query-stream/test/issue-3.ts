@@ -1,9 +1,9 @@
-import pg from 'gaussdb'
+import gaussdb from 'gaussdb'
 import QueryStream from '../src'
 
 describe('end semantics race condition', function () {
   before(function (done) {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     client.connect()
     client.on('drain', client.end.bind(client))
     client.on('end', done)
@@ -11,9 +11,9 @@ describe('end semantics race condition', function () {
     client.query('create table IF NOT EXISTS c(id int primary key references p)')
   })
   it('works', function (done) {
-    const client1 = new pg.Client()
+    const client1 = new gaussdb.Client()
     client1.connect()
-    const client2 = new pg.Client()
+    const client2 = new gaussdb.Client()
     client2.connect()
 
     const qr = new QueryStream('INSERT INTO p DEFAULT VALUES RETURNING id')

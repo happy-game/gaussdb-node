@@ -1,10 +1,10 @@
 'use strict'
 const helper = require('./../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const native = helper.args.native
 const assert = require('assert')
 
-const pool = new pg.Pool()
+const pool = new gaussdb.Pool()
 
 pool.connect(
   assert.calls(function (err, client, done) {

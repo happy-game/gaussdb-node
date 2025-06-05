@@ -1,10 +1,10 @@
 const assert = require('assert')
-const pg = require('gaussdb')
+const gaussdb = require('gaussdb')
 const Cursor = require('../')
 
 describe('queries with no data', function () {
   beforeEach(function (done) {
-    const client = (this.client = new pg.Client())
+    const client = (this.client = new gaussdb.Client())
     client.connect(done)
   })
 

@@ -6,7 +6,7 @@
 // https://github.com/HuaweiCloudDeveloper/gaussdb-drivers/blob/master-dev/diff-gaussdb-postgres.md#%E4%B8%8D%E6%94%AF%E6%8C%81-%E4%B8%B4%E6%97%B6%E8%A1%A8serial
 
 /*
-const pool = new helper.pg.Pool()
+const pool = new helper.gaussdb.Pool()
 pool.connect(
   assert.success(function (client, done) {
     helper.versionGTE(

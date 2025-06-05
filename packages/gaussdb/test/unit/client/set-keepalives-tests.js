@@ -1,6 +1,6 @@
 'use strict'
 const net = require('net')
-const pg = require('../../../lib/index.js')
+const gaussdb = require('../../../lib/index.js')
 const helper = require('./test-helper')
 const assert = require('assert')
 
@@ -20,7 +20,7 @@ suite.test('setting keep alive', (done) => {
       done()
     }
 
-    const client = new pg.Client({
+    const client = new gaussdb.Client({
       host: 'localhost',
       port: 7777,
       keepAlive: true,

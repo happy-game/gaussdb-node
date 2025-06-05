@@ -1,10 +1,10 @@
 'use strict'
 const helper = require('../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const assert = require('assert')
 
 new helper.Suite().test('parsing array results', function (cb) {
-  const pool = new pg.Pool()
+  const pool = new gaussdb.Pool()
   pool.connect(
     assert.success(function (client, done) {
       client.query('CREATE TEMP TABLE test_table(bar integer, "baz\'s" integer)')

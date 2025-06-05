@@ -7,10 +7,10 @@ const suite = new helper.Suite()
 const test = suite.test.bind(suite)
 
 test('ensure types is exported on root object', function () {
-  const pg = require('../../lib')
-  assert(pg.types)
-  assert(pg.types.getTypeParser)
-  assert(pg.types.setTypeParser)
+  const gaussdb = require('../../lib')
+  assert(gaussdb.types)
+  assert(gaussdb.types.getTypeParser)
+  assert(gaussdb.types.setTypeParser)
 })
 
 test('normalizing query configs', function () {

@@ -1,6 +1,6 @@
 'use strict'
 const helper = require('../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 
 process.on('unhandledRejection', function (e) {
   console.error(e, e.stack)
@@ -14,7 +14,7 @@ const NODE_MAJOR_VERSION = +process.versions.node.split('.')[0]
 if (NODE_MAJOR_VERSION >= 16) {
   suite.testAsync('promise API async stack trace in pool', async function outerFunction() {
     async function innerFunction() {
-      const pool = new pg.Pool()
+      const pool = new gaussdb.Pool()
       await pool.query('SELECT test from nonexistent')
     }
     try {
@@ -30,7 +30,7 @@ if (NODE_MAJOR_VERSION >= 16) {
 
   suite.testAsync('promise API async stack trace in client', async function outerFunction() {
     async function innerFunction() {
-      const client = new pg.Client()
+      const client = new gaussdb.Client()
       await client.connect()
       try {
         await client.query('SELECT test from nonexistent')

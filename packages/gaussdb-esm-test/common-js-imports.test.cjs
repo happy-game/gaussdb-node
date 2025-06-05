@@ -20,9 +20,9 @@ for (const path of paths) {
 
 describe('pg-native', () => {
   it('should work with commonjs', async () => {
-    const pg = require('gaussdb')
+    const gaussdb = require('gaussdb')
 
-    const pool = new pg.native.Pool()
+    const pool = new gaussdb.native.Pool()
     const result = await pool.query('SELECT 1')
     assert.strictEqual(result.rowCount, 1)
     pool.end()

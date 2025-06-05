@@ -1,6 +1,6 @@
 'use strict'
 const args = require('../test/cli')
-const pg = require('../lib')
+const gaussdb = require('../lib')
 
 const people = [
   { name: 'Aaron', age: 10 },
@@ -32,7 +32,7 @@ const people = [
 ]
 
 async function run() {
-  const con = new pg.Client({
+  const con = new gaussdb.Client({
     user: args.user,
     password: args.password,
     host: args.host,

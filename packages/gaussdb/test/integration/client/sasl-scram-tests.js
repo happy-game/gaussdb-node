@@ -1,6 +1,6 @@
 'use strict'
 const helper = require('./../test-helper')
-const pg = helper.pg
+const gaussdb = helper.gaussdb
 const suite = new helper.Suite()
 const { native } = helper.args
 const assert = require('assert')
@@ -46,7 +46,7 @@ if (!config.user || !config.password) {
 }
 
 suite.testAsync('can connect using sasl/scram with channel binding enabled (if using SSL)', async () => {
-  const client = new pg.Client({ ...config, enableChannelBinding: true })
+  const client = new gaussdb.Client({ ...config, enableChannelBinding: true })
   let usingChannelBinding = false
   let hasPeerCert = false
   client.connection.once('authenticationSASLContinue', () => {
@@ -59,7 +59,7 @@ suite.testAsync('can connect using sasl/scram with channel binding enabled (if u
 })
 
 suite.testAsync('can connect using sasl/scram with channel binding disabled', async () => {
-  const client = new pg.Client({ ...config, enableChannelBinding: false })
+  const client = new gaussdb.Client({ ...config, enableChannelBinding: false })
   let usingSASLWithoutChannelBinding = false
   client.connection.once('authenticationSASLContinue', () => {
     usingSASLWithoutChannelBinding = client.saslSession.mechanism === 'SCRAM-SHA-256'
@@ -70,7 +70,7 @@ suite.testAsync('can connect using sasl/scram with channel binding disabled', as
 })
 
 suite.testAsync('sasl/scram fails when password is wrong', async () => {
-  const client = new pg.Client({
+  const client = new gaussdb.Client({
     ...config,
     password: config.password + 'append-something-to-make-it-bad',
   })
@@ -89,7 +89,7 @@ suite.testAsync('sasl/scram fails when password is wrong', async () => {
 })
 
 suite.testAsync('sasl/scram fails when password is empty', async () => {
-  const client = new pg.Client({
+  const client = new gaussdb.Client({
     ...config,
     // We use a password function here so the connection defaults do not
     // override the empty string value with one from process.env.PGPASSWORD
