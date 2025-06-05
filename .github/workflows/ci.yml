@@ -51,13 +51,13 @@ jobs:
     name: Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
     env:
-      PGUSER: ci_user
-      PGPASSWORD: openGauss@123
-      PGHOST: localhost
-      PGDATABASE: ci_db_test
-      PGTESTNOSSL: 'true'
-      SHA256_TEST_PGUSER: sha256_test
-      SHA256_TEST_PGPASSWORD: test4@scram
+      GAUSSUSER: ci_user
+      GAUSSPASSWORD: openGauss@123
+      GAUSSHOST: localhost
+      GAUSSDATABASE: ci_db_test
+      GAUSSTESTNOSSL: 'true'
+      SHA256_TEST_GAUSSUSER: sha256_test
+      SHA256_TEST_GAUSSPASSWORD: test4@scram
     steps:
       - name: Show OS
         run: |

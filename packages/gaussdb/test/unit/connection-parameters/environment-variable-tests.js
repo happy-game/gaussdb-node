@@ -23,11 +23,11 @@ const clearEnv = () => {
 
 suite.test('ConnectionParameters initialized from environment variables', function () {
   clearEnv()
-  process.env['PGHOST'] = 'local'
-  process.env['PGUSER'] = 'bmc2'
-  process.env['PGPORT'] = 7890
-  process.env['PGDATABASE'] = 'allyerbase'
-  process.env['PGPASSWORD'] = 'open'
+  process.env['GAUSSHOST'] = 'local'
+  process.env['GAUSSUSER'] = 'bmc2'
+  process.env['GAUSSPORT'] = 7890
+  process.env['GAUSSDATABASE'] = 'allyerbase'
+  process.env['GAUSSPASSWORD'] = 'open'
 
   const subject = new ConnectionParameters()
   assert.equal(subject.host, 'local', 'env host')
@@ -39,13 +39,13 @@ suite.test('ConnectionParameters initialized from environment variables', functi
 
 suite.test('ConnectionParameters initialized from mix', function () {
   clearEnv()
-  process.env['PGHOST'] = 'local'
-  process.env['PGUSER'] = 'bmc2'
-  process.env['PGPORT'] = 7890
-  process.env['PGDATABASE'] = 'allyerbase'
-  process.env['PGPASSWORD'] = 'open'
-  delete process.env['PGPASSWORD']
-  delete process.env['PGDATABASE']
+  process.env['GAUSSHOST'] = 'local'
+  process.env['GAUSSUSER'] = 'bmc2'
+  process.env['GAUSSPORT'] = 7890
+  process.env['GAUSSDATABASE'] = 'allyerbase'
+  process.env['GAUSSPASSWORD'] = 'open'
+  delete process.env['GAUSSPASSWORD']
+  delete process.env['GAUSSDATABASE']
   const subject = new ConnectionParameters({
     user: 'testing',
     database: 'zugzug',
@@ -104,9 +104,9 @@ suite.test('ssl is false by default', function () {
 })
 
 const testVal = function (mode, expected) {
-  suite.test('ssl is ' + expected + ' when $PGSSLMODE=' + mode, function () {
+  suite.test('ssl is ' + expected + ' when $GAUSSSSLMODE=' + mode, function () {
     clearEnv()
-    process.env.PGSSLMODE = mode
+    process.env.GAUSSSSLMODE = mode
     const subject = new ConnectionParameters()
     assert.deepStrictEqual(subject.ssl, expected)
   })

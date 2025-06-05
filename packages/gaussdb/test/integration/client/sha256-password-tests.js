@@ -6,8 +6,8 @@ const { native } = helper.args
 const assert = require('assert')
 
 /**
- * This test only executes if the env variables SHA256_TEST_PGUSER and
- * SHA256_TEST_PGPASSWORD are defined. You can override additional values
+ * This test only executes if the env variables SHA256_TEST_GAUSSUSER and
+ * SHA256_TEST_GAUSSPASSWORD are defined. You can override additional values
  * for the host, port and database with other SHA256_TEST_ prefixed vars.
  * If the variables are not defined the test will be skipped.
  *
@@ -23,17 +23,17 @@ const assert = require('assert')
  *
  * Then run this file with after exporting:
  *
- *     SHA256_TEST_PGUSER=sha256_test
- *     SHA256_TEST_PGPASSWORD=test4@scram
+ *     SHA256_TEST_GAUSSUSER=sha256_test
+ *     SHA256_TEST_GAUSSPASSWORD=test4@scram
  */
 
 // Base config for SHA256 tests
 const config = {
-  user: process.env.SHA256_TEST_PGUSER,
-  password: process.env.SHA256_TEST_PGPASSWORD,
-  host: process.env.SHA256_TEST_PGHOST || 'localhost',
-  port: process.env.SHA256_TEST_PGPORT || 5432,
-  database: process.env.SHA256_TEST_PGDATABASE || 'ci_db_test',
+  user: process.env.SHA256_TEST_GAUSSUSER,
+  password: process.env.SHA256_TEST_GAUSSPASSWORD,
+  host: process.env.SHA256_TEST_GAUSSHOST || 'localhost',
+  port: process.env.SHA256_TEST_GAUSSPORT || 5432,
+  database: process.env.SHA256_TEST_GAUSSDATABASE || 'ci_db_test',
 }
 
 if (native) {

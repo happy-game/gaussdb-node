@@ -21,13 +21,13 @@ services:
       - ..:/workspace:cached
 
     environment:
-      PGPASSWORD: openGauss@123
-      PGUSER: gaussdb
-      PGDATABASE: data
-      PGHOST: db
+      GAUSSPASSWORD: openGauss@123
+      GAUSSUSER: gaussdb
+      GAUSSDATABASE: data
+      GAUSSHOST: db
       # set this to true in the development environment until I can get SSL setup on the 
       # docker postgres instance
-      PGTESTNOSSL: 'true'
+      GAUSSTESTNOSSL: 'true'
       
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity

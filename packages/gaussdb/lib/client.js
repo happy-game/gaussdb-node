@@ -112,6 +112,7 @@ class Client extends EventEmitter {
     }
 
     if (this.host && this.host.indexOf('/') === 0) {
+      // TODO: is GaussDB using domain sockets?
       con.connect(this.host + '/.s.PGSQL.' + this.port)
     } else {
       con.connect(this.port, this.host)
@@ -475,6 +476,7 @@ class Client extends EventEmitter {
       const con = this.connection
 
       if (this.host && this.host.indexOf('/') === 0) {
+        // TODO: is GaussDB using domain sockets?
         con.connect(this.host + '/.s.PGSQL.' + this.port)
       } else {
         con.connect(this.port, this.host)

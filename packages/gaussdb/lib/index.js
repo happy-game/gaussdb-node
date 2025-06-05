@@ -34,6 +34,7 @@ const GAUSSDB = function (clientConstructor) {
   this.utils = utils
 }
 
+// TODO: NODE_PG_FORCE_NATIVE or NODE_GAUSS_FORCE_NATIVE
 if (typeof process.env.NODE_PG_FORCE_NATIVE !== 'undefined') {
   module.exports = new GAUSSDB(require('./native'))
 } else {
