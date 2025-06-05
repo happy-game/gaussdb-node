@@ -68,6 +68,7 @@ suite.test('query timeout', (cb) => {
 suite.test('query recover from timeout', (cb) => {
   const pool = new gaussdb.Pool({ query_timeout: 1000 })
   pool.connect().then((client) => {
+    // TODO: there is no function named `gaussdb_sleep` in GaussDB, so we use `pg_sleep` instead.
     client.query(
       'SELECT pg_sleep(20)',
       assert.calls(function (err, result) {

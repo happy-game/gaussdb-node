@@ -28,7 +28,7 @@ const serverWithInvalidResponse = (port, callback) => {
   const server = net.createServer((socket) => {
     socket.write(MySqlHandshake)
 
-    // This server sends an invalid response which should throw in pg-protocol
+    // This server sends an invalid response which should throw in gaussdb-protocol
     sockets.add(socket)
   })
 

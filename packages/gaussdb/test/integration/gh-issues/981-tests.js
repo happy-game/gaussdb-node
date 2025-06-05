@@ -7,16 +7,16 @@ if (!helper.args.native) {
 }
 
 const assert = require('assert')
-const pg = require('../../../lib')
+const gaussdb = require('../../../lib')
 const native = require('../../../lib').native
 
 const JsClient = require('../../../lib/client')
 const NativeClient = require('../../../lib/native')
 
-assert(pg.Client === JsClient)
+assert(gaussdb.Client === JsClient)
 assert(native.Client === NativeClient)
 
-const jsPool = new pg.Pool()
+const jsPool = new gaussdb.Pool()
 const nativePool = new native.Pool()
 
 const suite = new helper.Suite()

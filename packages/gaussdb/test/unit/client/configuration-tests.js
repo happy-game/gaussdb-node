@@ -5,22 +5,22 @@ const assert = require('assert')
 const suite = new helper.Suite()
 const test = suite.test.bind(suite)
 
-const pguser = process.env['PGUSER'] || process.env.USER
-const pgdatabase = process.env['PGDATABASE'] || process.env.USER
-const pgport = process.env['PGPORT'] || 5432
+const gaussdbuser = process.env['PGUSER'] || process.env.USER
+const gaussdbdatabase = process.env['PGDATABASE'] || process.env.USER
+const gaussdbport = process.env['PGPORT'] || 5432
 
 test('client settings', function () {
   test('defaults', function () {
     const client = new Client()
-    assert.equal(client.user, pguser)
-    assert.equal(client.database, pgdatabase)
-    assert.equal(client.port, pgport)
+    assert.equal(client.user, gaussdbuser)
+    assert.equal(client.database, gaussdbdatabase)
+    assert.equal(client.port, gaussdbport)
     assert.equal(client.ssl, false)
   })
 
   test('custom', function () {
     const user = 'brian'
-    const database = 'pgjstest'
+    const database = 'gaussdbjstest'
     const password = 'boom'
     const client = new Client({
       user: user,
@@ -166,6 +166,6 @@ test('calls connect correctly on connection', function () {
     usedHost = host
   }
   client.connect()
-  assert.equal(usedPort, '/tmp/.s.PGSQL.' + pgport)
+  assert.equal(usedPort, '/tmp/.s.PGSQL.' + gaussdbport)
   assert.strictEqual(usedHost, undefined)
 })

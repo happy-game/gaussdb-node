@@ -36,7 +36,7 @@ class QueryStream extends Readable implements Submittable {
     this.handleError = this.cursor.handleError.bind(this.cursor)
     this.handleEmptyQuery = this.cursor.handleEmptyQuery.bind(this.cursor)
 
-    // pg client sets types via _result property
+    // gaussdb client sets types via _result property
     this._result = this.cursor._result
   }
 

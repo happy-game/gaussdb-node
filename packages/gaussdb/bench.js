@@ -1,4 +1,4 @@
-const pg = require('./lib')
+const gaussdb = require('./lib')
 
 const params = {
   text: 'select typname, typnamespace, typowner, typlen, typbyval, typcategory, typispreferred, typisdefined, typdelim, typrelid, typelem, typarray from pg_type where typtypmod = $1 and typisdefined = $2',
@@ -36,7 +36,7 @@ const bench = async (client, q, time) => {
 }
 
 const run = async () => {
-  const client = new pg.Client()
+  const client = new gaussdb.Client()
   await client.connect()
   console.log('start')
   await client.query('CREATE TEMP TABLE foobar(name TEXT, age NUMERIC)')

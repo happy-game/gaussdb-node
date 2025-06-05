@@ -1,12 +1,12 @@
 const assert = require('assert')
 const Cursor = require('../')
-const pg = require('gaussdb')
+const gaussdb = require('gaussdb')
 
 // SKIP: 不支持 LISTEN/NOFITY statement
 // https://github.com/HuaweiCloudDeveloper/gaussdb-drivers/blob/master-dev/diff-gaussdb-postgres.md#%E4%B8%8D%E6%94%AF%E6%8C%81-listennofity-statement
 describe.skip('transactions', () => {
   it('can execute multiple statements in a transaction', async () => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     await client.connect()
     await client.query('begin')
     await client.query('CREATE TEMP TABLE foobar(id SERIAL PRIMARY KEY)')
@@ -20,7 +20,7 @@ describe.skip('transactions', () => {
   })
 
   it('can execute multiple statements in a transaction if ending cursor early', async () => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     await client.connect()
     await client.query('begin')
     await client.query('CREATE TEMP TABLE foobar(id SERIAL PRIMARY KEY)')
@@ -31,7 +31,7 @@ describe.skip('transactions', () => {
   })
 
   it('can execute multiple statements in a transaction if no data', async () => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     await client.connect()
     await client.query('begin')
     // create a cursor that has no data response

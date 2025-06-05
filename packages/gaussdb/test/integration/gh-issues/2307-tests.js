@@ -1,6 +1,6 @@
 'use strict'
 
-const pg = require('../../../lib')
+const gaussdb = require('../../../lib')
 const helper = require('../test-helper')
 const assert = require('assert')
 
@@ -15,7 +15,7 @@ suite.test('bad ssl credentials do not cause crash', (done) => {
     },
   }
 
-  const client = new pg.Client(config)
+  const client = new gaussdb.Client(config)
 
   client.connect((err) => {
     assert(err)

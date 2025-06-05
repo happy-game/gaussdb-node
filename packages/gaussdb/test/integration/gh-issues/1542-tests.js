@@ -14,7 +14,7 @@ suite.testAsync('BoundPool can be subclassed', async () => {
   assert(subPool instanceof helper.gaussdb.Pool)
 })
 
-suite.test('calling pg.Pool without new throws', () => {
+suite.test('calling gaussdb.Pool without new throws', () => {
   const Pool = helper.gaussdb.Pool
   assert.throws(() => {
     Pool()

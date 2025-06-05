@@ -1,6 +1,6 @@
 import assert from 'node:assert'
 import { describe, it } from 'node:test'
-import pg, {
+import gaussdb, {
   Client,
   Pool,
   Connection,
@@ -13,7 +13,7 @@ import pg, {
   TypeOverrides,
 } from 'gaussdb'
 
-describe('pg', () => {
+describe('gaussdb', () => {
   it('should export Client constructor', () => {
     assert.ok(new Client())
   })
@@ -23,7 +23,7 @@ describe('pg', () => {
   })
 
   it('should still provide default export', () => {
-    assert.ok(new pg.Pool())
+    assert.ok(new gaussdb.Pool())
   })
 
   it('should export Connection constructor', () => {

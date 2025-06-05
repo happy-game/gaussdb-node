@@ -1,4 +1,4 @@
-const pg = require('gaussdb').native
+const gaussdb = require('gaussdb').native
 const Native = require('../')
 
 const warmup = function (fn, cb) {
@@ -20,7 +20,7 @@ const native = Native()
 native.connectSync()
 
 const queryText = 'SELECT generate_series(0, 1000) as X, generate_series(0, 1000) as Y, generate_series(0, 1000) as Z'
-const client = new pg.Client()
+const client = new gaussdb.Client()
 client.connect(function () {
   const pure = function (cb) {
     client.query(queryText, function (err) {

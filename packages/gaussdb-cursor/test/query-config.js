@@ -1,11 +1,11 @@
 'use strict'
 const assert = require('assert')
 const Cursor = require('../')
-const pg = require('gaussdb')
+const gaussdb = require('gaussdb')
 
 describe('query config passed to result', () => {
   it('passes rowMode to result', (done) => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     client.connect()
     const text = 'SELECT generate_series as num FROM generate_series(0, 5)'
     const cursor = client.query(new Cursor(text, null, { rowMode: 'array' }))
@@ -18,7 +18,7 @@ describe('query config passed to result', () => {
   })
 
   it('passes types to result', (done) => {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
     client.connect()
     const text = 'SELECT generate_series as num FROM generate_series(0, 2)'
     const types = {

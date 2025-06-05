@@ -1,8 +1,8 @@
-import pg from 'gaussdb'
+import gaussdb from 'gaussdb'
 
 export default function (name, cb) {
   describe(name, function () {
-    const client = new pg.Client()
+    const client = new gaussdb.Client()
 
     before(function (done) {
       client.connect(done)
