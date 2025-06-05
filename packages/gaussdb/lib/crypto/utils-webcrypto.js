@@ -2,8 +2,8 @@ const nodeCrypto = require('crypto')
 const { RFC5802Algorithm } = require('./rfc5802')
 
 module.exports = {
-  postgresMd5PasswordHash,
-  postgresSha256PasswordHash,
+  gaussdbMd5PasswordHash,
+  gaussdbSha256PasswordHash,
   randomBytes,
   deriveKey,
   sha256,
@@ -50,13 +50,13 @@ async function md5(string) {
 }
 
 // See AuthenticationMD5Password at https://www.postgresql.org/docs/current/static/protocol-flow.html
-async function postgresMd5PasswordHash(user, password, salt) {
+async function gaussdbMd5PasswordHash(user, password, salt) {
   const inner = await md5(password + user)
   const outer = await md5(Buffer.concat([Buffer.from(inner), salt]))
   return 'md5' + outer
 }
 
-async function postgresSha256PasswordHash(user, password, data) {
+async function gaussdbSha256PasswordHash(user, password, data) {
   // Constants for data structure parsing
   const PASSWORD_METHOD_OFFSET = 0
   const PASSWORD_METHOD_SIZE = 4

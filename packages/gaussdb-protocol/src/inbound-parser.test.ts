@@ -245,7 +245,7 @@ const parseBuffers = async (buffers: Buffer[]): Promise<BackendMessage[]> => {
   return msgs
 }
 
-describe('PgPacketStream', function () {
+describe('GaussDBPacketStream', function () {
   testForMessage(authOkBuffer, expectedAuthenticationOkayMessage)
   testForMessage(plainPasswordBuffer, expectedPlainPasswordMessage)
   testForMessage(md5PasswordBuffer, expectedMD5PasswordMessage)

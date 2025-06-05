@@ -16,7 +16,7 @@ test('md5 authentication', async function () {
     test('responds', function () {
       assert.lengthIs(client.connection.stream.packets, 1)
       test('should have correct encrypted data', async function () {
-        const password = await crypto.postgresMd5PasswordHash(client.user, client.password, salt)
+        const password = await crypto.gaussdbMd5PasswordHash(client.user, client.password, salt)
         // how do we want to test this?
         assert.equalBuffers(client.connection.stream.packets[0], new BufferList().addCString(password).join(true, 'p'))
       })

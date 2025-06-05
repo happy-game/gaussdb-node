@@ -254,7 +254,7 @@ class Client extends EventEmitter {
   _handleAuthMD5Password(msg) {
     this._checkPgPass(async () => {
       try {
-        const hashedPassword = await crypto.postgresMd5PasswordHash(this.user, this.password, msg.salt)
+        const hashedPassword = await crypto.gaussdbMd5PasswordHash(this.user, this.password, msg.salt)
         this.connection.password(hashedPassword)
       } catch (e) {
         this.emit('error', e)
@@ -265,7 +265,7 @@ class Client extends EventEmitter {
   _handleAuthSHA256Password(msg) {
     this._checkPgPass(async () => {
       try {
-        const hashedPassword = await crypto.postgresSha256PasswordHash(this.user, this.password, msg.data)
+        const hashedPassword = await crypto.gaussdbSha256PasswordHash(this.user, this.password, msg.data)
         this.connection.password(hashedPassword)
       } catch (e) {
         this.emit('error', e)
