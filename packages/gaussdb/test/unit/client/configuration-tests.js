@@ -5,9 +5,9 @@ const assert = require('assert')
 const suite = new helper.Suite()
 const test = suite.test.bind(suite)
 
-const gaussdbuser = process.env['PGUSER'] || process.env.USER
-const gaussdbdatabase = process.env['PGDATABASE'] || process.env.USER
-const gaussdbport = process.env['PGPORT'] || 5432
+const gaussdbuser = process.env['GAUSSUSER'] || process.env.USER
+const gaussdbdatabase = process.env['GAUSSDATABASE'] || process.env.USER
+const gaussdbport = process.env['GAUSSPORT'] || 5432
 
 test('client settings', function () {
   test('defaults', function () {
@@ -38,23 +38,23 @@ test('client settings', function () {
   })
 
   test('custom ssl default on', function () {
-    const old = process.env.PGSSLMODE
-    process.env.PGSSLMODE = 'prefer'
+    const old = process.env.GAUSSSSLMODE
+    process.env.GAUSSSSLMODE = 'prefer'
 
     const client = new Client()
-    process.env.PGSSLMODE = old
+    process.env.GAUSSSSLMODE = old
 
     assert.equal(client.ssl, true)
   })
 
   test('custom ssl force off', function () {
-    const old = process.env.PGSSLMODE
-    process.env.PGSSLMODE = 'prefer'
+    const old = process.env.GAUSSSSLMODE
+    process.env.GAUSSSSLMODE = 'prefer'
 
     const client = new Client({
       ssl: false,
     })
-    process.env.PGSSLMODE = old
+    process.env.GAUSSSSLMODE = old
 
     assert.equal(client.ssl, false)
   })
@@ -92,67 +92,67 @@ test('initializing from a config string', function () {
 
   test('when not including all values the defaults are used', function () {
     const client = new Client('gaussdb://host1')
-    assert.equal(client.user, process.env['PGUSER'] || process.env.USER)
-    assert.equal(client.password, process.env['PGPASSWORD'] || null)
+    assert.equal(client.user, process.env['GAUSSUSER'] || process.env.USER)
+    assert.equal(client.password, process.env['GAUSSPASSWORD'] || null)
     assert.equal(client.host, 'host1')
-    assert.equal(client.port, process.env['PGPORT'] || 5432)
-    assert.equal(client.database, process.env['PGDATABASE'] || process.env.USER)
+    assert.equal(client.port, process.env['GAUSSPORT'] || 5432)
+    assert.equal(client.database, process.env['GAUSSDATABASE'] || process.env.USER)
   })
 
   test('when not including all values the environment variables are used', function () {
-    const envUserDefined = process.env['PGUSER'] !== undefined
-    const envPasswordDefined = process.env['PGPASSWORD'] !== undefined
-    const envHostDefined = process.env['PGHOST'] !== undefined
-    const envPortDefined = process.env['PGPORT'] !== undefined
-    const envDBDefined = process.env['PGDATABASE'] !== undefined
+    const envUserDefined = process.env['GAUSSUSER'] !== undefined
+    const envPasswordDefined = process.env['GAUSSPASSWORD'] !== undefined
+    const envHostDefined = process.env['GAUSSHOST'] !== undefined
+    const envPortDefined = process.env['GAUSSPORT'] !== undefined
+    const envDBDefined = process.env['GAUSSDATABASE'] !== undefined
 
-    const savedEnvUser = process.env['PGUSER']
-    const savedEnvPassword = process.env['PGPASSWORD']
-    const savedEnvHost = process.env['PGHOST']
-    const savedEnvPort = process.env['PGPORT']
-    const savedEnvDB = process.env['PGDATABASE']
+    const savedEnvUser = process.env['GAUSSUSER']
+    const savedEnvPassword = process.env['GAUSSPASSWORD']
+    const savedEnvHost = process.env['GAUSSHOST']
+    const savedEnvPort = process.env['GAUSSPORT']
+    const savedEnvDB = process.env['GAUSSDATABASE']
 
-    process.env['PGUSER'] = 'utUser1'
-    process.env['PGPASSWORD'] = 'utPass1'
-    process.env['PGHOST'] = 'utHost1'
-    process.env['PGPORT'] = 5464
-    process.env['PGDATABASE'] = 'utDB1'
+    process.env['GAUSSUSER'] = 'utUser1'
+    process.env['GAUSSPASSWORD'] = 'utPass1'
+    process.env['GAUSSHOST'] = 'utHost1'
+    process.env['GAUSSPORT'] = 5464
+    process.env['GAUSSDATABASE'] = 'utDB1'
 
     const client = new Client('gaussdb://host1')
-    assert.equal(client.user, process.env['PGUSER'])
-    assert.equal(client.password, process.env['PGPASSWORD'])
+    assert.equal(client.user, process.env['GAUSSUSER'])
+    assert.equal(client.password, process.env['GAUSSPASSWORD'])
     assert.equal(client.host, 'host1')
-    assert.equal(client.port, process.env['PGPORT'])
-    assert.equal(client.database, process.env['PGDATABASE'])
+    assert.equal(client.port, process.env['GAUSSPORT'])
+    assert.equal(client.database, process.env['GAUSSDATABASE'])
 
     if (envUserDefined) {
-      process.env['PGUSER'] = savedEnvUser
+      process.env['GAUSSUSER'] = savedEnvUser
     } else {
-      delete process.env['PGUSER']
+      delete process.env['GAUSSUSER']
     }
 
     if (envPasswordDefined) {
-      process.env['PGPASSWORD'] = savedEnvPassword
+      process.env['GAUSSPASSWORD'] = savedEnvPassword
     } else {
-      delete process.env['PGPASSWORD']
+      delete process.env['GAUSSPASSWORD']
     }
 
     if (envDBDefined) {
-      process.env['PGDATABASE'] = savedEnvDB
+      process.env['GAUSSDATABASE'] = savedEnvDB
     } else {
-      delete process.env['PGDATABASE']
+      delete process.env['GAUSSDATABASE']
     }
 
     if (envHostDefined) {
-      process.env['PGHOST'] = savedEnvHost
+      process.env['GAUSSHOST'] = savedEnvHost
     } else {
-      delete process.env['PGHOST']
+      delete process.env['GAUSSHOST']
     }
 
     if (envPortDefined) {
-      process.env['PGPORT'] = savedEnvPort
+      process.env['GAUSSPORT'] = savedEnvPort
     } else {
-      delete process.env['PGPORT']
+      delete process.env['GAUSSPORT']
     }
   })
 })

@@ -6,8 +6,8 @@ const { native } = helper.args
 const assert = require('assert')
 
 /**
- * This test only executes if the env variables SCRAM_TEST_PGUSER and
- * SCRAM_TEST_PGPASSWORD are defined. You can override additional values
+ * This test only executes if the env variables SCRAM_TEST_GAUSSUSER and
+ * SCRAM_TEST_GAUSSPASSWORD are defined. You can override additional values
  * for the host, port and database with other SCRAM_TEST_ prefixed vars.
  * If the variables are not defined the test will be skipped.
  *
@@ -23,17 +23,17 @@ const assert = require('assert')
  *
  * Then run this file with after exporting:
  *
- *     SCRAM_TEST_PGUSER=scram_test
- *     SCRAM_TEST_PGPASSWORD=test4scram
+ *     SCRAM_TEST_GAUSSUSER=scram_test
+ *     SCRAM_TEST_GAUSSPASSWORD=test4scram
  */
 
 // Base config for SCRAM tests
 const config = {
-  user: process.env.SCRAM_TEST_PGUSER,
-  password: process.env.SCRAM_TEST_PGPASSWORD,
-  host: process.env.SCRAM_TEST_PGHOST, // optional
-  port: process.env.SCRAM_TEST_PGPORT, // optional
-  database: process.env.SCRAM_TEST_PGDATABASE, // optional
+  user: process.env.SCRAM_TEST_GAUSSUSER,
+  password: process.env.SCRAM_TEST_GAUSSPASSWORD,
+  host: process.env.SCRAM_TEST_GAUSSHOST, // optional
+  port: process.env.SCRAM_TEST_GAUSSPORT, // optional
+  database: process.env.SCRAM_TEST_GAUSSDATABASE, // optional
 }
 
 if (native) {
@@ -92,7 +92,7 @@ suite.testAsync('sasl/scram fails when password is empty', async () => {
   const client = new gaussdb.Client({
     ...config,
     // We use a password function here so the connection defaults do not
-    // override the empty string value with one from process.env.PGPASSWORD
+    // override the empty string value with one from process.env.GAUSSPASSWORD
     password: () => '',
   })
   let usingSasl = false

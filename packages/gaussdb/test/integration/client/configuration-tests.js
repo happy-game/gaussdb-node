@@ -10,7 +10,7 @@ const suite = new helper.Suite()
 const realEnv = {}
 for (const key in process.env) {
   realEnv[key] = process.env[key]
-  if (!key.indexOf('PG')) delete process.env[key]
+  if (!key.indexOf('GAUSS')) delete process.env[key]
 }
 
 suite.test('default values are used in new clients', function () {

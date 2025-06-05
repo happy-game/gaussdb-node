@@ -18,7 +18,7 @@ suite.test('cleartext password auth responds with password', function () {
 })
 
 suite.test('cleartext password auth does not crash with null password using pg-pass', function () {
-  process.env.PGPASSFILE = `${__dirname}/pgpass.file`
+  process.env.GAUSSPASSFILE = `${__dirname}/pgpass.file`
   const client = new helper.Client({
     host: 'foo',
     port: 5432,

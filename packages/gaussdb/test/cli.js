@@ -18,7 +18,7 @@ for (let i = 0; i < process.argv.length; i++) {
   }
 }
 
-if (process.env['PG_TEST_NATIVE']) {
+if (process.env['GAUSS_TEST_NATIVE']) {
   config.native = true
 }
 

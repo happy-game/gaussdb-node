@@ -7,13 +7,13 @@ const gaussdb = helper.gaussdb
 
 const suite = new helper.Suite()
 
-if (process.env.PG_CLIENT_CERT_TEST) {
+if (process.env.GAUSS_CLIENT_CERT_TEST) {
   suite.testAsync('client certificate', async () => {
     const pool = new gaussdb.Pool({
       ssl: {
-        ca: fs.readFileSync(process.env.PGSSLROOTCERT),
-        cert: fs.readFileSync(process.env.PGSSLCERT),
-        key: fs.readFileSync(process.env.PGSSLKEY),
+        ca: fs.readFileSync(process.env.GAUSSSSLROOTCERT),
+        cert: fs.readFileSync(process.env.GAUSSSSLCERT),
+        key: fs.readFileSync(process.env.GAUSSSSLKEY),
       },
     })
 
