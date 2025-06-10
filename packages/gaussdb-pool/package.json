@@ -1,6 +1,6 @@
 {
   "name": "gaussdb-pool",
-  "version": "3.10.0",
+  "version": "0.1.0",
   "description": "Connection pool for GaussDB",
   "main": "index.js",
   "exports": {
@@ -36,7 +36,7 @@
     "mocha": "^10.5.2"
   },
   "peerDependencies": {
-    "gaussdb": ">=8.0"
+    "gaussdb": ">=0.1.0"
   },
   "files": [
     "index.js",
