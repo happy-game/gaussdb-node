@@ -1,6 +1,6 @@
 {
   "name": "gaussdb-cursor",
-  "version": "2.15.0",
+  "version": "0.1.0",
   "description": "Query cursor extension for GaussDB",
   "main": "index.js",
   "exports": {
@@ -25,10 +25,10 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "^10.5.2",
-    "gaussdb": "^8.16.0"
+    "gaussdb": "^0.1.0"
   },
   "peerDependencies": {
-    "gaussdb": "^8"
+    "gaussdb": "^0.1.0"
   },
   "files": [
     "index.js",
