@@ -1,6 +1,6 @@
 {
   "name": "gaussdb",
-  "version": "8.16.0",
+  "version": "0.1.0",
   "description": "GaussDB client - pure javascript & libpq with the same API",
   "keywords": [
     "database",
@@ -29,9 +29,9 @@
     }
   },
   "dependencies": {
-    "gaussdb-connection-string": "^2.9.0",
-    "gaussdb-pool": "^3.10.0",
-    "gaussdb-protocol": "^1.10.0",
+    "gaussdb-connection-string": "^0.1.0",
+    "gaussdb-pool": "^0.1.0",
+    "gaussdb-protocol": "^0.1.0",
     "pg-types": "2.2.0",
     "pgpass": "1.0.5"
   },
@@ -47,7 +47,7 @@
     "wrangler": "^3.x"
   },
   "optionalDependencies": {
-    "gaussdb-cloudflare": "^1.2.5"
+    "gaussdb-cloudflare": "^0.1.0"
   },
   "peerDependencies": {
     "pg-native": ">=3.0.1"
