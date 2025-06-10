@@ -1,6 +1,6 @@
 {
   "name": "pg-native",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A slightly nicer interface to GaussDB over node-libpq",
   "main": "index.js",
   "exports": {
