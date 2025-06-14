@@ -35,6 +35,7 @@ If you're looking for a way to rely on `connect()` as the interface you use to i
 The MIT License (MIT)
 
 Copyright (c) 2023 Brian M. Carlson
+Copyright (c) 2025 happy-game
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

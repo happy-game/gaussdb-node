@@ -45,6 +45,7 @@ I'm very open to contribution! Open a pull request with your code or idea and we
 The MIT License (MIT)
 
 Copyright (c) 2013-2020 Brian M. Carlson
+Copyright (c) 2025 happy-game
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

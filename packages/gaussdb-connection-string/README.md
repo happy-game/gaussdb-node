@@ -6,9 +6,9 @@ gaussdb-connection-string
 
 Functions for dealing with a GaussDB connection string
 
-<!-- TODO: 后续可能修改 -->
 `parse` method taken from [gaussdb-node](https://github.com/HuaweiCloudDeveloper/gaussdb-node.git)
 Copyright (c) 2010-2014 Brian Carlson (brian.m.carlson@gmail.com)
+Copyright (c) 2025 happy-game
 MIT License
 
 ## Usage
