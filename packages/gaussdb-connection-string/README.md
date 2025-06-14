@@ -1,18 +1,20 @@
-pg-connection-string
+gaussdb-connection-string
 ====================
 
-[![NPM](https://nodei.co/npm/pg-connection-string.png?compact=true)](https://nodei.co/npm/pg-connection-string/)
+<!-- TODO: 打包后恢复 -->
+<!-- [![NPM](https://nodei.co/npm/gaussdb-connection-string.png?compact=true)](https://nodei.co/npm/gaussdb-connection-string/) -->
 
-Functions for dealing with a PostgresSQL connection string
+Functions for dealing with a GaussDB connection string
 
-`parse` method taken from [node-postgres](https://github.com/brianc/node-postgres.git)
+<!-- TODO: 后续可能修改 -->
+`parse` method taken from [gaussdb-node](https://github.com/HuaweiCloudDeveloper/gaussdb-node.git)
 Copyright (c) 2010-2014 Brian Carlson (brian.m.carlson@gmail.com)
 MIT License
 
 ## Usage
 
 ```js
-const parse = require('pg-connection-string').parse;
+const parse = require('gaussdb-connection-string').parse;
 
 const config = parse('gaussdb://someuser:somepassword@somehost:381/somedatabase')
 ```
@@ -21,7 +23,7 @@ The resulting config contains a subset of the following properties:
 
 * `user` - User with which to authenticate to the server
 * `password` - Corresponding password
-* `host` - Postgres server hostname or, for UNIX domain sockets, the socket filename
+* `host` - GaussDB server hostname or, for UNIX domain sockets, the socket filename
 * `port` - port on which to connect
 * `database` - Database name within the server
 * `client_encoding` - string encoding the client will use
@@ -34,11 +36,11 @@ The resulting config contains a subset of the following properties:
 
 ### ClientConfig Compatibility for TypeScript
 
-The pg-connection-string `ConnectionOptions` interface is not compatible with the `ClientConfig` interface that [pg.Client](https://node-postgres.com/apis/client) expects. To remedy this, use the `parseIntoClientConfig` function instead of `parse`:
+The gaussdb-connection-string `ConnectionOptions` interface is not compatible with the `ClientConfig` interface that [gaussdb.Client](https://node-gaussdb.com/apis/client) expects. To remedy this, use the `parseIntoClientConfig` function instead of `parse`:
 
 ```ts
-import { ClientConfig } from 'pg';
-import { parseIntoClientConfig } from 'pg-connection-string';
+import { ClientConfig } from 'gaussdb';
+import { parseIntoClientConfig } from 'gaussdb-connection-string';
 
 const config: ClientConfig = parseIntoClientConfig('gaussdb://someuser:somepassword@somehost:381/somedatabase')
 ```
@@ -46,8 +48,8 @@ const config: ClientConfig = parseIntoClientConfig('gaussdb://someuser:somepassw
 You can also use `toClientConfig` to convert an existing `ConnectionOptions` interface into a `ClientConfig` interface:
 
 ```ts
-import { ClientConfig } from 'pg';
-import { parse, toClientConfig } from 'pg-connection-string';
+import { ClientConfig } from 'gaussdb';
+import { parse, toClientConfig } from 'gaussdb-connection-string';
 
 const config = parse('gaussdb://someuser:somepassword@somehost:381/somedatabase')
 const clientConfig: ClientConfig = toClientConfig(config)
@@ -63,7 +65,7 @@ The short summary of acceptable URLs is:
 But see below for more details.
 
 ### UNIX Domain Sockets
-
+<!-- TODO: 此处待修改 -->
 When user and password are not given, the socket path follows `socket:`, as in `socket:/var/run/pgsql`.
 This form can be shortened to just a path: `/var/run/pgsql`.
 
@@ -76,7 +78,7 @@ Query parameters follow a `?` character, including the following special query p
 
 ### TCP Connections
 
-TCP connections to the Postgres server are indicated with `pg:` or `postgres:` schemes (in fact, any scheme but `socket:` is accepted).
+TCP connections to the GaussDB server are indicated with `gaussdb:` or `gauss:` schemes (in fact, any scheme but `socket:` is accepted).
 If username and password are included, they should be urlencoded.
 The database name, however, should *not* be urlencoded.
 
@@ -101,5 +103,3 @@ Query parameters follow a `?` character, including the following special query p
 
 A bare relative URL, such as `salesdata`, will indicate a database name while leaving other properties empty.
 
-> [!CAUTION]
-> Choosing an sslmode other than verify-full has serious security implications. Please read https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-SSLMODE-STATEMENTS to understand the trade-offs.

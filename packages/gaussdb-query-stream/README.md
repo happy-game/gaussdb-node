@@ -1,22 +1,22 @@
-# pg-query-stream
+# gaussdb-query-stream
 
-Receive result rows from [pg](https://github.com/brianc/node-postgres) as a readable (object) stream.
+Receive result rows from [gaussdb](https://github.com/HuaweiCloudDeveloper/gaussdb-node) as a readable (object) stream.
 
 ## installation
 
 ```bash
-$ npm install pg --save
-$ npm install pg-query-stream --save
+$ npm install gaussdb --save
+$ npm install gaussdb-query-stream --save
 ```
 
-_requires pg>=2.8.1_
+_requires gaussdb>=2.8.1_
 
 ## use
 
 ```js
-const pg = require('pg')
-const pool = new pg.Pool()
-const QueryStream = require('pg-query-stream')
+const gaussdb = require('gaussdb')
+const pool = new gaussdb.Pool()
+const QueryStream = require('gaussdb-query-stream')
 const JSONStream = require('JSONStream')
 
 // pipe 1,000,000 rows to stdout without blowing up your memory usage

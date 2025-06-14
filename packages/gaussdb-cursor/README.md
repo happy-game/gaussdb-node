@@ -1,16 +1,16 @@
-node-pg-cursor
+node-gaussdb-cursor
 ==============
 
-Use a PostgreSQL result cursor from node with an easy to use API.
+Use a GaussDB result cursor from node with an easy to use API.
 
 ### install
 
 ```sh
-$ npm install pg-cursor
+$ npm install gaussdb-cursor
 ```
-___note___: this depends on _either_ `npm install pg` or `npm install pg.js`, but you __must__ be using the pure JavaScript client.  This will __not work__ with the native bindings.
+___note___: this depends on _either_ `npm install gaussdb` or `npm install gaussdb.js`, but you __must__ be using the pure JavaScript client.  This will __not work__ with the native bindings.
 
-### :star: [Documentation](https://node-postgres.com/apis/cursor) :star:
+### :star: Documentation :star:
 
 ### license
 
