@@ -2,9 +2,9 @@
 title: Suggested Project Structure
 ---
 
-Whenever I am writing a project & using node-postgres I like to create a file within it and make all interactions with the database go through this file. This serves a few purposes:
+Whenever I am writing a project & using gaussdb-node I like to create a file within it and make all interactions with the database go through this file. This serves a few purposes:
 
-- Allows my project to adjust to any changes to the node-postgres API without having to trace down all the places I directly use node-postgres in my application.
+- Allows my project to adjust to any changes to the gaussdb-node API without having to trace down all the places I directly use gaussdb-node in my application.
 - Allows me to have a single place to put logging and diagnostics around my database.
 - Allows me to make custom extensions to my database access code & share it throughout the project.
 - Allows a single place to bootstrap & configure the database.
@@ -27,7 +27,7 @@ The location doesn't really matter - I've found it usually ends up being somewha
 Typically I'll start out my `db/index.js` file like so:
 
 ```js
-import { Pool } from 'pg'
+import { Pool } from 'gaussdb'
 
 const pool = new Pool()
 
@@ -36,11 +36,11 @@ export const query = (text, params) => {
 }
 ```
 
-That's it. But now everywhere else in my application instead of requiring `pg` directly, I'll require this file. Here's an example of a route within `routes/user.js`:
+That's it. But now everywhere else in my application instead of requiring `gaussdb` directly, I'll require this file. Here's an example of a route within `routes/user.js`:
 
 ```js
 // notice here I'm requiring my database adapter file
-// and not requiring node-postgres directly
+// and not requiring gaussdb-node directly
 import * as db from '../db/index.js'
 
 app.get('/:id', async (req, res, next) => {
@@ -51,10 +51,10 @@ app.get('/:id', async (req, res, next) => {
 // ... many other routes in this file
 ```
 
-Imagine we have lots of routes scattered throughout many files under our `routes/` directory. We now want to go back and log every single query that's executed, how long it took, and the number of rows it returned. If we had required node-postgres directly in every route file we'd have to go edit every single route - that would take forever & be really error prone! But thankfully we put our data access into `db/index.js`. Let's go add some logging:
+Imagine we have lots of routes scattered throughout many files under our `routes/` directory. We now want to go back and log every single query that's executed, how long it took, and the number of rows it returned. If we had required gaussdb-node directly in every route file we'd have to go edit every single route - that would take forever & be really error prone! But thankfully we put our data access into `db/index.js`. Let's go add some logging:
 
 ```js
-import { Pool } from 'pg'
+import { Pool } from 'gaussdb'
 
 const pool = new Pool()
 
@@ -74,7 +74,7 @@ _note: I didn't log the query parameters. Depending on your application you migh
 Now what if we need to check out a client from the pool to run several queries in a row in a transaction? We can add another method to our `db/index.js` file when we need to do this:
 
 ```js
-import { Pool } from 'pg'
+import { Pool } from 'gaussdb'
 
 const pool = new Pool()
 

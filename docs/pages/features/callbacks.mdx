@@ -4,11 +4,11 @@ title: Callbacks
 
 ## Callback Support
 
-`async` / `await` is the preferred way to write async code these days with node, but callbacks are supported in the `pg` module and the `pg-pool` module. To use them, pass a callback function as the last argument to the following methods & it will be called and a promise will not be returned:
+`async` / `await` is the preferred way to write async code these days with node, but callbacks are supported in the `gaussdb` module and the `gaussdb-pool` module. To use them, pass a callback function as the last argument to the following methods & it will be called and a promise will not be returned:
 
 
 ```js
-const { Pool, Client } = require('pg')
+const { Pool, Client } = require('gaussdb')
 
 // pool
 const pool = new Pool()

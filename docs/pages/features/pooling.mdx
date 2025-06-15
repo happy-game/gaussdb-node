@@ -7,19 +7,19 @@ import { Info } from '/components/info.tsx'
 
 If you're working on a web application or other software which makes frequent queries you'll want to use a connection pool.
 
-The easiest and by far most common way to use node-postgres is through a connection pool.
+The easiest and by far most common way to use gaussdb-node is through a connection pool.
 
 ## Why?
 
-- Connecting a new client to the PostgreSQL server requires a handshake which can take 20-30 milliseconds. During this time passwords are negotiated, SSL may be established, and configuration information is shared with the client & server. Incurring this cost _every time_ we want to execute a query would substantially slow down our application.
+- Connecting a new client to the GaussDB server requires a handshake which can take 20-30 milliseconds. During this time passwords are negotiated, SSL may be established, and configuration information is shared with the client & server. Incurring this cost _every time_ we want to execute a query would substantially slow down our application.
 
-- The PostgreSQL server can only handle a [limited number of clients at a time](https://wiki.postgresql.org/wiki/Number_Of_Database_Connections). Depending on the available memory of your PostgreSQL server you may even crash the server if you connect an unbounded number of clients. _note: I have crashed a large production PostgreSQL server instance in RDS by opening new clients and never disconnecting them in a python application long ago. It was not fun._
+- The GaussDB server can only handle a [limited number of clients at a time](https://wiki.gaussdb.org/wiki/Number_Of_Database_Connections). Depending on the available memory of your GaussDB server you may even crash the server if you connect an unbounded number of clients. _note: I have crashed a large production GaussDB server instance in RDS by opening new clients and never disconnecting them in a python application long ago. It was not fun._
 
-- PostgreSQL can only process one query at a time on a single connected client in a first-in first-out manner. If your multi-tenant web application is using only a single connected client all queries among all simultaneous requests will be pipelined and executed serially, one after the other. No good!
+- GaussDB can only process one query at a time on a single connected client in a first-in first-out manner. If your multi-tenant web application is using only a single connected client all queries among all simultaneous requests will be pipelined and executed serially, one after the other. No good!
 
 ### Good news
 
-node-postgres ships with built-in connection pooling via the [pg-pool](/apis/pool) module.
+gaussdb-node ships with built-in connection pooling via the [gaussdb-pool](/apis/pool) module.
 
 ## Examples
 
@@ -28,8 +28,8 @@ The client pool allows you to have a reusable pool of clients you can check out,
 ### Checkout, use, and return
 
 ```js
-import pg from 'pg'
-const { Pool } = pg
+import gaussdb from 'gaussdb'
+const { Pool } = gaussdb
 
 const pool = new Pool()
 
@@ -58,11 +58,11 @@ client.release()
 
 ### Single query
 
-If you don't need a transaction or you just need to run a single query, the pool has a convenience method to run a query on any available client in the pool. This is the preferred way to query with node-postgres if you can as it removes the risk of leaking a client.
+If you don't need a transaction or you just need to run a single query, the pool has a convenience method to run a query on any available client in the pool. This is the preferred way to query with gaussdb-node if you can as it removes the risk of leaking a client.
 
 ```js
-import pg from 'pg'
-const { Pool } = pg
+import gaussdb from 'gaussdb'
+const { Pool } = gaussdb
 
 const pool = new Pool()
 
@@ -75,8 +75,8 @@ console.log('user:', res.rows[0])
 To shut down a pool call `pool.end()` on the pool. This will wait for all checked-out clients to be returned and then shut down all the clients and the pool timers.
 
 ```js
-import pg from 'pg'
-const { Pool } = pg
+import gaussdb from 'gaussdb'
+const { Pool } = gaussdb
 const pool = new Pool()
 
 console.log('starting async query')

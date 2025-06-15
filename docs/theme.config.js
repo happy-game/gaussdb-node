@@ -1,14 +1,14 @@
 // theme.config.js
 export default {
   project: {
-    link: 'https://github.com/brianc/node-postgres',
+    link: 'https://github.com/HuaweiCloudDeveloper/gaussdb-node',
   },
   twitter: {
     cardType: 'summary_large_image',
-    site: 'https://node-postgres.com',
+    site: 'https://gaussdb-node.com',
   },
-  docsRepositoryBase: 'https://github.com/brianc/node-postgres/blob/master/docs', // base URL for the docs repository
-  titleSuffix: ' – node-postgres',
+  docsRepositoryBase: 'https://github.com/HuaweiCloudDeveloper/gaussdb-node/blob/master/docs', // base URL for the docs repository
+  titleSuffix: ' – gaussdb-node',
   darkMode: true,
   navigation: {
     prev: true,
@@ -49,11 +49,11 @@ l-161 -22 -94 41 c-201 87 -327 113 -533 112 -77 -1 -166 -7 -196 -13z m-89
           />
         </g>
       </svg>
-      <span style={{ fontWeight: 800 }}>node-postgres</span>
+      <span style={{ fontWeight: 800 }}>gaussdb-node</span>
     </>
   ),
   chat: {
-    link: 'https://discord.gg/2afXp5vUWm',
+    link: '',
   },
   head: (
     <>
@@ -61,9 +61,9 @@ l-161 -22 -94 41 c-201 87 -327 113 -533 112 -77 -1 -166 -7 -196 -13z m-89
       <link rel="shortcut icon" href="/favicon.ico" />
       <meta
         name="description"
-        content="node-postgres is a collection of node.js modules for interfacing with your PostgreSQL database."
+        content="gaussdb-node is a collection of node.js modules for interfacing with your PostgreSQL database."
       />
-      <meta name="og:title" content="node-postgres" />
+      <meta name="og:title" content="gaussdb-node" />
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100138145-1"></script>
       <script
         dangerouslySetInnerHTML={{

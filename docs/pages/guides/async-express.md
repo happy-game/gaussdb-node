@@ -2,9 +2,9 @@
 title: Express with async/await
 ---
 
-My preferred way to use node-postgres (and all async code in node.js) is with `async/await`. I find it makes reasoning about control-flow easier and allows me to write more concise and maintainable code.
+My preferred way to use gaussdb-node (and all async code in node.js) is with `async/await`. I find it makes reasoning about control-flow easier and allows me to write more concise and maintainable code.
 
-This is how I typically structure express web-applications with node-postgres to use `async/await`:
+This is how I typically structure express web-applications with gaussdb-node to use `async/await`:
 
 ```
 - app.js
@@ -22,7 +22,7 @@ That's the same structure I used in the [project structure](/guides/project-stru
 My `db/index.js` file usually starts out like this:
 
 ```js
-import { Pool } from 'pg'
+import { Pool } from 'gaussdb'
 
 const pool = new Pool()
 
@@ -79,4 +79,4 @@ mountRoutes(app)
 // ... more express setup stuff can follow
 ```
 
-Now you've got `async/await`, node-postgres, and express all working together!
+Now you've got `async/await`, gaussdb-node, and express all working together!

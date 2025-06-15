@@ -1,5 +1,5 @@
 ---
-title: pg.Client
+title: gaussdb.Client
 ---
 
 ## new Client
@@ -10,11 +10,11 @@ Every field of the `config` object is entirely optional. A `Client` instance wil
 
 ```ts
 type Config = {
-  user?: string, // default process.env.PGUSER || process.env.USER
-  password?: string or function, //default process.env.PGPASSWORD
-  host?: string, // default process.env.PGHOST
-  port?: number, // default process.env.PGPORT
-  database?: string, // default process.env.PGDATABASE || user
+  user?: string, // default process.env.GAUSSUSER || process.env.USER
+  password?: string or function, //default process.env.GAUSSPASSWORD
+  host?: string, // default process.env.GAUSSHOST
+  port?: number, // default process.env.GAUSSPORT
+  database?: string, // default process.env.GAUSSDATABASE || user
   connectionString?: string, // e.g. gaussdb://user:password@host:5432/database
   ssl?: any, // passed directly to node.TLSSocket, supports all tls.connect options
   types?: any, // custom type parsers
@@ -34,7 +34,7 @@ type Config = {
 example to create a client with specific connection information:
 
 ```js
-import { Client } from 'pg'
+import { Client } from 'gaussdb'
 
 const client = new Client({
   user: 'database-user',
@@ -48,7 +48,7 @@ const client = new Client({
 ## client.connect
 
 ```js
-import { Client } from 'pg'
+import { Client } from 'gaussdb'
 const client = new Client()
 
 await client.connect()
@@ -90,7 +90,7 @@ client.query(text: string, values?: any[]) => Promise<Result>
 **Plain text query**
 
 ```js
-import { Client } from 'pg'
+import { Client } from 'gaussdb'
 const client = new Client()
 
 await client.connect()
@@ -104,7 +104,7 @@ await client.end()
 **Parameterized query**
 
 ```js
-import { Client } from 'pg'
+import { Client } from 'gaussdb'
 const client = new Client()
 
 await client.connect()
@@ -139,10 +139,10 @@ await client.end()
 
 **client.query with a `Submittable`**
 
-If you pass an object to `client.query` and the object has a `.submit` function on it, the client will pass it's PostgreSQL server connection to the object and delegate query dispatching to the supplied object. This is an advanced feature mostly intended for library authors. It is incidentally also currently how the callback and promise based queries above are handled internally, but this is subject to change. It is also how [pg-cursor](https://github.com/brianc/node-pg-cursor) and [pg-query-stream](https://github.com/brianc/node-pg-query-stream) work.
+If you pass an object to `client.query` and the object has a `.submit` function on it, the client will pass it's GaussDB server connection to the object and delegate query dispatching to the supplied object. This is an advanced feature mostly intended for library authors. It is incidentally also currently how the callback and promise based queries above are handled internally, but this is subject to change. It is also how [gaussdb-cursor](https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/gaussdb-cursor) and [gaussdb-query-stream](https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/gaussdb-query-stream) work.
 
 ```js
-import { Query } from 'pg'
+import { Query } from 'gaussdb'
 const query = new Query('select $1::text as name', ['brianc'])
 
 const result = client.query(query)
@@ -166,7 +166,7 @@ query.on('error', (err) => {
 
 ## client.end
 
-Disconnects the client from the PostgreSQL server.
+Disconnects the client from the GaussDB server.
 
 ```js
 await client.end()
@@ -181,10 +181,10 @@ console.log('client has disconnected')
 client.on('error', (err: Error) => void) => void
 ```
 
-When the client is in the process of connecting, dispatching a query, or disconnecting it will catch and forward errors from the PostgreSQL server to the respective `client.connect` `client.query` or `client.end` promise; however, the client maintains a long-lived connection to the PostgreSQL back-end and due to network partitions, back-end crashes, fail-overs, etc the client can (and over a long enough time period _will_) eventually be disconnected while it is idle. To handle this you may want to attach an error listener to a client to catch errors. Here's a contrived example:
+When the client is in the process of connecting, dispatching a query, or disconnecting it will catch and forward errors from the GaussDB server to the respective `client.connect` `client.query` or `client.end` promise; however, the client maintains a long-lived connection to the GaussDB back-end and due to network partitions, back-end crashes, fail-overs, etc the client can (and over a long enough time period _will_) eventually be disconnected while it is idle. To handle this you may want to attach an error listener to a client to catch errors. Here's a contrived example:
 
 ```js
-const client = new pg.Client()
+const client = new gaussdb.Client()
 client.connect()
 
 client.on('error', (err) => {
@@ -202,42 +202,6 @@ client.on('error', (err) => {
 client.on('end') => void
 ```
 
-When the client disconnects from the PostgreSQL server it will emit an end event once.
+When the client disconnects from the GaussDB server it will emit an end event once.
 
-### notification
 
-Used for `listen/notify` events:
-
-```ts
-type Notification {
-  processId: number,
-  channel: string,
-  payload?: string
-}
-```
-
-```js
-const client = new pg.Client()
-await client.connect()
-
-client.query('LISTEN foo')
-
-client.on('notification', (msg) => {
-  console.log(msg.channel) // foo
-  console.log(msg.payload) // bar!
-})
-
-client.query(`NOTIFY foo, 'bar!'`)
-```
-
-### notice
-
-```ts
-client.on('notice', (notice: Error) => void) => void
-```
-
-Used to log out [notice messages](https://www.postgresql.org/docs/9.6/static/plpgsql-errors-and-messages.html) from the PostgreSQL server.
-
-```js
-client.on('notice', (msg) => console.warn('notice:', msg))
-```

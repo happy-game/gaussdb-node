@@ -1,33 +1,34 @@
-# pg-pool
-[![Build Status](https://travis-ci.org/brianc/node-pg-pool.svg?branch=master)](https://travis-ci.org/brianc/node-pg-pool)
+# gaussdb-pool
+<!-- TODO: 构建后恢复 -->
+<!-- [![Build Status](https://travis-ci.org/brianc/node-pg-pool.svg?branch=master)](https://travis-ci.org/brianc/node-pg-pool) -->
 
-A connection pool for node-postgres
+A connection pool for gaussdb-node
 
 ## install
 ```sh
-npm i pg-pool pg
+npm i gaussdb-pool gaussdb
 ```
 
 ## use
 
 ### create
 
-to use pg-pool you must first create an instance of a pool
+to use gaussdb-pool you must first create an instance of a pool
 
 ```js
-const Pool = require('pg-pool')
+const Pool = require('gaussdb-pool')
 
 // by default the pool uses the same
-// configuration as whatever `pg` version you have installed
+// configuration as whatever `gaussdb` version you have installed
 const pool = new Pool()
 
 // you can pass properties to the pool
-// these properties are passed unchanged to both the node-postgres Client constructor
+// these properties are passed unchanged to both the gaussdb-node Client constructor
 // and the node-pool (https://github.com/coopernurse/node-pool) constructor
 // allowing you to fully configure the behavior of both
 const pool2 = new Pool({
-  database: 'postgres',
-  user: 'brianc',
+  database: 'gaussdb',
+  user: 'tset',
   password: 'secret!',
   port: 5432,
   ssl: true,
@@ -38,20 +39,20 @@ const pool2 = new Pool({
 })
 
 // you can supply a custom client constructor
-// if you want to use the native postgres client
-const NativeClient = require('pg').native.Client
+// if you want to use the native gaussdb client
+const NativeClient = require('gaussdb').native.Client
 const nativePool = new Pool({ Client: NativeClient })
 
 // you can even pool pg-native clients directly
-const PgNativeClient = require('pg-native')
-const pgNativePool = new Pool({ Client: PgNativeClient })
+const GaussNativeClient = require('pg-native')
+const GaussNativePool = new Pool({ Client: GaussNativeClient })
 ```
 
 ##### Note:
-The Pool constructor does not support passing a Database URL as the parameter. To use pg-pool on heroku, for example, you need to parse the URL into a config object. Here is an example of how to parse a Database URL.
+The Pool constructor does not support passing a Database URL as the parameter. To use gaussdb-pool on heroku, for example, you need to parse the URL into a config object. Here is an example of how to parse a Database URL.
 
 ```js
-const Pool = require('pg-pool');
+const Pool = require('gaussdb-pool');
 const url = require('url')
 
 const params = url.parse(process.env.DATABASE_URL);
@@ -83,12 +84,12 @@ const pool = new Pool(config);
 
 ### acquire clients with a promise
 
-pg-pool supports a fully promise-based api for acquiring clients
+gaussdb-pool supports a fully promise-based api for acquiring clients
 
 ```js
 const pool = new Pool()
 pool.connect().then(client => {
-  client.query('select $1::text as name', ['pg-pool']).then(res => {
+  client.query('select $1::text as name', ['gaussdb-pool']).then(res => {
     client.release()
     console.log('hello from', res.rows[0].name)
   })
@@ -130,7 +131,7 @@ co(function * () {
 
 ### your new favorite helper method
 
-because its so common to just run a query and return the client to the pool afterward pg-pool has this built-in:
+because its so common to just run a query and return the client to the pool afterward gaussdb-pool has this built-in:
 
 ```js
 const pool = new Pool()
@@ -155,14 +156,14 @@ clients back to the pool after the query is done.
 
 ### drop-in backwards compatible
 
-pg-pool still and will always support the traditional callback api for acquiring a client.  This is the exact API node-postgres has shipped with for years:
+gaussdb-pool still and will always support the traditional callback api for acquiring a client:
 
 ```js
 const pool = new Pool()
 pool.connect((err, client, done) => {
   if (err) return done(err)
 
-  client.query('SELECT $1::text as name', ['pg-pool'], (err, res) => {
+  client.query('SELECT $1::text as name', ['gaussdb-pool'], (err, res) => {
     done()
     if (err) {
       return console.error('query error', err.message, err.stack)
@@ -194,7 +195,7 @@ The pool should be a __long-lived object__ in your application.  Generally you'l
 
 // correct usage: create the pool and let it live
 // 'globally' here, controlling access to it through exported methods
-const pool = new pg.Pool()
+const pool = new gaussdb.Pool()
 
 // this is the right way to export the query method
 module.exports.query = (text, values) => {
@@ -208,7 +209,7 @@ module.exports.connect = () => {
   // every time we called 'connect' to get a new client?
   // that's a bad thing & results in creating an unbounded
   // number of pools & therefore connections
-  const aPool = new pg.Pool()
+  const aPool = new gaussdb.Pool()
   return aPool.connect()
 }
 ```
@@ -219,12 +220,12 @@ Every instance of a `Pool` is an event emitter.  These instances emit the follow
 
 #### error
 
-Emitted whenever an idle client in the pool encounters an error.  This is common when your PostgreSQL server shuts down, reboots, or a network partition otherwise causes it to become unavailable while your pool has connected clients.
+Emitted whenever an idle client in the pool encounters an error.  This is common when your Gaussdb server shuts down, reboots, or a network partition otherwise causes it to become unavailable while your pool has connected clients.
 
 Example:
 
 ```js
-const Pool = require('pg-pool')
+const Pool = require('gaussdb-pool')
 const pool = new Pool()
 
 // attach an error handler to the pool for when a connected, idle client
@@ -237,12 +238,12 @@ pool.on('error', function(error, client) {
 
 #### connect
 
-Fired whenever the pool creates a __new__ `pg.Client` instance and successfully connects it to the backend.
+Fired whenever the pool creates a __new__ `gaussdb.Client` instance and successfully connects it to the backend.
 
 Example:
 
 ```js
-const Pool = require('pg-pool')
+const Pool = require('gaussdb-pool')
 const pool = new Pool()
 
 const count = 0
@@ -272,7 +273,7 @@ Example:
 This allows you to count the number of clients which have ever been acquired from the pool.
 
 ```js
-const Pool = require('pg-pool')
+const Pool = require('gaussdb-pool')
 const pool = new Pool()
 
 const acquireCount = 0
@@ -298,17 +299,16 @@ setTimeout(function () {
 
 ### environment variables
 
-pg-pool & node-postgres support some of the same environment variables as `psql` supports.  The most common are:
+gaussdb-pool & gaussdb-node support some of the same environment variables as `psql` supports.  The most common are:
 
 ```
-PGDATABASE=my_db
-PGUSER=username
-PGPASSWORD="my awesome password"
-PGPORT=5432
-PGSSLMODE=require
+GAUSSDATABASE=my_db
+GAUSSUSER=username
+GAUSSPASSWORD="my awesome password"
+GAUSSPORT=5432
+GAUSSSSLMODE=require
 ```
 
-Usually I will export these into my local environment via a `.env` file with environment settings or export them in `~/.bash_profile` or something similar.  This way I get configurability which works with both the postgres suite of tools (`psql`, `pg_dump`, `pg_restore`) and node, I can vary the environment variables locally and in production, and it supports the concept of a [12-factor app](http://12factor.net/) out of the box.
 
 ## bring your own promise
 
@@ -360,14 +360,12 @@ maxUses = rebalanceWindowSeconds * totalRequestsPerSecond / numAppInstances / po
 
 To run tests clone the repo, `npm i` in the working dir, and then run `npm test`
 
-## contributions
-
-I love contributions.  Please make sure they have tests, and submit a PR.  If you're not sure if the issue is worth it or will be accepted it never hurts to open an issue to begin the conversation.  If you're interested in keeping up with node-postgres releated stuff, you can follow me on twitter at [@briancarlson](https://twitter.com/briancarlson) - I generally announce any noteworthy updates there.
 
 ## license
 
 The MIT License (MIT)
 Copyright (c) 2016 Brian M. Carlson
+Copyright (c) 2025 happy-game
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

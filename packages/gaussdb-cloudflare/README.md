@@ -12,7 +12,7 @@ npm i --save-dev gaussdb-cloudflare
 
 ## How to use conditionally, in non-Node.js environments
 
-As implemented in `pg` [here](https://github.com/brianc/node-postgres/commit/07553428e9c0eacf761a5d4541a3300ff7859578#diff-34588ad868ebcb232660aba7ee6a99d1e02f4bc93f73497d2688c3f074e60533R5-R13), a typical use case might look as follows, where in a Node.js environment the `net` module is used, while in a non-Node.js environment, where `net` is unavailable, `gaussdb-cloudflare` is used instead, providing an equivalent interface:
+As implemented in `gaussdb` [here](https://github.com/HuaweiCloudDeveloper/gaussdb-node/commit/07553428e9c0eacf761a5d4541a3300ff7859578#diff-34588ad868ebcb232660aba7ee6a99d1e02f4bc93f73497d2688c3f074e60533R5-R13), a typical use case might look as follows, where in a Node.js environment the `net` module is used, while in a non-Node.js environment, where `net` is unavailable, `gaussdb-cloudflare` is used instead, providing an equivalent interface:
 
 ```js
 module.exports.getStream = function getStream(ssl = false) {
@@ -35,6 +35,7 @@ If you're looking for a way to rely on `connect()` as the interface you use to i
 The MIT License (MIT)
 
 Copyright (c) 2023 Brian M. Carlson
+Copyright (c) 2025 happy-game
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
