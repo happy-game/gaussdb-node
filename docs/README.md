@@ -1,6 +1,6 @@
-# node-postgres docs website
+# gaussdb-node docs
 
-This is the documentation for node-postgres which is currently hosted at [https://node-postgres.com](https://node-postgres.com).
+This is the documentation for gaussdb-node.
 
 ## Development
 

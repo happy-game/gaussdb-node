@@ -1,14 +1,16 @@
 ---
-title: Connecting
+## Environment variables
+
+Both individual clients & pools will use these environment variables. Here's a tiny program connecting node.js to the GaussDB server:le: Connecting
 ---
 
 ## Environment variables
 
-node-postgres uses the same [environment variables](https://www.postgresql.org/docs/9.1/static/libpq-envars.html) as libpq and psql to connect to a PostgreSQL server. Both individual clients & pools will use these environment variables. Here's a tiny program connecting node.js to the PostgreSQL server:
+Both individual clients & pools will use these environment variables. Here's a tiny program connecting node.js to the GaussDB server:
 
 ```js
-import pg from 'pg'
-const { Pool, Client } = pg
+import gaussdb from 'gaussdb'
+const { Pool, Client } = gaussdb
 
 // pools will use environment variables
 // for connection information
@@ -30,11 +32,11 @@ await client.end()
 To run the above program and specify which database to connect to we can invoke it like so:
 
 ```sh
-$ PGUSER=dbuser \
-  PGPASSWORD=secretpassword \
-  PGHOST=database.server.com \
-  PGPORT=3211 \
-  PGDATABASE=mydb \
+$ GAUSSDB_USER=dbuser \
+  GAUSSDB_PASSWORD=secretpassword \
+  GAUSSDB_HOST=database.server.com \
+  GAUSSDB_PORT=3211 \
+  GAUSSDB_DATABASE=mydb \
   node script.js
 ```
 
@@ -43,20 +45,20 @@ This allows us to write our programs without having to specify connection inform
 The default values for the environment variables used are:
 
 ```
-PGUSER=process.env.USER
-PGPASSWORD=null
-PGHOST=localhost
-PGPORT=5432
-PGDATABASE=process.env.USER
+GAUSSDB_USER=process.env.USER (fallback to GAUSSUSER)
+GAUSSDB_PASSWORD=null (fallback to GAUSSPASSWORD)
+GAUSSDB_HOST=localhost (fallback to GAUSSHOST)
+GAUSSDB_PORT=5432 (fallback to GAUSSPORT)
+GAUSSDB_DATABASE=process.env.USER (fallback to GAUSSDATABASE)
 ```
 
 ## Programmatic
 
-node-postgres also supports configuring a pool or client programmatically with connection information. Here's our same script from above modified to use programmatic (hard-coded in this case) values. This can be useful if your application already has a way to manage config values or you don't want to use environment variables.
+gaussdb-node also supports configuring a pool or client programmatically with connection information. Here's our same script from above modified to use programmatic (hard-coded in this case) values. This can be useful if your application already has a way to manage config values or you don't want to use environment variables.
 
 ```js
-import pg from 'pg'
-const { Pool, Client } = pg
+import gaussdb from 'gaussdb'
+const { Pool, Client } = gaussdb
 
 const pool = new Pool({
   user: 'dbuser',
@@ -83,11 +85,11 @@ console.log(await client.query('SELECT NOW()'))
 await client.end()
 ```
 
-Many cloud providers include alternative methods for connecting to database instances using short-lived authentication tokens. node-postgres supports dynamic passwords via a callback function, either synchronous or asynchronous. The callback function must resolve to a string.
+Many cloud providers include alternative methods for connecting to database instances using short-lived authentication tokens. gaussdb-node supports dynamic passwords via a callback function, either synchronous or asynchronous. The callback function must resolve to a string.
 
 ```js
-import pg from 'pg'
-const { Pool } = pg
+import gaussdb from 'gaussdb'
+const { Pool } = gaussdb
 import { RDS } from 'aws-sdk'
 
 const signerOptions = {
@@ -119,8 +121,8 @@ const pool = new Pool({
 Connections to unix sockets can also be made. This can be useful on distros like Ubuntu, where authentication is managed via the socket connection instead of a password.
 
 ```js
-import pg from 'pg'
-const { Client } = pg
+import gaussdb from 'gaussdb'
+const { Client } = gaussdb
 client = new Client({
   user: 'username',
   password: 'password',
@@ -131,12 +133,12 @@ client = new Client({
 
 ## Connection URI
 
-You can initialize both a pool and a client with a connection string URI as well. This is common in environments like Heroku where the database connection string is supplied to your application dyno through an environment variable. Connection string parsing brought to you by [pg-connection-string](https://github.com/brianc/node-postgres/tree/master/packages/pg-connection-string).
+You can initialize both a pool and a client with a connection string URI as well. This is common in environments like Heroku where the database connection string is supplied to your application dyno through an environment variable. Connection string parsing brought to you by [gaussdb-connection-string](https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/gaussdb-connection-string).
 
 ```js
-import pg from 'pg'
-const { Pool, Client } = pg
-const connectionString = 'postgresql://dbuser:secretpassword@database.server.com:3211/mydb'
+import gaussdb from 'gaussdb'
+const { Pool, Client } = gaussdb
+const connectionString = 'gaussdb://dbuser:secretpassword@database.server.com:3211/mydb'
 
 const pool = new Pool({
   connectionString,

@@ -1,5 +1,5 @@
 ---
-title: pg.Cursor
+title: gaussdb.Cursor
 slug: /apis/cursor
 ---
 
@@ -8,7 +8,7 @@ A cursor can be used to efficiently read through large result sets without loadi
 ## install
 
 ```
-$ npm install pg pg-cursor
+$ npm install gaussdb gaussdb-cursor
 ```
 
 ## constructor
@@ -18,8 +18,8 @@ $ npm install pg pg-cursor
 Instantiates a new Cursor. A cursor is an instance of `Submittable` and should be passed directly to the `client.query` method.
 
 ```js
-import { Pool } from 'pg'
-import Cursor from 'pg-cursor'
+import { Pool } from 'gaussdb'
+import Cursor from 'gaussdb-cursor'
 
 const pool = new Pool()
 const client = await pool.connect()
@@ -55,8 +55,8 @@ If the cursor has read to the end of the result sets all subsequent calls to cur
 Here is an example of reading to the end of a cursor:
 
 ```js
-import { Pool } from 'pg'
-import Cursor from 'pg-cursor'
+import { Pool } from 'gaussdb'
+import Cursor from 'gaussdb-cursor'
 
 const pool = new Pool()
 const client = await pool.connect()

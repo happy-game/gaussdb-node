@@ -4,7 +4,7 @@ title: Transactions
 
 import { Alert } from '/components/alert.tsx'
 
-To execute a transaction with node-postgres you simply execute `BEGIN / COMMIT / ROLLBACK` queries yourself through a client. Because node-postgres strives to be low level and un-opinionated, it doesn't provide any higher level abstractions specifically around transactions.
+To execute a transaction with gaussdb-node you simply execute `BEGIN / COMMIT / ROLLBACK` queries yourself through a client. Because gaussdb-node strives to be low level and un-opinionated, it doesn't provide any higher level abstractions specifically around transactions.
 
 <Alert>
   You <strong>must</strong> use the <em>same</em> client instance for all statements within a transaction. PostgreSQL
@@ -16,7 +16,7 @@ To execute a transaction with node-postgres you simply execute `BEGIN / COMMIT /
 ## Examples
 
 ```js
-import { Pool } from 'pg'
+import { Pool } from 'gaussdb'
 const pool = new Pool()
 
 const client = await pool.connect()

@@ -1,8 +1,8 @@
 {
-  "client": "pg.Client",
-  "pool": "pg.Pool",
-  "result": "pg.Result",
-  "types": "pg.Types",
+  "client": "gaussdb.Client",
+  "pool": "gaussdb.Pool",
+  "result": "gaussdb.Result",
+  "types": "gaussdb.Types",
   "cursor": "Cursor",
   "utilities": "Utilities"
 }

@@ -1,9 +1,9 @@
 ---
-title: pg.Result
+title: gaussdb.Result
 slug: /apis/result
 ---
 
-The `pg.Result` shape is returned for every successful query.
+The `gaussdb.Result` shape is returned for every successful query.
 
 <div className="alert alert-info">note: you cannot instantiate this directly</div>
 
@@ -18,8 +18,8 @@ Every result will have a rows array. If no rows are returned the array will be e
 Every result will have a fields array. This array contains the `name` and `dataTypeID` of each field in the result. These fields are ordered in the same order as the columns if you are using `arrayMode` for the query:
 
 ```js
-import pg from 'pg'
-const { Pool } = pg
+import gaussdb from 'gaussdb'
+const { Pool } = gaussdb
 
 const pool = new Pool()
 
