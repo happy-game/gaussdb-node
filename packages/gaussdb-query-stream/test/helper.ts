@@ -1,4 +1,4 @@
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 
 export default function (name, cb) {
   describe(name, function () {

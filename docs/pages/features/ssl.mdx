@@ -22,7 +22,7 @@ const config = {
   },
 }
 
-import { Client, Pool } from 'gaussdb'
+import { Client, Pool } from 'gaussdb-node'
 
 const client = new Client(config)
 await client.connect()

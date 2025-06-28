@@ -27,7 +27,7 @@ const pool = new Pool()
 // and the node-pool (https://github.com/coopernurse/node-pool) constructor
 // allowing you to fully configure the behavior of both
 const pool2 = new Pool({
-  database: 'gaussdb',
+  database: 'gaussdb-node',
   user: 'tset',
   password: 'secret!',
   port: 5432,
@@ -40,7 +40,7 @@ const pool2 = new Pool({
 
 // you can supply a custom client constructor
 // if you want to use the native gaussdb client
-const NativeClient = require('gaussdb').native.Client
+const NativeClient = require('gaussdb-node').native.Client
 const nativePool = new Pool({ Client: NativeClient })
 
 // you can even pool pg-native clients directly

@@ -1,4 +1,4 @@
-import { Pool } from 'gaussdb'
+import { Pool } from 'gaussdb-node'
 import { test } from 'vitest'
 import assert from 'node:assert'
 import args from '../cli'

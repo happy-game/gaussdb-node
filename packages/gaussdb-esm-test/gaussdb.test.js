@@ -11,9 +11,9 @@ import gaussdb, {
   escapeLiteral,
   Result,
   TypeOverrides,
-} from 'gaussdb'
+} from 'gaussdb-node'
 
-describe('gaussdb', () => {
+describe('gaussdb-node', () => {
   it('should export Client constructor', () => {
     assert.ok(new Client())
   })

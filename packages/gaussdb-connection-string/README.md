@@ -39,7 +39,7 @@ The resulting config contains a subset of the following properties:
 The gaussdb-connection-string `ConnectionOptions` interface is not compatible with the `ClientConfig` interface that [gaussdb.Client](https://node-gaussdb.com/apis/client) expects. To remedy this, use the `parseIntoClientConfig` function instead of `parse`:
 
 ```ts
-import { ClientConfig } from 'gaussdb';
+import { ClientConfig } from 'gaussdb-node';
 import { parseIntoClientConfig } from 'gaussdb-connection-string';
 
 const config: ClientConfig = parseIntoClientConfig('gaussdb://someuser:somepassword@somehost:381/somedatabase')
@@ -48,7 +48,7 @@ const config: ClientConfig = parseIntoClientConfig('gaussdb://someuser:somepassw
 You can also use `toClientConfig` to convert an existing `ConnectionOptions` interface into a `ClientConfig` interface:
 
 ```ts
-import { ClientConfig } from 'gaussdb';
+import { ClientConfig } from 'gaussdb-node';
 import { parse, toClientConfig } from 'gaussdb-connection-string';
 
 const config = parse('gaussdb://someuser:somepassword@somehost:381/somedatabase')

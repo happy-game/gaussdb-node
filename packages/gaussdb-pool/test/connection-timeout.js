@@ -138,7 +138,7 @@ describe('connection timeout', () => {
   })
 
   it('continues processing after a connection failure', (done) => {
-    const Client = require('gaussdb').Client
+    const Client = require('gaussdb-node').Client
     const orgConnect = Client.prototype.connect
     let called = false
 
@@ -173,7 +173,7 @@ describe('connection timeout', () => {
   })
 
   it('releases newly connected clients if the queued already timed out', (done) => {
-    const Client = require('gaussdb').Client
+    const Client = require('gaussdb-node').Client
 
     const orgConnect = Client.prototype.connect
 

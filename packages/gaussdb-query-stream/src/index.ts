@@ -1,5 +1,5 @@
 import { Readable } from 'stream'
-import { Submittable, Connection } from 'gaussdb'
+import { Submittable, Connection } from 'gaussdb-node'
 import Cursor from 'gaussdb-cursor'
 
 interface QueryStreamConfig {

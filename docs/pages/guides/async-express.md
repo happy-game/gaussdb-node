@@ -22,7 +22,7 @@ That's the same structure I used in the [project structure](/guides/project-stru
 My `db/index.js` file usually starts out like this:
 
 ```js
-import { Pool } from 'gaussdb'
+import { Pool } from 'gaussdb-node'
 
 const pool = new Pool()
 

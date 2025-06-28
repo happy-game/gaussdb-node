@@ -1,5 +1,5 @@
 {
-  "name": "gaussdb",
+  "name": "gaussdb-node",
   "version": "0.1.0",
   "description": "GaussDB client - pure javascript & libpq with the same API",
   "keywords": [

@@ -1,4 +1,4 @@
-const gaussdb = require('gaussdb').native
+const gaussdb = require('gaussdb-node').native
 const Native = require('../')
 
 const warmup = function (fn, cb) {

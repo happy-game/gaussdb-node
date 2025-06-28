@@ -1,4 +1,4 @@
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 import assert from 'assert'
 import QueryStream from '../src'
 

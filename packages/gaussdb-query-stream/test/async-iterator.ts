@@ -1,5 +1,5 @@
 import QueryStream from '../src'
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 import assert from 'assert'
 
 const queryText = 'SELECT * FROM generate_series(0, 200) num'
