@@ -4,7 +4,7 @@ title: ESM
 
 ## ESM Support
 
-As of v8.15.x gaussdb-node supporters the __ECMAScript Module__ (ESM) format. This means you can use `import` statements instead of `require` or `import gaussdb from 'gaussdb'`.
+As of v8.15.x gaussdb-node supporters the __ECMAScript Module__ (ESM) format. This means you can use `import` statements instead of `require` or `import gaussdb from 'gaussdb-node'`.
 
 CommonJS modules are still supported. The ESM format is an opt-in feature and will not affect existing codebases that use CommonJS.
 
@@ -13,7 +13,7 @@ The docs have been changed to show ESM usage, but in a CommonJS context you can 
 If you're using CommonJS, you can use the following code to import the `gaussdb` module:
 
 ```js
-  const gaussdb = require('gaussdb')
+  const gaussdb = require('gaussdb-node')
   const { Client } = gaussdb
   // etc...
 ```
@@ -23,7 +23,7 @@ If you're using CommonJS, you can use the following code to import the `gaussdb`
 If you're using ESM, you can use the following code to import the `gaussdb` module:
 
 ```js
-  import { Client } from 'gaussdb'
+  import { Client } from 'gaussdb-node'
   // etc...
 ```
 
@@ -31,7 +31,7 @@ If you're using ESM, you can use the following code to import the `gaussdb` modu
 Previously if you were using ESM you would have to use the following code:
 
 ```js
-  import gaussdb from 'gaussdb'
+  import gaussdb from 'gaussdb-node'
   const { Client } = gaussdb
   // etc...
 ```

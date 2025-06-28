@@ -1,7 +1,7 @@
 'use strict'
 const assert = require('assert')
 const Cursor = require('../')
-const gaussdb = require('gaussdb')
+const gaussdb = require('gaussdb-node')
 
 describe('query config passed to result', () => {
   it('passes rowMode to result', (done) => {

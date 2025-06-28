@@ -14,7 +14,7 @@ _requires gaussdb>=2.8.1_
 ## use
 
 ```js
-const gaussdb = require('gaussdb')
+const gaussdb = require('gaussdb-node')
 const pool = new gaussdb.Pool()
 const QueryStream = require('gaussdb-query-stream')
 const JSONStream = require('JSONStream')

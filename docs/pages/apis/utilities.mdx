@@ -9,7 +9,7 @@ import { Alert } from '/components/alert.tsx'
 Escapes a string as a [SQL identifier](https://www.gaussdb.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS).
 
 ```js
-import { escapeIdentifier } from 'gaussdb';
+import { escapeIdentifier } from 'gaussdb-node';
 const escapedIdentifier = escapeIdentifier('FooIdentifier')
 console.log(escapedIdentifier) // '"FooIdentifier"'
 ```
@@ -27,7 +27,7 @@ console.log(escapedIdentifier) // '"FooIdentifier"'
 Escapes a string as a [SQL literal](https://www.gaussdb.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS).
 
 ```js
-import { escapeLiteral } from 'gaussdb';
+import { escapeLiteral } from 'gaussdb-node';
 const escapedLiteral = escapeLiteral("hello 'world'")
 console.log(escapedLiteral) // "'hello ''world'''"
 ```

@@ -1,4 +1,4 @@
-import { ClientConfig } from 'gaussdb'
+import { ClientConfig } from 'gaussdb-node'
 
 export function parse(connectionString: string, options?: Options): ConnectionOptions
 

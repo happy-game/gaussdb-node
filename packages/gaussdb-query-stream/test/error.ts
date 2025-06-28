@@ -1,7 +1,7 @@
 import assert from 'assert'
 import helper from './helper'
 import QueryStream from '../src'
-import { Pool, Client } from 'gaussdb'
+import { Pool, Client } from 'gaussdb-node'
 
 helper('error', function (client) {
   it('receives error on stream', function (done) {

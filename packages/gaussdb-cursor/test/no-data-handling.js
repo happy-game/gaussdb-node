@@ -1,5 +1,5 @@
 const assert = require('assert')
-const gaussdb = require('gaussdb')
+const gaussdb = require('gaussdb-node')
 const Cursor = require('../')
 
 describe('queries with no data', function () {

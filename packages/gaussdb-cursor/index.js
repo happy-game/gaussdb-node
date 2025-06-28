@@ -1,7 +1,7 @@
 'use strict'
 // note: can remove these deep requires when we bump min version of pg to 9.x
-const Result = require('gaussdb/lib/result.js')
-const prepare = require('gaussdb/lib/utils.js').prepareValue
+const Result = require('gaussdb-node/lib/result.js')
+const prepare = require('gaussdb-node/lib/utils.js').prepareValue
 const EventEmitter = require('events').EventEmitter
 const util = require('util')
 

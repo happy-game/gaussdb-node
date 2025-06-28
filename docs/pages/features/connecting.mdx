@@ -9,7 +9,7 @@ Both individual clients & pools will use these environment variables. Here's a t
 Both individual clients & pools will use these environment variables. Here's a tiny program connecting node.js to the GaussDB server:
 
 ```js
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 const { Pool, Client } = gaussdb
 
 // pools will use environment variables
@@ -57,7 +57,7 @@ GAUSSDB_DATABASE=process.env.USER (fallback to GAUSSDATABASE)
 gaussdb-node also supports configuring a pool or client programmatically with connection information. Here's our same script from above modified to use programmatic (hard-coded in this case) values. This can be useful if your application already has a way to manage config values or you don't want to use environment variables.
 
 ```js
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 const { Pool, Client } = gaussdb
 
 const pool = new Pool({
@@ -88,7 +88,7 @@ await client.end()
 Many cloud providers include alternative methods for connecting to database instances using short-lived authentication tokens. gaussdb-node supports dynamic passwords via a callback function, either synchronous or asynchronous. The callback function must resolve to a string.
 
 ```js
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 const { Pool } = gaussdb
 import { RDS } from 'aws-sdk'
 
@@ -121,7 +121,7 @@ const pool = new Pool({
 Connections to unix sockets can also be made. This can be useful on distros like Ubuntu, where authentication is managed via the socket connection instead of a password.
 
 ```js
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 const { Client } = gaussdb
 client = new Client({
   user: 'username',
@@ -136,7 +136,7 @@ client = new Client({
 You can initialize both a pool and a client with a connection string URI as well. This is common in environments like Heroku where the database connection string is supplied to your application dyno through an environment variable. Connection string parsing brought to you by [gaussdb-connection-string](https://github.com/HuaweiCloudDeveloper/gaussdb-node/tree/master/packages/gaussdb-connection-string).
 
 ```js
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 const { Pool, Client } = gaussdb
 const connectionString = 'gaussdb://dbuser:secretpassword@database.server.com:3211/mydb'
 

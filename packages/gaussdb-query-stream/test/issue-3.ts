@@ -1,4 +1,4 @@
-import gaussdb from 'gaussdb'
+import gaussdb from 'gaussdb-node'
 import QueryStream from '../src'
 
 describe('end semantics race condition', function () {
