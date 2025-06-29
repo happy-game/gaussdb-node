@@ -25,9 +25,11 @@ services:
       GAUSSUSER: gaussdb
       GAUSSDATABASE: data
       GAUSSHOST: db
-      # set this to true in the development environment until I can get SSL setup on the 
-      # docker postgres instance
-      GAUSSTESTNOSSL: 'true'
+      # SHA256 test user configuration (matching CI)
+      SHA256_TEST_GAUSSUSER: sha256_test
+      SHA256_TEST_GAUSSPASSWORD: test4@scram
+      # SSL configuration
+      GAUSSTESTNOSSL: 'false'
       
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -43,7 +45,6 @@ services:
     restart: unless-stopped
     ports: 
       - 5432:5432
-    # command: postgres -c password_encryption=md5
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_INITDB_ARGS: "--auth-local=md5"
@@ -51,3 +52,15 @@ services:
       GS_PASSWORD: openGauss@123
       GS_USER_PASSWORD: openGauss@123
       GS_DB: data
+    volumes:
+      - db-data:/var/lib/opengauss/data
+      - ./ssl:/tmp/ssl
+    # Add health check to ensure database is ready
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:

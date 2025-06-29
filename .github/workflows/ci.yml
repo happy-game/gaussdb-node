@@ -55,16 +55,48 @@ jobs:
       GAUSSPASSWORD: openGauss@123
       GAUSSHOST: localhost
       GAUSSDATABASE: ci_db_test
-      GAUSSTESTNOSSL: 'true'
+      # GAUSSTESTNOSSL: 'true'
       SHA256_TEST_GAUSSUSER: sha256_test
       SHA256_TEST_GAUSSPASSWORD: test4@scram
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Show OS
         run: |
           uname -a
       - name: Wait for GaussDB to be ready
         run: |
           timeout 60 bash -c 'until pg_isready -h localhost -p 5432; do sleep 2; done'
+      - name: Setup SSL certificates
+        run: |
+          # Get container ID
+          CONTAINER_ID=$(docker ps --filter "ancestor=opengauss/opengauss" --format "{{.ID}}")
+          
+          # Create SSL directory in container
+          docker exec $CONTAINER_ID mkdir -p /tmp/ssl
+          
+          # Copy pre-generated certificates to container
+          docker cp .github/ssl/server.crt $CONTAINER_ID:/tmp/ssl/
+          docker cp .github/ssl/server.key $CONTAINER_ID:/tmp/ssl/
+          
+          # Set proper permissions
+          docker exec $CONTAINER_ID chown omm:omm /tmp/ssl/server.crt /tmp/ssl/server.key
+          docker exec $CONTAINER_ID chmod 600 /tmp/ssl/server.key
+          docker exec $CONTAINER_ID chmod 644 /tmp/ssl/server.crt
+          
+          # Configure SSL in postgresql.conf
+          docker exec $CONTAINER_ID sed -i "s/#ssl = off/ssl = on/" /var/lib/opengauss/data/postgresql.conf
+          docker exec $CONTAINER_ID sed -i "s/#ssl_ciphers = 'HIGH:MEDIUM:+3DES:!aNULL'/ssl_ciphers = 'ALL'/" /var/lib/opengauss/data/postgresql.conf
+          docker exec $CONTAINER_ID sed -i "s|#ssl_cert_file = 'server.crt'|ssl_cert_file = '/tmp/ssl/server.crt'|" /var/lib/opengauss/data/postgresql.conf
+          docker exec $CONTAINER_ID sed -i "s|#ssl_key_file = 'server.key'|ssl_key_file = '/tmp/ssl/server.key'|" /var/lib/opengauss/data/postgresql.conf
+          
+          # Restart GaussDB container to apply SSL settings
+          docker restart $CONTAINER_ID
+          
+          # Wait for database to be ready after restart
+          timeout 60 bash -c 'until pg_isready -h localhost -p 5432; do sleep 2; done'
+          
       - name: Setup SHA256 authentication
         run: |
           # Wait for database to be fully started
@@ -80,13 +112,11 @@ jobs:
           sleep 5
           
           PGPASSWORD=openGauss@123 psql -h localhost -U ci_user -d ci_db_test -c "CREATE ROLE sha256_test login password 'test4@scram';"
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: yarn
       - run: yarn install --frozen-lockfile
+      - run: node a.js
       - run: yarn test
