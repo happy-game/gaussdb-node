@@ -1,10 +1,9 @@
 {
   "name": "gaussdb-node",
   "version": "0.2.0",
-  "description": "GaussDB client - pure javascript & libpq with the same API",
+  "description": "GaussDB client - pure javascript implementation",
   "keywords": [
     "database",
-    "libpq",
     "gaussdb",
     "rdbms"
   ],
@@ -50,12 +49,10 @@
     "gaussdb-cloudflare": "^0.2.0"
   },
   "peerDependencies": {
-    "pg-native": ">=3.0.1"
+    
   },
   "peerDependenciesMeta": {
-    "pg-native": {
-      "optional": true
-    }
+    
   },
   "scripts": {
     "test": "make test-all"

@@ -4,16 +4,15 @@
 
 ### Features
 
-- Pure JavaScript client and native libpq bindings share _the same API_
 - Connection pooling
 - Extensible JS ↔ GaussDB data-type coercion
 
-Non-blocking GaussDB client for Node.js. Pure JavaScript and optional native libpq bindings.
+Non-blocking GaussDB client for Node.js.
 
 ## Install
 
 ```sh
-$ npm install gaussdb
+$ npm install gaussdb-node
 ```
 
 ---
@@ -22,7 +21,6 @@ $ npm install gaussdb
 
 ### Features
 
-- Pure JavaScript client and native libpq bindings share _the same API_
 - Connection pooling
 - Extensible JS ↔ Gaussdb data-type coercion
 - Supported Gaussdb features

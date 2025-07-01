@@ -1,13 +1,10 @@
 'use strict'
 const helper = require('./../test-helper')
-let { Client } = helper
+const { Client } = helper
 const assert = require('assert')
 
-if (helper.args.native) {
-  Client = require('./../../lib/native')
-  helper.Client = Client
-  helper.gaussdb = helper.gaussdb.native
-}
+// Native bindings are no longer supported
+// All tests now use pure JavaScript implementation
 
 // creates a client from cli parameters
 helper.client = function (cb) {

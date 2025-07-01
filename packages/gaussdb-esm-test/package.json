@@ -18,8 +18,7 @@
     "gaussdb-cursor": "^0.2.0",
     "gaussdb-pool": "^0.2.0",
     "gaussdb-protocol": "^0.2.0",
-    "gaussdb-query-stream": "^0.2.0",
-    "pg-native": "^3.5.0"
+    "gaussdb-query-stream": "^0.2.0"
   },
   "author": "Brian M. Carlson <brian.m.carlson@gmail.com>",
   "license": "MIT"

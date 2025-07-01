@@ -38,14 +38,6 @@ const pool2 = new Pool({
   maxUses: 7500, // close (and replace) a connection after it has been used 7500 times (see below for discussion)
 })
 
-// you can supply a custom client constructor
-// if you want to use the native gaussdb client
-const NativeClient = require('gaussdb-node').native.Client
-const nativePool = new Pool({ Client: NativeClient })
-
-// you can even pool pg-native clients directly
-const GaussNativeClient = require('pg-native')
-const GaussNativePool = new Pool({ Client: GaussNativeClient })
 ```
 
 ##### Note:

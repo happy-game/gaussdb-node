@@ -34,32 +34,5 @@ const GAUSSDB = function (clientConstructor) {
   this.utils = utils
 }
 
-// TODO: NODE_PG_FORCE_NATIVE or NODE_GAUSS_FORCE_NATIVE
-if (typeof process.env.NODE_PG_FORCE_NATIVE !== 'undefined') {
-  module.exports = new GAUSSDB(require('./native'))
-} else {
-  module.exports = new GAUSSDB(Client)
-
-  // lazy require native module...the native module may not have installed
-  Object.defineProperty(module.exports, 'native', {
-    configurable: true,
-    enumerable: false,
-    get() {
-      let native = null
-      try {
-        native = new GAUSSDB(require('./native'))
-      } catch (err) {
-        if (err.code !== 'MODULE_NOT_FOUND') {
-          throw err
-        }
-      }
-
-      // overwrite module.exports.native so that getter is never called again
-      Object.defineProperty(module.exports, 'native', {
-        value: native,
-      })
-
-      return native
-    },
-  })
-}
+// Native bindings are no longer supported
+module.exports = new GAUSSDB(Client)
