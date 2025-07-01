@@ -10,6 +10,7 @@ if (process.env.GAUSSTESTNOSSL) {
   return
 }
 
+// TODO: remove native bindings support
 suite.testAsync('it should connect over ssl', async () => {
   const ssl = helper.args.native
     ? 'require'

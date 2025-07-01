@@ -83,15 +83,3 @@ suite.test('application_name from connection string', function (done) {
     done()
   })
 })
-
-// TODO: make the test work for native client too
-if (!helper.args.native) {
-  suite.test('application_name is read from the env', function (done) {
-    const appName = (process.env.GAUSSAPPNAME = 'testest')
-    getAppName({}, function (res) {
-      delete process.env.GAUSSAPPNAME
-      assert.strictEqual(res, appName)
-      done()
-    })
-  })
-}

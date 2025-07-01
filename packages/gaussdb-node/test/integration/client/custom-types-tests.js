@@ -38,21 +38,20 @@ suite.test('custom type parser in client config with multiple results', (done) =
 })
 
 // Custom type-parsers per query are not supported in native
-if (!helper.args.native) {
-  suite.test('custom type parser in query', (done) => {
-    const client = new Client()
+// Native bindings are no longer supported, always check DatabaseError
+suite.test('custom type parser in query', (done) => {
+  const client = new Client()
 
-    client.connect().then(() => {
-      client.query(
-        {
-          text: 'SELECT NOW() as val',
-          types: customTypes,
-        },
-        assert.success(function (res) {
-          assert.equal(res.rows[0].val, 'okay!')
-          client.end().then(done)
-        })
-      )
-    })
+  client.connect().then(() => {
+    client.query(
+      {
+        text: 'SELECT NOW() as val',
+        types: customTypes,
+      },
+      assert.success(function (res) {
+        assert.equal(res.rows[0].val, 'okay!')
+        client.end().then(done)
+      })
+    )
   })
-}
+})

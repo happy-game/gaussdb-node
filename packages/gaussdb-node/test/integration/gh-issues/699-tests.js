@@ -2,7 +2,7 @@
 const helper = require('../test-helper')
 const copyFrom = require('pg-copy-streams').from
 
-if (helper.args.native) return
+// Native bindings are no longer supported, test always runs now
 
 const pool = new helper.gaussdb.Pool()
 pool.connect(function (err, client, done) {

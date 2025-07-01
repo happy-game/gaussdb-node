@@ -1,7 +1,6 @@
 'use strict'
 const helper = require('./test-helper')
 const gaussdb = helper.gaussdb
-const native = helper.args.native
 const assert = require('assert')
 
 const suite = new helper.Suite()
@@ -65,11 +64,7 @@ suite.test('connection-level errors cause queued queries to fail', (cb) => {
       client.query(
         'SELECT pg_terminate_backend(pg_backend_pid())',
         assert.calls((err) => {
-          if (helper.args.native) {
-            assert.ok(err)
-          } else {
-            assert.equal(err.code, '57P01')
-          }
+          assert.equal(err.code, '57P01')
         })
       )
 
@@ -83,11 +78,7 @@ suite.test('connection-level errors cause queued queries to fail', (cb) => {
       client.query(
         'SELECT 1',
         assert.calls((err) => {
-          if (helper.args.native) {
-            assert.equal(err.message, 'terminating connection due to administrator command')
-          } else {
-            assert.equal(err.message, 'Connection terminated unexpectedly')
-          }
+          assert.equal(err.message, 'Connection terminated unexpectedly')
 
           done(err)
           pool.end()
@@ -105,11 +96,7 @@ suite.test('connection-level errors cause future queries to fail', (cb) => {
       client.query(
         'SELECT pg_terminate_backend(pg_backend_pid())',
         assert.calls((err) => {
-          if (helper.args.native) {
-            assert.ok(err)
-          } else {
-            assert.equal(err.code, '57P01')
-          }
+          assert.equal(err.code, '57P01')
         })
       )
 
@@ -120,11 +107,7 @@ suite.test('connection-level errors cause future queries to fail', (cb) => {
           client.query(
             'SELECT 1',
             assert.calls((err) => {
-              if (helper.args.native) {
-                assert.equal(err.message, 'terminating connection due to administrator command')
-              } else {
-                assert.equal(err.message, 'Client has encountered a connection error and is not queryable')
-              }
+              assert.equal(err.message, 'Client has encountered a connection error and is not queryable')
 
               done(err)
               pool.end()
@@ -140,27 +123,14 @@ suite.test('connection-level errors cause future queries to fail', (cb) => {
 suite.test('handles socket error during pool.query and destroys it immediately', (cb) => {
   const pool = new gaussdb.Pool({ max: 1 })
 
-  if (native) {
-    pool.query('SELECT pg_sleep(10)', [], (err) => {
-      assert.equal(err.message, 'canceling statement due to user request')
-      cb()
-    })
+  pool.query('SELECT pg_sleep(10)', [], (err) => {
+    assert.equal(err.message, 'network issue')
+    assert.equal(stream.destroyed, true)
+    cb()
+  })
 
-    setTimeout(() => {
-      pool._clients[0].native.cancel((err) => {
-        assert.ifError(err)
-      })
-    }, 100)
-  } else {
-    pool.query('SELECT pg_sleep(10)', [], (err) => {
-      assert.equal(err.message, 'network issue')
-      assert.equal(stream.destroyed, true)
-      cb()
-    })
-
-    const stream = pool._clients[0].connection.stream
-    setTimeout(() => {
-      stream.emit('error', new Error('network issue'))
-    }, 100)
-  }
+  const stream = pool._clients[0].connection.stream
+  setTimeout(() => {
+    stream.emit('error', new Error('network issue'))
+  }, 100)
 })

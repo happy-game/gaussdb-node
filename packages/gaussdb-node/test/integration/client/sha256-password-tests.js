@@ -2,7 +2,6 @@
 const helper = require('./../test-helper')
 const gaussdb = helper.gaussdb
 const suite = new helper.Suite()
-const { native } = helper.args
 const assert = require('assert')
 
 /**
@@ -36,10 +35,6 @@ const config = {
   database: process.env.SHA256_TEST_GAUSSDATABASE || 'ci_db_test',
 }
 
-if (native) {
-  suite.testAsync('skipping SHA256 tests (on native)', () => {})
-  return
-}
 if (!config.user || !config.password) {
   suite.testAsync('skipping SHA256 tests (missing env)', () => {})
   return

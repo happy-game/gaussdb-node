@@ -7,5 +7,5 @@
       "allowBranch": "master"
     }
   },
-  "ignoreChanges": ["**/*.md", "**/test/**", "packages/pg-native/**", "packages/pg-native-*/**"]
+  "ignoreChanges": ["**/*.md", "**/test/**"]
 }

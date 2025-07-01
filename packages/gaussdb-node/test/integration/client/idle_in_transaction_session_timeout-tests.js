@@ -52,45 +52,44 @@ function getIdleTransactionSessionTimeout(conf, cb) {
   )
 }
 
-if (!helper.args.native) {
-  // idle_in_transaction_session_timeout is not supported with the native client
-  testClientVersion(function () {
-    suite.test('No default idle_in_transaction_session_timeout ', function (done) {
-      getConInfo()
-      getIdleTransactionSessionTimeout({}, function (res) {
-        assert.strictEqual(res, '0') // 0 = no timeout
-        done()
-      })
-    })
-
-    suite.test('idle_in_transaction_session_timeout integer is used', function (done) {
-      const conf = getConInfo({
-        idle_in_transaction_session_timeout: 3000,
-      })
-      getIdleTransactionSessionTimeout(conf, function (res) {
-        assert.strictEqual(res, '3s')
-        done()
-      })
-    })
-
-    suite.test('idle_in_transaction_session_timeout float is used', function (done) {
-      const conf = getConInfo({
-        idle_in_transaction_session_timeout: 3000.7,
-      })
-      getIdleTransactionSessionTimeout(conf, function (res) {
-        assert.strictEqual(res, '3s')
-        done()
-      })
-    })
-
-    suite.test('idle_in_transaction_session_timeout string is used', function (done) {
-      const conf = getConInfo({
-        idle_in_transaction_session_timeout: '3000',
-      })
-      getIdleTransactionSessionTimeout(conf, function (res) {
-        assert.strictEqual(res, '3s')
-        done()
-      })
+// Native bindings are no longer supported
+// All tests now use pure JavaScript implementation
+testClientVersion(function () {
+  suite.test('No default idle_in_transaction_session_timeout ', function (done) {
+    getConInfo()
+    getIdleTransactionSessionTimeout({}, function (res) {
+      assert.strictEqual(res, '0') // 0 = no timeout
+      done()
     })
   })
-}
+
+  suite.test('idle_in_transaction_session_timeout integer is used', function (done) {
+    const conf = getConInfo({
+      idle_in_transaction_session_timeout: 3000,
+    })
+    getIdleTransactionSessionTimeout(conf, function (res) {
+      assert.strictEqual(res, '3s')
+      done()
+    })
+  })
+
+  suite.test('idle_in_transaction_session_timeout float is used', function (done) {
+    const conf = getConInfo({
+      idle_in_transaction_session_timeout: 3000.7,
+    })
+    getIdleTransactionSessionTimeout(conf, function (res) {
+      assert.strictEqual(res, '3s')
+      done()
+    })
+  })
+
+  suite.test('idle_in_transaction_session_timeout string is used', function (done) {
+    const conf = getConInfo({
+      idle_in_transaction_session_timeout: '3000',
+    })
+    getIdleTransactionSessionTimeout(conf, function (res) {
+      assert.strictEqual(res, '3s')
+      done()
+    })
+  })
+})

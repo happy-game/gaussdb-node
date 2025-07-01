@@ -49,11 +49,7 @@ suite.test('emits notify message', function (done) {
 
 // this test fails on travis due to their config
 suite.test('emits notice message', function (done) {
-  if (helper.args.native) {
-    console.error('notice messages do not work curreintly with node-libpq')
-    return done()
-  }
-
+  // Native bindings are no longer supported, always test
   const client = helper.client()
   const text = `
 DO language plpgsql $$

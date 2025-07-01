@@ -84,9 +84,7 @@ function killIdleQuery(targetQuery, cb) {
 }
 
 suite.test('query killed during query execution of prepared statement', function (done) {
-  if (helper.args.native) {
-    return done()
-  }
+  // Native bindings are no longer supported, always check
   const client = new Client(helper.args)
   client.connect(
     assert.success(function () {

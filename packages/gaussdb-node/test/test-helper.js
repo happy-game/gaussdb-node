@@ -54,7 +54,7 @@ const expect = function (callback, timeout) {
 // print out the filename
 process.stdout.write(require('path').basename(process.argv[1]))
 if (args.binary) process.stdout.write(' (binary)')
-if (args.native) process.stdout.write(' (native)')
+// Native bindings are no longer supported
 
 process.on('exit', function () {
   console.log('')
