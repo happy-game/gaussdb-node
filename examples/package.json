@@ -1,0 +1,11 @@
+{
+  "name": "gaussdb-node-examples",
+  "type": "module",
+  "description": "Examples for gaussdb-node",
+  "private": true,
+  "dependencies": {
+    "gaussdb-node": "workspace:*",
+    "gaussdb-cursor": "workspace:*",
+    "gaussdb-query-stream": "workspace:*"
+  }
+}
