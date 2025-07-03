@@ -1,6 +1,6 @@
 {
   "name": "gaussdb-node",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "GaussDB client - pure javascript implementation",
   "keywords": [
     "database",
@@ -28,9 +28,9 @@
     }
   },
   "dependencies": {
-    "gaussdb-connection-string": "^0.2.0",
-    "gaussdb-pool": "^0.2.0",
-    "gaussdb-protocol": "^0.2.0",
+    "gaussdb-connection-string": "^0.2.1",
+    "gaussdb-pool": "^0.2.1",
+    "gaussdb-protocol": "^0.2.1",
     "pg-types": "2.2.0",
     "pgpass": "1.0.5"
   },
@@ -46,14 +46,9 @@
     "wrangler": "^3.x"
   },
   "optionalDependencies": {
-    "gaussdb-cloudflare": "^0.2.0"
+    "gaussdb-cloudflare": "^0.2.1"
   },
-  "peerDependencies": {
-    
-  },
-  "peerDependenciesMeta": {
-    
-  },
+  "peerDependenciesMeta": {},
   "scripts": {
     "test": "make test-all"
   },
