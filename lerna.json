@@ -4,7 +4,15 @@
   "version": "independent",
   "command": {
     "version": {
-      "allowBranch": "master"
+      "allowBranch": "master",
+      "conventionalCommits": true,
+      "message": "chore(release): publish",
+      "push": true,
+      "createRelease": false
+    },
+    "publish": {
+      "ignoreChanges": ["**/*.md", "**/test/**", "**/*.test.*"],
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ignoreChanges": ["**/*.md", "**/test/**"]
