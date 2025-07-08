@@ -5,11 +5,11 @@ Receive result rows from [gaussdb](https://github.com/HuaweiCloudDeveloper/gauss
 ## installation
 
 ```bash
-$ npm install gaussdb --save
+$ npm install gaussdb-node --save
 $ npm install gaussdb-query-stream --save
 ```
 
-_requires gaussdb>=2.8.1_
+_requires gaussdb-node>=0.2.1_
 
 ## use
 
