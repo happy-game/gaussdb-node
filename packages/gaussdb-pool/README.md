@@ -6,7 +6,7 @@ A connection pool for gaussdb-node
 
 ## install
 ```sh
-npm i gaussdb-pool gaussdb
+npm i gaussdb-pool gaussdb-node
 ```
 
 ## use
@@ -27,7 +27,7 @@ const pool = new Pool()
 // and the node-pool (https://github.com/coopernurse/node-pool) constructor
 // allowing you to fully configure the behavior of both
 const pool2 = new Pool({
-  database: 'gaussdb-node',
+  database: 'test_db',
   user: 'tset',
   password: 'secret!',
   port: 5432,
