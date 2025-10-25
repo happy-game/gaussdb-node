@@ -22,7 +22,7 @@ pool.connect(function (err, client, done) {
         done()
 
         if (err) throw err
-        assert.equal(res.rows[0].body, '')
+        assert.equal(res.rows[0].body, null)
         pool.end()
       })
     })

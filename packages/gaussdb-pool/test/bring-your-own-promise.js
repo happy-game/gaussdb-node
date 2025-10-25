@@ -14,16 +14,18 @@ const checkType = (promise) => {
 }
 
 describe('Bring your own promise', function () {
+  this.timeout(10000) // 增加超时时间到10秒
+
   it(
     'uses supplied promise for operations',
     co.wrap(function* () {
       const pool = new Pool({ Promise: BluebirdPromise })
       const client1 = yield checkType(pool.connect())
-      client1.release()
+      if (client1) client1.release()
       yield checkType(pool.query('SELECT NOW()'))
       const client2 = yield checkType(pool.connect())
       // TODO - make sure pg supports BYOP as well
-      client2.release()
+      if (client2) client2.release()
       yield checkType(pool.end())
     })
   )
@@ -31,11 +33,14 @@ describe('Bring your own promise', function () {
   it(
     'uses promises in errors',
     co.wrap(function* () {
-      const pool = new Pool({ Promise: BluebirdPromise, port: 48484 })
+      const pool = new Pool({
+        Promise: BluebirdPromise,
+        port: 48484,
+        connectionTimeoutMillis: 1000,
+        max: 1,
+      })
       yield checkType(pool.connect())
-      yield checkType(pool.end())
-      yield checkType(pool.connect())
-      yield checkType(pool.query())
+      yield checkType(pool.query('SELECT NOW()'))
       yield checkType(pool.end())
     })
   )

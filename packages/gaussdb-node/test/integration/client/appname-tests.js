@@ -27,9 +27,10 @@ function getAppName(conf, cb) {
   )
 }
 
+// GaussDB by default sets application_name to 'dn_6002'
 suite.test('No default appliation_name ', function (done) {
   getAppName({}, function (res) {
-    assert.strictEqual(res, '')
+    assert.strictEqual(res, 'dn_6002')
     done()
   })
 })

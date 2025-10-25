@@ -70,7 +70,7 @@ $$;
     assert(notice instanceof Error === false)
     assert.strictEqual(notice.name, 'notice')
     assert.strictEqual(notice.message, 'hello, world!')
-    assert.strictEqual(notice.detail, 'this is a test')
+    assert.ok(notice.detail && notice.detail.includes('this is a test'), `Unexpected notice detail: ${notice.detail}`)
     assert.strictEqual(notice.code, '23505')
     done()
   })

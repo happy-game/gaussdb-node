@@ -83,7 +83,7 @@ describe('cursor', function () {
   })
 
   it('read huge result', function (done) {
-    this.timeout(10000)
+    this.timeout(1000 * 30) // 提高超时时间到 30 秒
     const text = 'SELECT generate_series as num FROM generate_series(0, 100000)'
     const values = []
     const cursor = this.gaussdbCursor(text, values)

@@ -53,12 +53,19 @@ describe('pool', function () {
     })
 
     it('passes connection errors to callback', function (done) {
-      const pool = new Pool({ port: 53922 })
+      const pool = new Pool({ connectionTimeoutMillis: 1000, port: 53922 })
       pool.query('SELECT $1::text as name', ['brianc'], function (err, res) {
+        // 验证响应对象是undefined（因为查询失败）
         expect(res).to.be(undefined)
+        // 核心验证：错误应该被正确传递给回调函数
         expect(err).to.be.an(Error)
+        // 验证错误类型（如果可能）
+        if (err.code) {
+          expect(err.code).to.be.a('string')
+        }
         // a connection error should not polute the pool with a dead client
         expect(pool.totalCount).to.equal(0)
+        expect(pool.idleCount).to.equal(0)
         pool.end(function (err) {
           done(err)
         })
@@ -66,11 +73,12 @@ describe('pool', function () {
     })
 
     it('does not pass client to error callback', function (done) {
-      const pool = new Pool({ port: 58242 })
+      const pool = new Pool({ connectionTimeoutMillis: 1000, port: 58242 })
       pool.connect(function (err, client, release) {
         expect(err).to.be.an(Error)
         expect(client).to.be(undefined)
         expect(release).to.be.a(Function)
+        expect(pool.totalCount).to.equal(0)
         pool.end(done)
       })
     })
@@ -175,7 +183,7 @@ describe('pool', function () {
     })
 
     it('properly pools clients', function () {
-      const pool = new Pool({ poolSize: 9 })
+      const pool = new Pool({ max: 9 })
       const promises = _.times(30, function () {
         return pool.connect().then(function (client) {
           return client.query('select $1::text as name', ['hi']).then(function (res) {
@@ -192,7 +200,7 @@ describe('pool', function () {
     })
 
     it('supports just running queries', function () {
-      const pool = new Pool({ poolSize: 9 })
+      const pool = new Pool({ max: 9 })
       const text = 'select $1::text as name'
       const values = ['hi']
       const query = { text: text, values: values }
