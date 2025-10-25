@@ -48,10 +48,16 @@ suite.test('connection-level errors cause queued queries to fail', (cb) => {
       client.query(
         'SELECT pg_terminate_backend(pg_backend_pid())',
         assert.calls((err) => {
-          // Note: In GaussDB, pg_terminate_backend() drops the TCP connection immediately
-          // rather than returning a proper PostgreSQL DatabaseError with code '57P01'.
-          assert.equal(err.message, 'Connection terminated unexpectedly')
-          assert.equal(err.code, undefined)
+          const dbType = process.env.DB_TYPE || process.env.GAUSS_TYPE || 'gaussdb'
+          if (dbType.toLowerCase() === 'opengauss') {
+            // In OpenGauss, pg_terminate_backend returns a proper DatabaseError
+            assert.equal(err.code, '57P01')
+          } else {
+            // Note: In GaussDB, pg_terminate_backend() drops the TCP connection immediately
+            // rather than returning a proper PostgreSQL DatabaseError with code '57P01'.
+            assert.equal(err.message, 'Connection terminated unexpectedly')
+            assert.equal(err.code, undefined)
+          }
         })
       )
 
@@ -83,10 +89,16 @@ suite.test('connection-level errors cause future queries to fail', (cb) => {
       client.query(
         'SELECT pg_terminate_backend(pg_backend_pid())',
         assert.calls((err) => {
-          // Note: In GaussDB, pg_terminate_backend() drops the TCP connection immediately
-          // rather than returning a proper PostgreSQL DatabaseError with code '57P01'.
-          assert.equal(err.message, 'Connection terminated unexpectedly')
-          assert.equal(err.code, undefined)
+          const dbType = process.env.DB_TYPE || process.env.GAUSS_TYPE || 'gaussdb'
+          if (dbType.toLowerCase() === 'opengauss') {
+            // In OpenGauss, pg_terminate_backend returns a proper DatabaseError
+            assert.equal(err.code, '57P01')
+          } else {
+            // Note: In GaussDB, pg_terminate_backend() drops the TCP connection immediately
+            // rather than returning a proper PostgreSQL DatabaseError with code '57P01'.
+            assert.equal(err.message, 'Connection terminated unexpectedly')
+            assert.equal(err.code, undefined)
+          }
         })
       )
 
@@ -122,5 +134,5 @@ suite.test('handles socket error during pool.query and destroys it immediately',
   const stream = pool._clients[0].connection.stream
   setTimeout(() => {
     stream.emit('error', new Error('network issue'))
-  }, 100)
+  }, 1000)
 })

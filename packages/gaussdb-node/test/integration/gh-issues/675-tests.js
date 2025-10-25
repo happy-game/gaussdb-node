@@ -22,7 +22,11 @@ pool.connect(function (err, client, done) {
         done()
 
         if (err) throw err
-        assert.equal(res.rows[0].body, null)
+        // Determine expected value based on database type
+        // GaussDB returns null for empty buffer, OpenGauss returns empty string
+        const dbType = process.env.DB_TYPE || process.env.GAUSS_TYPE || 'gaussdb'
+        const expectedValue = dbType.toLowerCase() === 'opengauss' ? '' : null
+        assert.equal(res.rows[0].body, expectedValue)
         pool.end()
       })
     })
