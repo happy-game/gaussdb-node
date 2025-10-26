@@ -33,6 +33,7 @@ jobs:
           POSTGRES_HOST_AUTH_METHOD: 'trust'
           POSTGRES_INITDB_ARGS: "--auth-local=md5"
           GS_DB: ci_db_test
+          DB_TYPE: opengauss
         ports:
           - 5432:5432
         # options: --health-cmd "su - omm -c \"gs_ctl status\"" --health-interval 10s --health-timeout 5s --health-retries 5
@@ -58,6 +59,7 @@ jobs:
       GAUSSTESTNOSSL: 'true'
       SHA256_TEST_GAUSSUSER: sha256_test
       SHA256_TEST_GAUSSPASSWORD: test4@scram
+      DB_TYPE: opengauss
     steps:
       - name: Show OS
         run: |

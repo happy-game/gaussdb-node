@@ -27,9 +27,18 @@ function getAppName(conf, cb) {
   )
 }
 
+// Determine default application_name based on database type
+// GaussDB defaults to 'dn_6002', OpenGauss defaults to empty string
+const getDefaultAppName = () => {
+  // Check environment variable to determine database type
+  const dbType = process.env.DB_TYPE || process.env.GAUSS_TYPE || 'gaussdb'
+  return dbType.toLowerCase() === 'opengauss' ? '' : 'dn_6002'
+}
+
 suite.test('No default appliation_name ', function (done) {
+  const expectedAppName = getDefaultAppName()
   getAppName({}, function (res) {
-    assert.strictEqual(res, '')
+    assert.strictEqual(res, expectedAppName)
     done()
   })
 })

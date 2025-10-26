@@ -47,17 +47,29 @@ describe('events', function () {
       expect(client).to.be.ok()
       acquireCount++
     })
+    const promises = []
     for (let i = 0; i < 10; i++) {
-      pool.connect(function (err, client, release) {
-        if (err) return done(err)
-        release()
+      // 为connect操作创建Promise
+      const connectPromise = new Promise((resolve, reject) => {
+        pool.connect(function (err, client, release) {
+          if (err) return reject(err)
+          release()
+          resolve()
+        })
       })
-      pool.query('SELECT now()')
+      promises.push(connectPromise)
+      // 为query操作创建Promise
+      promises.push(pool.query('SELECT now()'))
     }
-    setTimeout(function () {
-      expect(acquireCount).to.be(20)
-      pool.end(done)
-    }, 100)
+    Promise.all(promises)
+      .then(() => {
+        expect(acquireCount).to.be(20)
+        return pool.end()
+      })
+      .then(() => {
+        done()
+      })
+      .catch(done)
   })
 
   it('emits release every time a client is released', function (done) {

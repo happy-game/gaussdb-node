@@ -45,7 +45,16 @@ const testForTypeCoercion = function (type) {
                 }
                 const expected = val + ' (' + typeof val + ')'
                 const returned = row.col + ' (' + typeof row.col + ')'
-                assert.strictEqual(row.col, val, 'expected ' + type.name + ' of ' + expected + ' but got ' + returned)
+                if (type.name === 'real') {
+                  // GaussDB 使用 32 位浮点数表示 real 类型，允许有微小的误差 -101.300003 vs -101.3
+                  const delta = Math.abs(row.col - val)
+                  assert(
+                    delta < 1e-5,
+                    'expected ' + type.name + ' of ' + expected + ' but got ' + returned + ' (difference ' + delta + ')'
+                  )
+                } else {
+                  assert.strictEqual(row.col, val, 'expected ' + type.name + ' of ' + expected + ' but got ' + returned)
+                }
               },
               'row should have been called for ' + type.name + ' of ' + val
             )

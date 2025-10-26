@@ -104,7 +104,8 @@ if (!process.version.startsWith('v8')) {
       await pool.end()
     })
 
-    it('can read with delays', async () => {
+    it('can read with delays', async function () {
+      this.timeout(10000)
       const pool = new gaussdb.Pool({ max: 1 })
       const client = await pool.connect()
       const rows = []

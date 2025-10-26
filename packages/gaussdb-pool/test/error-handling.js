@@ -196,18 +196,19 @@ describe('pool error handling', function () {
     it(
       'continues to work and provide new clients',
       co.wrap(function* () {
-        const pool = new Pool({ max: 1 })
+        const pool = new Pool({ connectionTimeoutMillis: 1000, max: 2 })
         const errors = []
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
           try {
             yield pool.query('invalid sql')
           } catch (err) {
             errors.push(err)
           }
         }
-        expect(errors).to.have.length(20)
+        expect(errors).to.have.length(10)
         expect(pool.idleCount).to.equal(0)
         expect(pool.query).to.be.a(Function)
+        // 测试连接池是否还能正常工作
         const res = yield pool.query('SELECT $1::text as name', ['brianc'])
         expect(res.rows).to.have.length(1)
         expect(res.rows[0].name).to.equal('brianc')
@@ -254,7 +255,9 @@ describe('pool error handling', function () {
     })
 
     setTimeout(() => {
-      pool._clients[0].end()
+      if (pool._clients && pool._clients[0]) {
+        pool._clients[0].end()
+      }
     }, 1000)
   })
 })

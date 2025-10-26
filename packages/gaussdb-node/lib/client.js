@@ -345,9 +345,17 @@ class Client extends EventEmitter {
       return
     }
     this._connectionError = true
+    this._connecting = false
     clearTimeout(this.connectionTimeoutHandle)
+
+    if (this.connection && this.connection.stream) {
+      this.connection.stream.destroy()
+    }
+
     if (this._connectionCallback) {
-      return this._connectionCallback(err)
+      const callback = this._connectionCallback
+      this._connectionCallback = null
+      return callback(err)
     }
     this.emit('error', err)
   }

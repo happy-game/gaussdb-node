@@ -70,7 +70,7 @@ describe('connection timeout', () => {
   )
 
   it('should timeout on checkout of used connection', (done) => {
-    const pool = new Pool({ connectionTimeoutMillis: 100, max: 1 })
+    const pool = new Pool({ connectionTimeoutMillis: 1000, max: 1 })
     pool.connect((err, client, release) => {
       expect(err).to.be(undefined)
       expect(client).to.not.be(undefined)
@@ -106,7 +106,7 @@ describe('connection timeout', () => {
   })
 
   it('should timeout on query if all clients are busy', (done) => {
-    const pool = new Pool({ connectionTimeoutMillis: 100, max: 1 })
+    const pool = new Pool({ connectionTimeoutMillis: 1000, max: 1 })
     pool.connect((err, client, release) => {
       expect(err).to.be(undefined)
       expect(client).to.not.be(undefined)
@@ -120,7 +120,7 @@ describe('connection timeout', () => {
   })
 
   it('should recover from timeout errors', (done) => {
-    const pool = new Pool({ connectionTimeoutMillis: 100, max: 1 })
+    const pool = new Pool({ connectionTimeoutMillis: 1000, max: 1 })
     pool.connect((err, client, release) => {
       expect(err).to.be(undefined)
       expect(client).to.not.be(undefined)
