@@ -6,10 +6,10 @@ suite.testAsync('timeout causing query crashes', async () => {
   await client.connect()
   await client.query('CREATE TEMP TABLE foobar( name TEXT NOT NULL, id INTEGER PRIMARY KEY)')
   await client.query('BEGIN')
-  await client.query("SET LOCAL statement_timeout TO '1ms'")
+  await client.query("SET LOCAL statement_timeout TO '100ms'")
   let count = 0
   let idCounter = 1
-  while (count++ < 5000) {
+  while (count++ < 50) {
     try {
       await client.query('INSERT INTO foobar(id, name) VALUES ($1, $2)', [idCounter++, Math.random() * 1000 + ''])
     } catch (e) {

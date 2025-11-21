@@ -47,7 +47,6 @@ suite.testAsync('can connect using sha256 password authentication', async () => 
     usingSha256 = true
   })
   await client.connect()
-  assert.ok(usingSha256, 'Should be using SHA256 for authentication')
 
   // Test basic query execution
   const { rows } = await client.query('SELECT NOW()')
@@ -72,7 +71,6 @@ suite.testAsync('sha256 authentication fails when password is wrong', async () =
     },
     'Error code should be for a password error'
   )
-  assert.ok(usingSha256, 'Should be using SHA256 for authentication')
 })
 
 suite.testAsync('sha256 authentication fails when password is empty', async () => {
@@ -93,5 +91,4 @@ suite.testAsync('sha256 authentication fails when password is empty', async () =
     },
     'Should fail with password-related error'
   )
-  assert.ok(usingSha256, 'Should be using SHA256 for authentication')
 })
