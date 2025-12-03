@@ -1,0 +1,1112 @@
+yarn run v1.9.4
+$ yarn build
+$ tsc --build
+$ yarn lerna exec --concurrency 1 yarn test
+$ /mnt/data/projects/gaussdb-node/node_modules/.bin/lerna exec --concurrency 1 yarn test
+lerna notice cli v3.22.1
+lerna info versioning independent
+lerna info Executing command in 8 packages: "yarn test"
+$ echo e2e test in pg package
+e2e test in pg package
+$ nyc --reporter=lcov mocha && npm run check-coverage
+
+
+  toClientConfig
+    ✔ converts connection info
+    ✔ converts query params
+    ✔ converts SSL boolean
+    ✔ converts sslmode=disable
+    ✔ converts sslmode=noverify
+    ✔ converts other sslmode options
+    ✔ converts other sslmode options
+    ✔ converts ssl cert options
+    ✔ converts unix domain sockets
+    ✔ handles invalid port
+    ✔ handles invalid sslconfig values
+
+  parseIntoClientConfig
+    ✔ converts url
+
+  parse
+    ✔ using connection string in client constructor
+    ✔ escape spaces if present
+    ✔ do not double escape spaces
+    ✔ initializing with unix domain socket
+    ✔ initializing with unix domain socket and a specific database, the simple way
+    ✔ initializing with unix domain socket, the health way
+    ✔ initializing with unix domain socket, the escaped health way
+    ✔ initializing with unix domain socket, username and password
+    ✔ password contains  < and/or >  characters
+    ✔ password contains colons
+    ✔ username or password contains weird characters
+    ✔ url is properly encoded
+    ✔ relative url sets database
+    ✔ no pathname returns null database
+    ✔ pathname of "/" returns null database
+    ✔ configuration parameter host
+    ✔ configuration parameter host overrides url host
+    ✔ url with encoded socket
+    ✔ url with real host and an encoded db name
+    ✔ configuration parameter host treats encoded host as part of the db name
+    ✔ configuration parameter application_name
+    ✔ configuration parameter fallback_application_name
+    ✔ configuration parameter options
+    ✔ configuration parameter ssl=true
+    ✔ configuration parameter ssl=1
+    ✔ configuration parameter ssl=0
+    ✔ set ssl
+    ✔ configuration parameter sslcert=/path/to/cert
+    ✔ configuration parameter sslkey=/path/to/key
+    ✔ configuration parameter sslrootcert=/path/to/ca
+    ✔ configuration parameter sslmode=no-verify
+    ✔ configuration parameter sslmode=disable
+    ✔ configuration parameter sslmode=prefer
+    ✔ configuration parameter sslmode=require
+    ✔ configuration parameter sslmode=verify-ca
+    ✔ configuration parameter sslmode=verify-full
+    ✔ configuration parameter ssl=true and sslmode=require still work with sslrootcert=/path/to/ca
+    ✔ configuration parameter sslmode=disable with uselibpqcompat query param
+    ✔ configuration parameter sslmode=prefer with uselibpqcompat query param
+    ✔ configuration parameter sslmode=require with uselibpqcompat query param
+    ✔ configuration parameter sslmode=verify-ca with uselibpqcompat query param
+    ✔ configuration parameter sslmode=verify-ca and sslrootcert with uselibpqcompat query param
+    ✔ configuration parameter sslmode=verify-full with uselibpqcompat query param
+    ✔ configuration parameter ssl=true and sslmode=require still work with sslrootcert=/path/to/ca with uselibpqcompat query param
+    ✔ configuration parameter sslmode=disable with useLibpqCompat option
+    ✔ configuration parameter sslmode=prefer with useLibpqCompat option
+    ✔ configuration parameter sslmode=require with useLibpqCompat option
+    ✔ configuration parameter sslmode=verify-ca with useLibpqCompat option
+    ✔ configuration parameter sslmode=verify-ca and sslrootcert with useLibpqCompat option
+    ✔ configuration parameter sslmode=verify-full with useLibpqCompat option
+    ✔ configuration parameter ssl=true and sslmode=require still work with sslrootcert=/path/to/ca with useLibpqCompat option
+    ✔ does not allow uselibpqcompat query parameter and useLibpqCompat option at the same time
+    ✔ allow other params like max, ...
+    ✔ configuration parameter keepalives
+    ✔ unknown configuration parameter is passed into client
+    ✔ do not override a config field with value from query string
+    ✔ return last value of repeated parameter
+    ✔ use the port specified in the query parameters
+
+
+  70 passing (50ms)
+
+
+> gaussdb-connection-string@0.2.1 check-coverage
+> nyc check-coverage --statements 100 --branches 100 --lines 100 --functions 100
+
+$  node_modules/.bin/mocha
+
+
+  Bring your own promise
+    ✔ uses supplied promise for operations (174ms)
+    ✔ uses promises in errors (2004ms)
+
+  Connection strings
+    ✔ pool delegates connectionString property to client
+
+  connection timeout
+    ✔ should callback with an error if timeout is passed
+    ✔ should reject promise with an error if timeout is passed
+    ✔ should handle multiple timeouts
+    ✔ should timeout on checkout of used connection (1112ms)
+    ✔ should not break further pending checkouts on a timeout (312ms)
+    ✔ should timeout on query if all clients are busy (1112ms)
+    ✔ should recover from timeout errors (1144ms)
+    ✔ continues processing after a connection failure (240ms)
+    ✔ releases newly connected clients if the queued already timed out (1441ms)
+
+  pool ending
+    ✔ ends without being used
+    ✔ ends with a promise
+    ✔ ends with clients (139ms)
+    ✔ allows client to finish (141ms)
+
+  pool error handling
+    ✔ Should complete these queries without dying (177ms)
+    ✔ Catches errors in client.query (110ms)
+    ✔ should continue with queued items after a connection failure
+    ✔ handles post-checkout client failures in pool.query (1002ms)
+    calling release more than once
+      ✔ should throw each time (112ms)
+      ✔ should throw each time with callbacks (112ms)
+    using an ended pool
+      ✔ rejects all additional promises
+      ✔ returns an error on all additional callbacks
+    error from idle client
+      ✔ removes client from pool (113ms)
+    error from in-use client
+      ✔ keeps the client in the pool (111ms)
+    passing a function to pool.query
+passing fn to query
+      ✔ calls back with error
+    pool with lots of errors
+      ✔ continues to work and provide new clients (1525ms)
+
+  events
+    ✔ emits connect before callback (110ms)
+    ✔ emits "connect" only with a successful connection
+    ✔ emits acquire every time a client is acquired (200ms)
+    ✔ emits release every time a client is released (223ms)
+    ✔ emits release with an error if client is released due to an error (108ms)
+    ✔ emits error and client if an idle client in the pool hits an error (107ms)
+
+  idle timeout
+    ✔ should timeout and remove the client (155ms)
+    ✔ times out and removes clients when others are also removed (232ms)
+    ✔ can remove idle clients and recreate them (251ms)
+    ✔ does not time out clients which are used (949ms)
+    ✔ unrefs the connections and timeouts so the program can exit when idle when the allowExitOnIdle option is set (279ms)
+    ✔ keeps old behavior when allowExitOnIdle option is not set (498ms)
+
+  pool
+    with callbacks
+      ✔ works totally unconfigured (138ms)
+      ✔ passes props to clients (111ms)
+      ✔ can run a query with a callback without parameters (137ms)
+      ✔ can run a query with a callback (142ms)
+      ✔ passes connection errors to callback (1002ms)
+      ✔ does not pass client to error callback (1001ms)
+      ✔ removes client if it errors in background (153ms)
+      ✔ should not change given options (108ms)
+      ✔ does not create promises when connecting (112ms)
+      ✔ does not create promises when querying (140ms)
+      ✔ does not create promises when ending
+      ✔ never calls callback syncronously (112ms)
+    with promises
+      ✔ connects, queries, and disconnects (141ms)
+      ✔ executes a query directly (142ms)
+      ✔ properly pools clients (263ms)
+      ✔ supports just running queries (265ms)
+      ✔ recovers from query errors (676ms)
+
+  lifetime timeout
+expired while idle - on-remove event
+    ✔ connection lifetime should expire and remove the client (1113ms)
+expired while busy - on-remove event
+    ✔ connection lifetime should expire and remove the client after the client is done working (1543ms)
+    ✔ can remove expired clients and recreate them (1788ms)
+
+  logging
+    ✔ logs to supplied log function if given (143ms)
+
+  maxUses
+    ✔ can create a single client and use it once (139ms)
+    ✔ getting a connection a second time returns the same connection and releasing it also closes it (111ms)
+    ✔ getting a connection a third time returns a new connection (218ms)
+    ✔ getting a connection from a pending request gets a fresh client when the released candidate is expended (225ms)
+    ✔ logs when removing an expended client (112ms)
+
+  releasing clients
+    ✔ removes a client which cannot be queried (283ms)
+    ✔ removes a client which is ending (255ms)
+
+  pool size of 1
+    ✔ can create a single client and use it once (137ms)
+    ✔ can create a single client and use it multiple times (106ms)
+    ✔ can only send 1 query at a time (792ms)
+    ✔ does not remove clients when at or below min (128ms)
+    ✔ does remove clients when at or below min if maxUses is reached (128ms)
+    ✔ does remove clients when at or below min if maxLifetimeSeconds is reached (1127ms)
+
+  pool size of 2
+    ✔ does not remove clients when at or below min (263ms)
+    ✔ does remove clients when above min (260ms)
+
+  submittable
+    ✔ is returned from the query method (202ms)
+
+  verify
+    ✔ verifies a client with a callback (110ms)
+
+
+  78 passing (28s)
+
+$ yarn build
+$ tsc
+$ mocha dist/**/*.test.js
+
+
+  GaussDBPacketStream
+    ✔ receives and parses authenticationOk
+    ✔ receives and parses authenticationCleartextPassword
+    ✔ receives and parses authenticationMD5Password
+    ✔ receives and parses parameterStatus
+    ✔ receives and parses backendKeyData
+    ✔ receives and parses readyForQuery
+    ✔ receives and parses commandComplete
+    ✔ receives and parses notification
+    ✔ receives and parses emptyQuery
+    ✔ receives and parses noData
+    ✔ receives and parses error
+    ✔ receives and parses parseComplete
+    ✔ receives and parses bindComplete
+    ✔ receives and parses bindComplete
+    ✔ receives and parses closeComplete
+    rowDescription messages
+      ✔ receives and parses rowDescription
+      ✔ receives and parses rowDescription
+      ✔ receives and parses rowDescription
+      ✔ receives and parses rowDescription
+    parameterDescription messages
+      ✔ receives and parses parameterDescription
+      ✔ receives and parses parameterDescription
+      ✔ receives and parses parameterDescription
+    parsing rows
+      parsing empty row
+        ✔ receives and parses dataRow
+      parsing data row with fields
+        ✔ receives and parses dataRow
+    notice message
+      ✔ receives and parses notice
+    with all the fields
+      ✔ receives and parses error
+    parses portal suspended message
+      ✔ receives and parses portalSuspended
+    parses replication start message
+      ✔ receives and parses replicationStart
+    copy
+      ✔ receives and parses copyInResponse
+      ✔ receives and parses copyInResponse
+      ✔ receives and parses copyOutResponse
+      ✔ receives and parses copyOutResponse
+      ✔ receives and parses copyDone
+      ✔ receives and parses copyData
+    split buffer, single message parsing
+      ✔ parses when full buffer comes in
+      ✔ parses when split in the middle
+      ✔ parses when split at end
+      ✔ parses when split at beginning
+    split buffer, multiple message parsing
+      ✔ receives both messages when packet is not split
+      receives both messages when packet is split
+        ✔ in the middle
+        ✔ at the front
+        ✔ at the end
+
+  serializer
+    ✔ builds startup message
+    ✔ builds password message
+    ✔ builds request ssl message
+    ✔ builds SASLInitialResponseMessage message
+    ✔ builds SCRAMClientFinalMessage message
+    ✔ builds query message
+    ✔ with custom valueMapper
+    ✔ with named statement, portal, and buffer value
+    ✔ builds flush command
+    ✔ builds sync command
+    ✔ builds end command
+    ✔ builds cancel message
+    parse message
+      ✔ builds parse message
+      ✔ builds parse message with named query
+      ✔ with multiple parameters
+    bind messages
+      ✔ with no values
+      ✔ with named statement, portal, and values
+    builds execute message
+      ✔ for unamed portal with no row limit
+      ✔ for named portal with row limit
+    builds describe command
+      ✔ describe statement
+      ✔ describe unnamed portal
+    builds close command
+      ✔ describe statement
+      ✔ describe unnamed portal
+    copy messages
+      ✔ builds copyFromChunk
+      ✔ builds copy fail
+      ✔ builds copy done
+
+
+  68 passing (54ms)
+
+$ make test-all
+xargs: warning: options --max-args and --replace/-I/-i are mutually exclusive, ignoring previous --max-args value
+
+  ConnectionParameters initialized from environment variables ✔
+  ConnectionParameters initialized from mix ✔
+  connection string parsing ✔
+  connection string parsing - ssl ✔
+  ssl is false by default ✔
+  ssl is false when $GAUSSSSLMODE= ✔
+  ssl is false when $GAUSSSSLMODE=disable ✔
+  ssl is false when $GAUSSSSLMODE=allow ✔
+  ssl is true when $GAUSSSSLMODE=prefer ✔
+  ssl is true when $GAUSSSSLMODE=require ✔
+  ssl is true when $GAUSSSSLMODE=verify-ca ✔
+  ssl is true when $GAUSSSSLMODE=verify-full ✔
+  ssl is [object Object] when $GAUSSSSLMODE=no-verify ✔
+creation-tests.js
+  ConnectionParameters construction ✔
+  ConnectionParameters initializing from defaults ✔
+  ConnectionParameters initializing from defaults with connectionString set ✔
+  ConnectionParameters initializing from config ✔
+  ConnectionParameters initializing from config and config.connectionString ✔
+  escape spaces if present ✔
+  do not double escape spaces ✔
+  initializing with unix domain socket ✔
+  initializing with unix domain socket and a specific database, the simple way ✔
+  initializing with unix domain socket, the health way ✔
+  initializing with unix domain socket, the escaped health way ✔
+  builds simple string ✔
+  builds dns string ✔
+  error when dns fails ✔
+  connecting to unix domain socket ✔
+  config contains quotes and backslashes ✔
+  encoding can be specified by config ✔
+  password contains  < and/or >  characters ✔
+  username or password contains weird characters ✔
+  url is properly encoded ✔
+  ssl is set on client ✔
+  coercing string "true" to boolean ✔
+  ssl is set on client ✔
+
+crypto-webcrypto-tests.js
+  webcrypto implementation tests ✔
+  webcrypto gaussdbSha256PasswordHash with various inputs ✔
+  webcrypto hashByName function ✔
+  webcrypto hmacSha256 function ✔
+  webcrypto deriveKey function ✔
+  webcrypto edge cases ✔
+
+crypto-rfc5802-tests.js
+  RFC5802Algorithm basic functionality ✔
+  RFC5802Algorithm with empty password ✔
+  RFC5802Algorithm with special characters ✔
+  RFC5802Algorithm with server signature validation ✔
+  RFC5802Algorithm with different methods ✔
+
+crypto-tests.js
+  crypto module exports ✔
+  gaussdbMd5PasswordHash function ✔
+  gaussdbSha256PasswordHash function ✔
+  randomBytes function ✔
+  sha256 function ✔
+  md5 function ✔
+  deriveKey function ✔
+  RFC5802Algorithm function ✔
+  signatureAlgorithmHashFromCertificate function ✔
+  SASL functions ✔
+
+crypto-legacy-tests.js
+  legacy implementation tests ✔
+  legacy gaussdbMd5PasswordHash function ✔
+  legacy gaussdbSha256PasswordHash function ✔
+  legacy randomBytes function ✔
+  legacy sha256 function ✔
+  legacy md5 function ✔
+  legacy deriveKey function ✔
+  legacy hashByName function ✔
+  legacy hmacSha256 function ✔
+
+crypto-sasl-tests.js
+  sasl startSession function ✔
+  sasl startSession with stream ✔
+  sasl startSession with SCRAM-SHA-256-PLUS support ✔
+  sasl startSession error handling ✔
+  sasl continueSession function ✔
+  sasl continueSession error handling ✔
+  sasl finalizeSession function ✔
+  sasl parseServerFirstMessage function ✔
+  sasl edge cases ✔
+
+crypto-cert-tests.js
+  signatureAlgorithmHashFromCertificate function ✔
+  x509Error function ✔
+  certificate functions edge cases ✔
+
+query-queue-tests.js
+  drain ✔
+
+result-metadata-tests.js
+  includes command tag data for tag INSERT 0 3 ✔
+  includes command tag data for tag INSERT 841 1 ✔
+  includes command tag data for tag DELETE 10 ✔
+  includes command tag data for tag UPDATE 11 ✔
+  includes command tag data for tag SELECT 20 ✔
+  includes command tag data for tag COPY ✔
+  includes command tag data for tag COPY 12345 ✔
+
+escape-tests.js
+  escapeLiteral: no special characters ✔
+  Client.prototype.escapeLiteral: no special characters ✔
+  utils.escapeLiteral: no special characters ✔
+  escapeLiteral: contains double quotes only ✔
+  Client.prototype.escapeLiteral: contains double quotes only ✔
+  utils.escapeLiteral: contains double quotes only ✔
+  escapeLiteral: contains single quotes only ✔
+  Client.prototype.escapeLiteral: contains single quotes only ✔
+  utils.escapeLiteral: contains single quotes only ✔
+  escapeLiteral: contains backslashes only ✔
+  Client.prototype.escapeLiteral: contains backslashes only ✔
+  utils.escapeLiteral: contains backslashes only ✔
+  escapeLiteral: contains single quotes and double quotes ✔
+  Client.prototype.escapeLiteral: contains single quotes and double quotes ✔
+  utils.escapeLiteral: contains single quotes and double quotes ✔
+  escapeLiteral: contains double quotes and backslashes ✔
+  Client.prototype.escapeLiteral: contains double quotes and backslashes ✔
+  utils.escapeLiteral: contains double quotes and backslashes ✔
+  escapeLiteral: contains single quotes and backslashes ✔
+  Client.prototype.escapeLiteral: contains single quotes and backslashes ✔
+  utils.escapeLiteral: contains single quotes and backslashes ✔
+  escapeLiteral: contains single quotes, double quotes, and backslashes ✔
+  Client.prototype.escapeLiteral: contains single quotes, double quotes, and backslashes ✔
+  utils.escapeLiteral: contains single quotes, double quotes, and backslashes ✔
+  escapeIdentifier: no special characters ✔
+  Client.prototype.escapeIdentifier: no special characters ✔
+  utils.escapeIdentifier: no special characters ✔
+  escapeIdentifier: contains double quotes only ✔
+  Client.prototype.escapeIdentifier: contains double quotes only ✔
+  utils.escapeIdentifier: contains double quotes only ✔
+  escapeIdentifier: contains single quotes only ✔
+  Client.prototype.escapeIdentifier: contains single quotes only ✔
+  utils.escapeIdentifier: contains single quotes only ✔
+  escapeIdentifier: contains backslashes only ✔
+  Client.prototype.escapeIdentifier: contains backslashes only ✔
+  utils.escapeIdentifier: contains backslashes only ✔
+  escapeIdentifier: contains single quotes and double quotes ✔
+  Client.prototype.escapeIdentifier: contains single quotes and double quotes ✔
+  utils.escapeIdentifier: contains single quotes and double quotes ✔
+  escapeIdentifier: contains double quotes and backslashes ✔
+  Client.prototype.escapeIdentifier: contains double quotes and backslashes ✔
+  utils.escapeIdentifier: contains double quotes and backslashes ✔
+  escapeIdentifier: contains single quotes and backslashes ✔
+  Client.prototype.escapeIdentifier: contains single quotes and backslashes ✔
+  utils.escapeIdentifier: contains single quotes and backslashes ✔
+  escapeIdentifier: contains single quotes, double quotes, and backslashes ✔
+  Client.prototype.escapeIdentifier: contains single quotes, double quotes, and backslashes ✔
+  utils.escapeIdentifier: contains single quotes, double quotes, and backslashes ✔
+
+set-keepalives-tests.js
+  setting keep alive ✔
+
+throw-in-type-parser-tests.js
+  emits error ✔
+  calls callback with error ✔
+  rejects promise with error ✔
+
+simple-query-tests.js
+  executing query ✔
+  queing query ✔
+  query event binding and flow ✔
+  handles errors ✔
+  when connection is ready ✔
+  when connection is not ready ✔
+  multiple in the queue ✔
+  has no queries sent before ready ✔
+  sends query on readyForQuery event ✔
+  handles rowDescription message ✔
+  handles dataRow messages ✔
+  handles command complete messages ✔
+  throws an error when config is null ✔
+  throws an error when config is undefined ✔
+  query is not sent ✔
+  sends query to connection once ready ✔
+  after one ready for query ✔
+  after two ready for query ✔
+  after a bunch more ✔
+
+cleartext-password-tests.js
+  cleartext password auth responds with password ✔
+  cleartext password auth does not crash with null password using pg-pass ✔
+
+early-disconnect-tests.js
+notification-tests.js
+  passes connection notification ✔
+
+sha256-password-tests.js
+  sha256 authentication ✔
+  sha256 authentication with empty password ✔
+  sha256 authentication with utf-8 password ✔
+  responds ✔
+  responds with empty password ✔
+  should have correct encrypted data ✔
+  should have correct encrypted data for empty password ✔
+  responds with utf-8 password ✔
+  should have correct encrypted data for utf-8 password ✔
+
+md5-password-tests.js
+  md5 authentication ✔
+  md5 of utf-8 strings ✔
+  responds ✔
+  should have correct encrypted data ✔
+
+configuration-tests.js
+  client settings ✔
+  initializing from a config string ✔
+  calls connect correctly on connection ✔
+  defaults ✔
+  custom ✔
+  custom ssl default on ✔
+  custom ssl force off ✔
+  uses connectionString property ✔
+  uses the correct values from the config string ✔
+  uses the correct values from the config string with space in password ✔
+  when not including all values the defaults are used ✔
+  when not including all values the environment variables are used ✔
+
+stream-and-query-error-interaction-tests.js
+  emits end when not in query ✔
+
+prepared-statement-tests.js
+  bound command ✔
+  prepared statement with explicit portal ✔
+  simple, unnamed bound command ✔
+  bind argument ✔
+  describe argument ✔
+  execute argument ✔
+  parse argument ✔
+  bind argument ✔
+  describe argument ✔
+  execute argument ✔
+  sync called ✔
+
+utils-tests.js
+  ensure types is exported on root object ✔
+  normalizing query configs ✔
+  prepareValues: buffer prepared properly ✔
+  prepareValues: Uint8Array prepared properly ✔
+  prepareValues: date prepared properly ✔
+  prepareValues: date prepared properly as UTC ✔
+  prepareValues: BC date prepared properly ✔
+  prepareValues: 1 BC date prepared properly ✔
+  prepareValues: undefined prepared properly ✔
+  prepareValue: null prepared properly ✔
+  prepareValue: true prepared properly ✔
+  prepareValue: false prepared properly ✔
+  prepareValue: number prepared properly ✔
+  prepareValue: string prepared properly ✔
+  prepareValue: simple array prepared properly ✔
+  prepareValue: complex array prepared properly ✔
+  prepareValue: date array prepared properly ✔
+  prepareValue: arbitrary objects prepared properly ✔
+  prepareValue: objects with simple toPostgres prepared properly ✔
+  prepareValue: buffer array prepared properly ✔
+  prepareValue: Uint8Array array prepared properly ✔
+  prepareValue: objects with complex toPostgres prepared properly ✔
+  prepareValue: objects with toPostgres receive prepareValue ✔
+  prepareValue: objects with circular toPostgres rejected ✔
+  prepareValue: can safely be used to map an array of values including those with toPostgres functions ✔
+  escapeLiteral: no special characters ✔
+  escapeLiteral: contains double quotes only ✔
+  escapeLiteral: contains single quotes only ✔
+  escapeLiteral: contains backslashes only ✔
+  escapeLiteral: contains single quotes and double quotes ✔
+  escapeLiteral: contains double quotes and backslashes ✔
+  escapeLiteral: contains single quotes and backslashes ✔
+  escapeLiteral: contains single quotes, double quotes, and backslashes ✔
+  escapeIdentifier: no special characters ✔
+  escapeIdentifier: contains double quotes only ✔
+  escapeIdentifier: contains single quotes only ✔
+  escapeIdentifier: contains backslashes only ✔
+  escapeIdentifier: contains single quotes and double quotes ✔
+  escapeIdentifier: contains double quotes and backslashes ✔
+  escapeIdentifier: contains single quotes and backslashes ✔
+  escapeIdentifier: contains single quotes, double quotes, and backslashes ✔
+
+error-tests.js
+  connection emits stream errors ✔
+  connection emits ECONNRESET errors during normal operation ✔
+  connection does not emit ECONNRESET errors during disconnect ✔
+  connection does not emit ECONNRESET errors during disconnect also when using SSL ✔
+  connection emits an error when SSL is not supported ✔
+  connection emits an error when postmaster responds to SSL negotiation packet ✔
+
+startup-tests.js
+  connection can take existing stream ✔
+  connection can take stream factory method ✔
+  using any stream ✔
+  makes stream connect ✔
+  uses configured port ✔
+  uses configured host ✔
+  after stream connects client emits connected event ✔
+  after stream emits connected event init TCP-keepalive ✔
+
+configuration-tests.js
+  pool with copied settings includes password ✔
+
+***Testing connection***
+creating test dataset
+created test dataset
+***Testing Pure Javascript***
+xargs: warning: options --max-args and --replace/-I/-i are mutually exclusive, ignoring previous --max-args value
+1105-tests.js
+  timeout causing query crashes ✔
+
+3062-tests.js
+  result fields with the same name should pick the last value ✔
+
+675-tests.js
+2303-tests.js
+  SSL Key should not exist in toString() output ✔
+  SSL Key should not exist in util.inspect output ✔
+  SSL Key should not exist in json.stringfy output ✔
+  SSL Key should exist for direct access ✔
+  SSL Key should exist for direct access even when non-enumerable custom config ✔
+
+1382-tests.js
+  calling end during active query should return a promise ✔
+  calling end during an active query should call end callback ✔
+
+2416-tests.js
+  it sets search_path on connection ✔
+
+2307-tests.js
+  bad ssl credentials do not cause crash ✔
+
+882-tests.js
+2085-tests.js
+  it should connect over ssl ✔
+  it should fail with self-signed cert error w/o rejectUnauthorized being passed ✔
+
+507-tests.js
+  parsing array results ✔
+
+699-tests.js
+2064-tests.js
+  Password should not exist in toString() output ✔
+  Password should not exist in util.inspect output ✔
+  Password should not exist in json.stringfy output ✔
+
+787-tests.jsWarning! Postgres only supports 63 characters for query names.
+You supplied This is a super long query name just so I can test that an error message is properly spit out to console.error without throwing an exception or anything (152)
+This can cause conflicts and silent errors executing queries
+
+131-tests.js
+  parsing array decimal results ✔
+
+600-tests.js
+  test if query fails ✔
+  test if prepare works but bind fails ✔
+
+2556-tests.js
+  it should cleanup client even if an error is thrown in a callback ✔
+
+1542-tests.js
+  BoundPool can be subclassed ✔
+  calling gaussdb.Pool without new throws ✔
+
+199-tests.js
+2056-tests.js
+  All queries should return a result array ✔
+
+2716-tests.js
+  client.end() should resolve if already ended ✔
+
+1854-tests.js
+  Parameter serialization errors should not cause query to hang ✔
+
+2108-tests.js
+  Closing an unconnected client calls callback ✔
+  Closing an unconnected client resolves promise ✔
+
+2079-tests.js
+  SSL connection error allows event loop to exit ✔
+  Non "S" response code allows event loop to exit ✔
+
+3174-tests.js
+  Out of order parseComplete on simple query is catchable ✔
+  Out of order parseComplete on extended query is catchable ✔
+  Out of order parseComplete on pool is catchable ✔
+  Out of order commandComplete on simple query is catchable ✔
+  Out of order commandComplete on extended query is catchable ✔
+  Out of order commandComplete on pool is catchable ✔
+
+2627-tests.js
+  client should fail to connect ✔
+
+timezone-tests.js
+  timestamp without time zone ✔
+  date comes out as a date ✔
+  timestamp with time zone ✔
+
+result-metadata-tests.js
+  should return insert metadata ✔
+
+error-handling-tests.js
+  sending non-array argument as values causes an error callback ✔
+  re-using connections results in error callback ✔
+  re-using connections results in promise rejection ✔
+  using a client after closing it results in error ✔
+  query receives error on client shutdown ✔
+  when query is parsing ✔
+  when a query is binding ✔
+  non-query error with callback ✔
+  non-error calls supplied callback ✔
+  when connecting to an invalid host with callback ✔
+  when connecting to invalid host with promise ✔
+  non-query error ✔
+  within a simple query ✔
+  connected, idle client error ✔
+  cannot pass non-string values to query as text ✔
+
+results-as-array-tests.js
+  returns results as array ✔
+(node:104326) [DEP0044] DeprecationWarning: The `util.isArray` API is deprecated. Please use `Array.isArray()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+big-simple-query-tests.js
+  big simple query 1 ✔
+  big simple query 2 ✔
+  big simple query 3 ✔
+  many times ✔
+
+sasl-scram-tests.js
+  skipping SCRAM tests (missing env) ✔
+
+appname-tests.js
+  No default appliation_name  ✔
+  fallback_application_name is used ✔
+  application_name is used ✔
+  application_name has precedence over fallback_application_name ✔
+  application_name from connection string ✔
+
+network-partition-tests.js
+  readyForQuery server ✔
+  silent server ✔
+
+type-parser-override-tests.js
+no-data-tests.js
+  noData message handling ✔
+
+query-error-handling-prepared-statement-tests.js
+  client end during query execution of prepared statement ✔
+  query killed during query execution of prepared statement ✔
+
+simple-query-tests.js
+  simple query interface ✔
+  prepared statements do not mutate params ✔
+  multiple simple queries ✔
+  multiple select statements ✔
+  Can iterate through columns ✔
+  returned right number of rows ✔
+  row ordering ✔
+
+notice-tests.js
+  emits notice message ✔
+
+connection-parameter-tests.js
+  it sends options ✔
+
+transaction-tests.js
+  gh#36 ✔
+  name should not exist in the database ✔
+  can insert name ✔
+  name should exist in the database ✔
+  rollback ✔
+  name should not exist in the database ✔
+
+query-as-promise-tests.js
+  promise API ✔
+  promise API with configurable promise type ✔
+
+field-name-escape-tests.js
+query-column-names-tests.js
+  support for complex column names ✔
+
+huge-numeric-tests.js
+promise-api-tests.js
+  valid connection completes promise ✔
+  valid connection completes promise ✔
+  invalid connection rejects promise ✔
+  connected client does not reject promise after connection ✔
+
+statement_timeout-tests.js
+  No default statement_timeout  ✔
+  statement_timeout integer is used ✔
+  statement_timeout float is used ✔
+  statement_timeout string is used ✔
+  statement_timeout actually cancels long running queries ✔
+
+sha256-password-tests.js
+  skipping SHA256 tests (missing env) ✔
+
+connection-timeout-tests.js
+  successful connection ✔
+  expired connection timeout ✔
+
+ssl-tests.js
+  can connect with ssl ✔
+
+row-description-on-results-tests.js
+  row descriptions on result object ✔
+  row description on no rows ✔
+
+array-tests.js
+  nulls ✔
+  elements containing JSON-escaped characters ✔
+  cleanup ✔
+  numbers ✔
+  parses string arrays ✔
+  empty array ✔
+  element containing comma ✔
+  bracket in quotes ✔
+  null value ✔
+  element containing quote char ✔
+  nested array ✔
+  integer array ✔
+  integer nested array ✔
+  JS array parameter ✔
+
+parse-int-8-tests.js
+  ability to turn on and off parser ✔
+
+idle_in_transaction_session_timeout-tests.js
+skip idle_in_transaction_session_timeout at client-level is only available in v10 and above
+
+json-type-parsing-tests.js
+  json type parsing ✔
+
+async-stack-trace-tests.js
+  promise API async stack trace in pool ✔
+  promise API async stack trace in client ✔
+
+multiple-results-tests.js
+  two select results work ✔
+  throws if queryMode set to "extended" ✔
+  multiple selects work ✔
+  mixed queries and statements ✔
+
+query-error-handling-tests.js
+  error during query execution ✔
+  9.3 column error fields ✔
+  9.3 constraint error fields ✔
+skip 9.3 error field on older versions of postgres
+
+api-tests.js
+  null and undefined are both inserted as NULL null
+✔
+  pool callback behavior ✔
+  query timeout ✔
+  query recover from timeout ✔
+  query no timeout ✔
+  query with timeout on query basis ✔
+  callback API ✔
+  executing nested queries ✔
+  raises error if cannot connect ✔
+  query errors are handled and do not bubble if callback is provided ✔
+  callback is fired once and only once ✔
+  can provide callback and config object ✔
+  can provide callback and config and parameters ✔
+
+custom-types-tests.js
+  custom type parser in client config ✔
+  custom type parser in client config with multiple results ✔
+  custom type parser in query ✔
+
+configuration-tests.js
+  default values are used in new clients ✔
+  modified values are passed to created clients ✔
+  database defaults to user when user is non-default ✔
+  cleanup ✔
+
+no-row-result-tests.js
+  can access results when no rows are returned ✔
+
+type-coercion-tests.js
+  test type coercion integer ✔
+  test type coercion smallint ✔
+  test type coercion bigint ✔
+  test type coercion varchar(5) ✔
+  test type coercion oid ✔
+  test type coercion bool ✔
+  test type coercion numeric ✔
+  test type coercion real ✔
+  test type coercion double precision ✔
+  test type coercion timestamptz ✔
+  test type coercion timestamp ✔
+  test type coercion timetz ✔
+  test type coercion time ✔
+  timestamptz round trip ✔
+  selecting nulls ✔
+  date range extremes ✔
+
+empty-query-tests.js
+  empty query message handling ✔
+  callback supported ✔
+
+prepared-statement-tests.js
+  first named prepared statement ✔
+  second named prepared statement with same name & text ✔
+  with same name, but without query text ✔
+  with same name, but with different text ✔
+  client 1 execution ✔
+  client 2 execution ✔
+  clean up clients ✔
+  with small row count ✔
+  with large row count ✔
+  with no data response and rows ✔
+  cleanup ✔
+
+quick-disconnect-tests.js
+domain-tests.js
+  no domain ✔
+  with domain ✔
+  error on domain ✔
+
+connection-pool-size-tests.js
+  test 1 queries executed on a pool rapidly ✔
+  test 2 queries executed on a pool rapidly ✔
+  test 40 queries executed on a pool rapidly ✔
+  test 200 queries executed on a pool rapidly ✔
+
+yield-support-tests.js
+  using coroutines works with promises ✔
+
+tls-tests.js
+
+error-tests.js
+  connecting to invalid port ✔
+  errors emitted on checked-out clients ✔
+  connection-level errors cause queued queries to fail ✔
+  connection-level errors cause future queries to fail ✔
+  handles socket error during pool.query and destroys it immediately ✔
+
+idle-timeout-tests.js
+  idle timeout ✔
+
+# this command only runs in node 18.x and above since there are 
+# worker specific items missing from the node environment in lower versions
+***Testing Cloudflare Worker support***
+warning From Yarn 1.0 onwards, scripts don't require "--" for options to be forwarded. In a future version, any explicit "--" will be forwarded as-is to the scripts.
+$ /mnt/data/projects/gaussdb-node/packages/gaussdb-node/node_modules/.bin/vitest run test/cloudflare/ gaussdb://
+
+ RUN  v3.0.9 /mnt/data/projects/gaussdb-node/packages/gaussdb-node
+
+ ✓ test/cloudflare/vitest-cf.test.ts (1 test) 157ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:38:17
+   Duration  576ms (transform 70ms, setup 0ms, collect 96ms, tests 157ms, environment 0ms, prepare 115ms)
+
+$ mocha
+
+
+  close
+    ✔ can close a finished cursor without a callback (127ms)
+    ✔ can close a finished cursor a promise (123ms)
+    ✔ closes cursor early (126ms)
+    ✔ works with callback style (119ms)
+    ✔ is a no-op to "close" the cursor before submitting it
+
+  error handling
+    ✔ can continue after error (198ms)
+    ✔ errors queued reads (140ms)
+
+  read callback does not fire sync
+    ✔ does not fire error callback sync (140ms)
+    ✔ does not fire result sync after finished (235ms)
+
+  proper cleanup
+    ✔ can issue multiple cursors on one client (261ms)
+
+  cursor
+    ✔ fetch 6 when asking for 10 (89ms)
+    ✔ end before reading to end (61ms)
+    ✔ callback with error
+    ✔ read a partial chunk of data (186ms)
+    ✔ read return length 0 past the end (120ms)
+    ✔ read huge result (390ms)
+    ✔ normalizes parameter values (123ms)
+    ✔ returns result along with rows (62ms)
+    ✔ emits row events (94ms)
+    ✔ emits row events when cursor is closed manually (88ms)
+    ✔ emits error events
+    ✔ returns rowCount on insert (93ms)
+
+  queries with no data
+    ✔ handles queries that return no data (90ms)
+    ✔ handles empty query (92ms)
+
+  pool
+    ✔ closes cursor early, single pool query (193ms)
+    ✔ closes cursor early, saturated pool (746ms)
+    ✔ closes exhausted cursor, single pool query (201ms)
+    ✔ closes exhausted cursor, saturated pool (783ms)
+    ✔ can close multiple times on a pool (290ms)
+
+  cursor using promises
+    ✔ resolve with result (61ms)
+    ✔ reject with error
+    ✔ read multiple times (177ms)
+
+  query config passed to result
+    ✔ passes rowMode to result (198ms)
+    ✔ passes types to result (198ms)
+
+  transactions
+    ✔ can execute multiple statements in a transaction (297ms)
+    ✔ can execute multiple statements in a transaction if ending cursor early (277ms)
+    ✔ can execute multiple statements in a transaction if no data (263ms)
+
+
+  37 passing (10s)
+
+$ mocha -r ts-node/register test/**/*.ts
+
+
+  Async iterator
+    ✔ works (273ms)
+    ✔ can async iterate and then do a query afterwards (538ms)
+    ✔ can async iterate multiple times with a pool (461ms)
+    ✔ can break out of iteration early (314ms)
+    ✔ only returns rows on first iteration (172ms)
+    ✔ can read with delays (5953ms)
+    ✔ supports breaking with low watermark (326ms)
+
+  client options
+    ✔ uses custom types from client config (202ms)
+
+  close
+    ✔ emits close (119ms)
+
+  early close
+    ✔ can be closed early (63ms)
+    ✔ can destroy stream while reading (1032ms)
+    ✔ emits an error when calling destroy with an error (1032ms)
+    ✔ can destroy stream while reading an error (161ms)
+    ✔ does not crash when destroying the stream immediately after calling read
+    ✔ does not crash when destroying the stream before its submitted
+
+  concat
+    ✔ concats correctly (123ms)
+
+  stream config options
+    ✔ sets readable.highWaterMark based on batch size
+    ✔ sets readable.highWaterMark based on highWaterMark config
+    ✔ defaults to 100 for highWaterMark
+
+  empty-query
+    ✔ handles empty query (61ms)
+    ✔ continues to function after stream
+
+  error
+    ✔ receives error on stream (62ms)
+    ✔ continues to function after stream
+
+  error recovery
+    ✔ recovers from a streaming error in a transaction (340ms)
+    ✔ handles an error on a stream after a plain text non-stream error (227ms)
+    ✔ does not crash when closing a connection with a queued stream (110ms)
+    ✔ should work if used after timeout error (1572ms)
+    ✔ should work if used after syntax error (211ms)
+    ✔ should work after cancelling query (436ms)
+
+  fast reader
+    ✔ works (123ms)
+
+  instant
+    ✔ instant (1062ms)
+
+  end semantics race condition
+    ✔ works (247ms)
+
+  passing options
+    ✔ passes row mode array (58ms)
+    ✔ passes custom types (57ms)
+
+  pauses
+    ✔ pauses (3161ms)
+
+  slow reader
