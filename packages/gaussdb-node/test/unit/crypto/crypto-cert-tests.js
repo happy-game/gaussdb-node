@@ -6,21 +6,29 @@ const suite = new helper.Suite()
 // 测试证书签名功能
 suite.testAsync('signatureAlgorithmHashFromCertificate function', async () => {
   const { signatureAlgorithmHashFromCertificate } = require('../../../lib/crypto/cert-signatures')
-  
+
   // 测试函数存在性
   assert.strictEqual(typeof signatureAlgorithmHashFromCertificate, 'function')
-  
+
   // 创建一个简单的模拟证书数据（简化版X.509结构）
   // 这是一个非常简化的测试，实际证书结构要复杂得多
   const certData = Buffer.from([
     0x30, // SEQUENCE
-    0x0C, // 长度
+    0x0c, // 长度
     0x06, // OID
     0x08, // OID长度
-    0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x02, 0x05, // SHA256 OID
-    0x05, 0x00 // NULL
+    0x2a,
+    0x86,
+    0x48,
+    0x86,
+    0xf7,
+    0x0d,
+    0x02,
+    0x05, // SHA256 OID
+    0x05,
+    0x00, // NULL
   ])
-  
+
   // 测试正常情况
   try {
     const result = signatureAlgorithmHashFromCertificate(certData, 0)
@@ -34,13 +42,13 @@ suite.testAsync('signatureAlgorithmHashFromCertificate function', async () => {
 
 suite.testAsync('x509Error function', async () => {
   const certSignatures = require('../../../lib/crypto/cert-signatures')
-  
+
   // 由于x509Error是内部函数，我们无法直接测试它
   // 但我们可以通过测试其他会调用它的函数来间接测试
-  
+
   // 创建无效的证书数据来触发错误
-  const invalidCertData = Buffer.from([0xFF, 0xFF]) // 无效的数据
-  
+  const invalidCertData = Buffer.from([0xff, 0xff]) // 无效的数据
+
   try {
     certSignatures.signatureAlgorithmHashFromCertificate(invalidCertData, 0)
     // 如果没有抛出错误，测试失败
@@ -52,11 +60,10 @@ suite.testAsync('x509Error function', async () => {
   }
 })
 
-
 // 测试边界情况和错误处理
 suite.testAsync('certificate functions edge cases', async () => {
   const { signatureAlgorithmHashFromCertificate } = require('../../../lib/crypto/cert-signatures')
-  
+
   // 测试空缓冲区
   try {
     signatureAlgorithmHashFromCertificate(Buffer.alloc(0), 0)
@@ -64,7 +71,7 @@ suite.testAsync('certificate functions edge cases', async () => {
   } catch (err) {
     assert(err instanceof Error)
   }
-  
+
   // 测试null输入
   try {
     signatureAlgorithmHashFromCertificate(null, 0)
@@ -72,7 +79,7 @@ suite.testAsync('certificate functions edge cases', async () => {
   } catch (err) {
     assert(err instanceof Error)
   }
-  
+
   // 测试undefined输入
   try {
     signatureAlgorithmHashFromCertificate(undefined, 0)
