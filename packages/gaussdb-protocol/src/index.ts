@@ -1,6 +1,7 @@
 import { DatabaseError } from './messages'
 import { serialize } from './serializer'
 import { Parser, MessageCallback } from './parser'
+import { BufferReader, Endian } from './buffer-reader'
 
 export function parse(stream: NodeJS.ReadableStream, callback: MessageCallback): Promise<void> {
   const parser = new Parser()
@@ -8,4 +9,5 @@ export function parse(stream: NodeJS.ReadableStream, callback: MessageCallback):
   return new Promise((resolve) => stream.on('end', () => resolve()))
 }
 
-export { serialize, DatabaseError }
+export { serialize, DatabaseError, BufferReader }
+export type { Endian }
