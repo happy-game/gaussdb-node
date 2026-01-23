@@ -12,6 +12,8 @@ export const escapeIdentifier = gaussdb.escapeIdentifier
 export const escapeLiteral = gaussdb.escapeLiteral
 export const Result = gaussdb.Result
 export const TypeOverrides = gaussdb.TypeOverrides
+export const LogicalReplicationService = gaussdb.LogicalReplicationService
+export const MppdbDecodingPlugin = gaussdb.MppdbDecodingPlugin
 
 // Also export the defaults
 export const defaults = gaussdb.defaults

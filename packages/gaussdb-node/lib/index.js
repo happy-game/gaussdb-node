@@ -8,6 +8,8 @@ const utils = require('./utils')
 const Pool = require('gaussdb-pool')
 const TypeOverrides = require('./type-overrides')
 const { DatabaseError } = require('gaussdb-protocol')
+const { LogicalReplicationService, MppdbDecodingPlugin } = require('./logical-replication')
+
 const { escapeIdentifier, escapeLiteral } = require('./utils')
 
 const poolFactory = (Client) => {
@@ -28,6 +30,8 @@ const GAUSSDB = function (clientConstructor) {
   this.types = require('pg-types')
   this.DatabaseError = DatabaseError
   this.TypeOverrides = TypeOverrides
+  this.LogicalReplicationService = LogicalReplicationService
+  this.MppdbDecodingPlugin = MppdbDecodingPlugin
   this.escapeIdentifier = escapeIdentifier
   this.escapeLiteral = escapeLiteral
   this.Result = Result
