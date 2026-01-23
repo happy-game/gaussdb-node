@@ -66,12 +66,7 @@ class MppdbDecodingPlugin {
 
   _decodeStyle() {
     const slotOptions = this.options.slotOptions || {}
-    return (
-      this.options.decodeStyle ||
-      this.options['decode-style'] ||
-      slotOptions['decode-style'] ||
-      't'
-    )
+    return this.options.decodeStyle || this.options['decode-style'] || slotOptions['decode-style'] || 't'
   }
 
   _sendingBatch() {
@@ -197,12 +192,14 @@ function parseOptionalTxnFields(reader) {
   const info = {}
   while (reader.remaining() > 0) {
     const next = reader.peekByte()
-    if (next === 0x58) {  // 'X' for xid
+    if (next === 0x58) {
+      // 'X' for xid
       reader.byte()
       info.xid = uint64ToNumberOrString(reader.uint64Parts())
       continue
     }
-    if (next === 0x54) {  // 'T' for timestamp
+    if (next === 0x54) {
+      // 'T' for timestamp
       reader.byte()
       const tsLen = reader.uint32()
       info.timestamp = reader.string(tsLen)

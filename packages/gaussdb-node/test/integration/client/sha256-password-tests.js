@@ -48,6 +48,9 @@ suite.testAsync('can connect using sha256 password authentication', async () => 
   })
   await client.connect()
 
+  // Verify SHA256 authentication was used
+  assert.strictEqual(usingSha256, true, 'Should use SHA256 authentication')
+
   // Test basic query execution
   const { rows } = await client.query('SELECT NOW()')
   assert.strictEqual(rows.length, 1)
@@ -59,10 +62,6 @@ suite.testAsync('sha256 authentication fails when password is wrong', async () =
   const client = new gaussdb.Client({
     ...config,
     password: config.password + 'append-something-to-make-it-bad',
-  })
-  let usingSha256 = false
-  client.connection.once('authenticationSHA256Password', () => {
-    usingSha256 = true
   })
   await assert.rejects(
     () => client.connect(),
@@ -78,10 +77,6 @@ suite.testAsync('sha256 authentication fails when password is empty', async () =
     ...config,
     // use a password function to simulate empty password
     password: () => '',
-  })
-  let usingSha256 = false
-  client.connection.once('authenticationSHA256Password', () => {
-    usingSha256 = true
   })
   await assert.rejects(
     () => client.connect(),
