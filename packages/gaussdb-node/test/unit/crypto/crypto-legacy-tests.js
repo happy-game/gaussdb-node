@@ -7,7 +7,7 @@ const suite = new helper.Suite()
 suite.testAsync('legacy implementation tests', async () => {
   // 直接测试legacy实现
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 检查模块是否导出了必要的函数
   assert.strictEqual(typeof crypto.gaussdbMd5PasswordHash, 'function')
   assert.strictEqual(typeof crypto.gaussdbSha256PasswordHash, 'function')
@@ -21,12 +21,12 @@ suite.testAsync('legacy implementation tests', async () => {
 
 suite.testAsync('legacy gaussdbMd5PasswordHash function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试MD5密码哈希功能
   const user = 'testuser'
   const password = 'testpass'
   const salt = Buffer.from([1, 2, 3, 4])
-  
+
   const hashed = crypto.gaussdbMd5PasswordHash(user, password, salt)
   assert.strictEqual(typeof hashed, 'string')
   assert(hashed.startsWith('md5'))
@@ -35,11 +35,11 @@ suite.testAsync('legacy gaussdbMd5PasswordHash function', async () => {
 
 suite.testAsync('legacy gaussdbSha256PasswordHash function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试SHA256密码哈希功能
   const user = 'testuser'
   const password = 'testpass'
-  
+
   // 构造模拟的salt数据，符合GaussDB SHA256认证的数据结构
   // 结构: [4 bytes method][64 bytes random code][8 bytes token][4 bytes iteration]
   const data = Buffer.alloc(80)
@@ -47,41 +47,41 @@ suite.testAsync('legacy gaussdbSha256PasswordHash function', async () => {
   data.write('A'.repeat(64), 4, 'ascii') // 64-byte random code
   data.write('B'.repeat(8), 68, 'ascii') // 8-byte token
   data.writeInt32BE(1000, 76) // iteration count
-  
+
   const hashed = crypto.gaussdbSha256PasswordHash(user, password, data)
   assert.strictEqual(typeof hashed, 'string')
 })
 
 suite.testAsync('legacy randomBytes function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试随机字节生成功能
   const bytes1 = crypto.randomBytes(16)
   const bytes2 = crypto.randomBytes(16)
-  
+
   assert(bytes1 instanceof Buffer)
   assert.strictEqual(bytes1.length, 16)
   assert(bytes2 instanceof Buffer)
   assert.strictEqual(bytes2.length, 16)
-  
+
   // 两次生成的随机数据应该不同
   assert.notStrictEqual(bytes1.toString('hex'), bytes2.toString('hex'))
 })
 
 suite.testAsync('legacy sha256 function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试SHA256哈希功能
   const data = Buffer.from('hello world')
   const hash = crypto.sha256(data)
-  
+
   assert(hash instanceof Buffer)
   assert.strictEqual(hash.length, 32) // SHA256 produces 32-byte output
 })
 
 suite.testAsync('legacy md5 function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试MD5哈希功能
   const hash = crypto.md5('hello world')
   assert.strictEqual(typeof hash, 'string')
@@ -91,12 +91,12 @@ suite.testAsync('legacy md5 function', async () => {
 
 suite.testAsync('legacy deriveKey function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试密钥派生功能
   const password = 'password'
   const salt = Buffer.from('salt')
   const iterations = 100
-  
+
   const key = await crypto.deriveKey(password, salt, iterations)
   // nodeCrypto.pbkdf2Sync返回Buffer
   assert(key instanceof Buffer)
@@ -105,15 +105,15 @@ suite.testAsync('legacy deriveKey function', async () => {
 
 suite.testAsync('legacy hashByName function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试hashByName函数
   const data = Buffer.from('hello world')
-  
+
   // 测试SHA-256
   const sha256Hash = crypto.hashByName('sha256', data)
   assert(sha256Hash instanceof Buffer)
   assert.strictEqual(sha256Hash.length, 32)
-  
+
   // 测试SHA-1
   const sha1Hash = crypto.hashByName('sha1', data)
   assert(sha1Hash instanceof Buffer)
@@ -122,11 +122,11 @@ suite.testAsync('legacy hashByName function', async () => {
 
 suite.testAsync('legacy hmacSha256 function', async () => {
   const crypto = require('../../../lib/crypto/utils-legacy')
-  
+
   // 测试hmacSha256函数
   const key = Buffer.from('key')
   const message = 'message'
-  
+
   const hmac = crypto.hmacSha256(key, message)
   assert(hmac instanceof Buffer)
   assert.strictEqual(hmac.length, 32) // SHA-256 HMAC produces 32-byte output
