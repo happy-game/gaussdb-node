@@ -18,6 +18,8 @@ class HostChooser {
     this.loadBalanceMode = loadBalanceMode
     this.targetServerType = targetServerType || 'any'
     this.recheckMillis = (hostRecheckSeconds || 10) * 1000
+
+    this.roundRobinIndex = 0
   }
 
   /**
@@ -44,8 +46,14 @@ class HostChooser {
    * @private
    */
   _roundRobin(hosts) {
-    // TODO
-    throw new Error('HostChooser: roundrobin load balance mode is not implemented')
+    if (hosts.length === 0) {
+      return []
+    }
+
+    const index = this.roundRobinIndex % hosts.length
+    const rotated = hosts.slice(index).concat(hosts.slice(0, index))
+    this.roundRobinIndex++
+    return rotated
   }
 
   /**
