@@ -1,6 +1,6 @@
 {
   "name": "gaussdb-node",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "GaussDB client - pure javascript implementation",
   "keywords": [
     "database",
@@ -30,7 +30,7 @@
   "dependencies": {
     "gaussdb-connection-string": "^0.2.1",
     "gaussdb-pool": "^0.2.1",
-    "gaussdb-protocol": "^0.2.1",
+    "gaussdb-protocol": "^0.2.2",
     "pg-types": "2.2.0",
     "pgpass": "1.0.5"
   },
