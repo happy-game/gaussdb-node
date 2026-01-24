@@ -8,10 +8,10 @@
  * Host status enumeration
  */
 const HostStatus = {
-  CONNECT_OK: 'CONNECT_OK',       // Host is reachable
-  CONNECT_FAIL: 'CONNECT_FAIL',   // Host connection failed
-  MASTER: 'MASTER',               // Host is a primary server
-  SLAVE: 'SLAVE'                  // Host is a standby server
+  CONNECT_OK: 'CONNECT_OK', // Host is reachable
+  CONNECT_FAIL: 'CONNECT_FAIL', // Host connection failed
+  MASTER: 'MASTER', // Host is a primary server
+  SLAVE: 'SLAVE', // Host is a standby server
 }
 
 /**
@@ -35,7 +35,7 @@ class HostStatusEntry {
    * @returns {boolean} True if expired
    */
   isExpired(currentTime, recheckMillis) {
-    return (currentTime - this.timestamp) >= recheckMillis
+    return currentTime - this.timestamp >= recheckMillis
   }
 }
 
@@ -93,6 +93,100 @@ class HostStatusTracker {
 
     const hostKey = this._getHostKey(hostSpec)
     return this.statusMap.get(hostKey) || null
+  }
+
+  /**
+   * Check if a host is suitable based on status and targetServerType
+   * @param {Object} hostSpec - HostSpec object {host, port}
+   * @param {string} targetServerType - Target server type (any/master/slave/preferSlave)
+   * @param {number} recheckMillis - Recheck interval in milliseconds
+   * @returns {boolean} True if host is suitable
+   * @private
+   */
+  _isHostSuitable(hostSpec, targetServerType, recheckMillis) {
+    const entry = this.getHostStatus(hostSpec)
+
+    // No status recorded, consider it suitable (will be tested)
+    if (!entry) {
+      return true
+    }
+
+    const currentTime = Date.now()
+
+    // If status has expired, consider it suitable (needs recheck)
+    if (entry.isExpired(currentTime, recheckMillis)) {
+      return true
+    }
+
+    const status = entry.status
+
+    // Connection failed recently, not suitable
+    if (status === HostStatus.CONNECT_FAIL) {
+      return false
+    }
+
+    // For targetServerType='any', any connected host is suitable
+    if (targetServerType === 'any') {
+      return true
+    }
+
+    // For targetServerType='master', only MASTER or CONNECT_OK is suitable
+    if (targetServerType === 'master') {
+      return status === HostStatus.MASTER || status === HostStatus.CONNECT_OK
+    }
+
+    // For targetServerType='slave', only SLAVE is suitable
+    if (targetServerType === 'slave') {
+      return status === HostStatus.SLAVE
+    }
+
+    // For targetServerType='preferSlave', SLAVE is preferred, but MASTER/CONNECT_OK is acceptable
+    if (targetServerType === 'preferSlave') {
+      return status === HostStatus.SLAVE || status === HostStatus.MASTER || status === HostStatus.CONNECT_OK
+    }
+
+    // Default: consider suitable
+    return true
+  }
+
+  /**
+   * Get candidate hosts filtered by targetServerType and status expiration
+   * @param {Array<Object>} hostSpecs - Array of HostSpec objects
+   * @param {string} targetServerType - Target server type (any/master/slave/preferSlave)
+   * @param {number} recheckMillis - Recheck interval in milliseconds
+   * @returns {Array<Object>} Array of suitable HostSpec objects
+   */
+  getCandidateHosts(hostSpecs, targetServerType, recheckMillis) {
+    if (!hostSpecs || hostSpecs.length === 0) {
+      return []
+    }
+
+    // For targetServerType='preferSlave', prioritize SLAVE hosts
+    if (targetServerType === 'preferSlave') {
+      const slaveHosts = []
+      const otherHosts = []
+
+      for (const hostSpec of hostSpecs) {
+        if (!this._isHostSuitable(hostSpec, targetServerType, recheckMillis)) {
+          continue
+        }
+
+        const entry = this.getHostStatus(hostSpec)
+        if (entry && entry.status === HostStatus.SLAVE && !entry.isExpired(Date.now(), recheckMillis)) {
+          slaveHosts.push(hostSpec)
+        } else {
+          otherHosts.push(hostSpec)
+        }
+      }
+
+      // Prefer slaves, fallback to others
+      return slaveHosts.length > 0 ? slaveHosts : otherHosts
+    }
+
+    // For other targetServerType, filter suitable hosts
+    return hostSpecs.filter((hostSpec) => {
+      return this._isHostSuitable(hostSpec, targetServerType, recheckMillis)
+    })
   }
 
   /**
