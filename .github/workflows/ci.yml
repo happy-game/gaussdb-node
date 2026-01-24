@@ -60,13 +60,20 @@ jobs:
       SHA256_TEST_GAUSSUSER: sha256_test
       SHA256_TEST_GAUSSPASSWORD: test4@scram
       DB_TYPE: opengauss
+      LOGICAL_REPLICATION_TEST: '1'
     steps:
       - name: Show OS
         run: |
           uname -a
       - name: Wait for GaussDB to be ready
         run: |
-          timeout 60 bash -c 'until pg_isready -h localhost -p 5432; do sleep 2; done'
+          # Using gs_ctl status (native OpenGauss check) instead of pg_isready
+          CONTAINER_ID=$(docker ps --filter "ancestor=opengauss/opengauss" --format "{{.ID}}")
+          timeout 60 bash -c "until docker exec $CONTAINER_ID su - omm -c 'gs_ctl status -D /var/lib/opengauss/data' > /dev/null 2>&1; do echo -n '.'; sleep 2; done" || {
+            echo "Timeout waiting for GaussDB to start"
+            docker logs $CONTAINER_ID
+            exit 1
+          }
       - name: Setup SHA256 authentication
         run: |
           # Wait for database to be fully started
@@ -82,6 +89,53 @@ jobs:
           sleep 5
           
           PGPASSWORD=openGauss@123 psql -h localhost -U ci_user -d ci_db_test -c "CREATE ROLE sha256_test login password 'test4@scram';"
+      - name: Setup logical replication
+        if: env.LOGICAL_REPLICATION_TEST == '1'
+        run: |
+          # Get container ID
+          CONTAINER_ID=$(docker ps --filter "ancestor=opengauss/opengauss" --format "{{.ID}}")
+
+          # Set wal_level to logical
+          docker exec $CONTAINER_ID su - omm -c "gs_guc set -D /var/lib/opengauss/data/ -c 'wal_level = logical'"
+
+          # Set max_replication_slots
+          docker exec $CONTAINER_ID su - omm -c "gs_guc set -D /var/lib/opengauss/data/ -c 'max_replication_slots = 10'"
+
+          # Set max_wal_senders
+          docker exec $CONTAINER_ID su - omm -c "gs_guc set -D /var/lib/opengauss/data/ -c 'max_wal_senders = 10'"
+
+          # Add replication connection rule to pg_hba.conf
+          docker exec $CONTAINER_ID su - omm -c "gs_guc set -D /var/lib/opengauss/data/ -h 'host replication all 0.0.0.0/0 md5'"
+
+          # Restart container to apply logical replication settings
+          docker restart $CONTAINER_ID
+
+          # Wait for database to be ready again
+          sleep 10
+          timeout 60 bash -c "until docker exec $CONTAINER_ID su - omm -c 'gs_ctl status -D /var/lib/opengauss/data' > /dev/null 2>&1; do echo -n '.'; sleep 2; done" || {
+            echo "Timeout waiting for GaussDB to restart"
+            docker logs $CONTAINER_ID
+            exit 1
+          }
+
+          sleep 5
+
+          # Verify configuration
+          echo "Verifying logical replication configuration..."
+          WAL_LEVEL=$(docker exec $CONTAINER_ID su - omm -c "gsql -d ci_db_test -t -c \"SHOW wal_level;\"" | tr -d ' \n')
+          MAX_REPL_SLOTS=$(docker exec $CONTAINER_ID su - omm -c "gsql -d ci_db_test -t -c \"SHOW max_replication_slots;\"" | tr -d ' \n')
+          MAX_WAL_SENDERS=$(docker exec $CONTAINER_ID su - omm -c "gsql -d ci_db_test -t -c \"SHOW max_wal_senders;\"" | tr -d ' \n')
+
+          echo "  wal_level: ${WAL_LEVEL}"
+          echo "  max_replication_slots: ${MAX_REPL_SLOTS}"
+          echo "  max_wal_senders: ${MAX_WAL_SENDERS}"
+
+          if [ "$WAL_LEVEL" != "logical" ]; then
+            echo "Warning: wal_level is not set to 'logical'"
+            exit 1
+          fi
+
+          echo "Logical Replication Setup Complete!"
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
