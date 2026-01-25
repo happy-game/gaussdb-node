@@ -2,6 +2,26 @@
 
 const HostStatusTracker = require('./host-status-tracker')
 
+const roundRobinRegistry = new Map()
+
+const buildClusterKey = (hosts, loadBalanceMode, targetServerType) => {
+  const hostList = (hosts || []).map((hostSpec) => `${hostSpec.host}:${hostSpec.port}`)
+  return JSON.stringify({
+    hosts: hostList,
+    loadBalanceMode: loadBalanceMode || '',
+    targetServerType: targetServerType || '',
+  })
+}
+
+const getRoundRobinCounter = (clusterKey) => {
+  let counter = roundRobinRegistry.get(clusterKey)
+  if (!counter) {
+    counter = { value: 0 }
+    roundRobinRegistry.set(clusterKey, counter)
+  }
+  return counter
+}
+
 /**
  * HostChooser - Manages host selection strategy for load balancing
  */
@@ -19,7 +39,11 @@ class HostChooser {
     this.targetServerType = targetServerType || 'any'
     this.recheckMillis = (hostRecheckSeconds || 10) * 1000
 
-    this.roundRobinIndex = 0
+    // Always use driver-level round-robin counter for consistent load balancing
+    if (this.loadBalanceMode === 'roundrobin' || this.loadBalanceMode === 'balance') {
+      const clusterKey = buildClusterKey(this.hosts, this.loadBalanceMode, this.targetServerType)
+      this.roundRobinCounter = getRoundRobinCounter(clusterKey)
+    }
   }
 
   /**
@@ -50,9 +74,12 @@ class HostChooser {
       return []
     }
 
-    const index = this.roundRobinIndex % hosts.length
+    if (!this.roundRobinCounter) {
+      throw new Error('HostChooser: roundRobinCounter not initialized')
+    }
+
+    const index = this.roundRobinCounter.value++ % hosts.length
     const rotated = hosts.slice(index).concat(hosts.slice(0, index))
-    this.roundRobinIndex++
     return rotated
   }
 
